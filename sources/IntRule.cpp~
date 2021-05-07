@@ -68,5 +68,5 @@ void IntRule::Point(int p, VecDouble& co, double& w) const {
         co[i] = fPoints(p, i);
     }
     w = fWeights[p];
-//    std::cout << co << w << std::endl;
+    std::cout << co << w << std::endl;
 }

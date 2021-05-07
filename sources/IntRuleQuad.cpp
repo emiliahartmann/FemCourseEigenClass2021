@@ -13,60 +13,72 @@ IntRuleQuad::IntRuleQuad(){
 }
 
 IntRuleQuad::IntRuleQuad(int order) {
+    SetOrder(order);
 //    DebugStop();
 }
 
 void IntRuleQuad::SetOrder(int order) {
+//    std::cout << order << std::endl;
     fOrder = order;
     if(order < 0 || order > MaxOrder());
     switch (order){
     case 0: 
     case 1:
-//        fPoints.resize(1,Dimension());
-//        fWeights.resize(1);
-//        fPoints(0,0) = 0;
-//        fWeights(0) = 2.;
-//        break;
-        {
         fPoints.resize(1,Dimension());
         fWeights.resize(1);
-        VecDouble temp(3);
-        gaulegQuad(-1.,1.,temp,fWeights);
-        fPoints(0,0) = temp[0];
-        }
+        fPoints(0,0) = 0;
+        fWeights(0) = 4.;
+        break;
+//        {
+//        fPoints.resize(1,Dimension());
+//        fWeights.resize(1);
+//        VecDouble temp(3);
+//        gaulegQuad(-1.,1.,temp,fWeights);
+//        fPoints(0,0) = temp[0];
+//        }
         break;
     case 2:
-        fPoints.resize(2,Dimension());
-        fWeights.resize(2);
-        fPoints(0,0) = -1/(sqrt (3));
-        fPoints(1,0) = 1/(sqrt (3));
-        fWeights(0) = 1.;
-        fWeights(1) = 1.;
-        break;
     case 3:
-        fPoints.resize(3,Dimension());
-        fWeights.resize(3);
-        fPoints(0,0) = -sqrt (3/5);
-        fPoints(1,0) = 0.;
-        fPoints(2,0) = sqrt (3/5);
-        fWeights(0) = 5/9;
-        fWeights(1) = 8/9;
-        fWeights(2) = 5/9;
-        break;
-    case 4:
         fPoints.resize(4,Dimension());
         fWeights.resize(4);
-        fPoints(0,0) = -sqrt(3/7+2/7*sqrt(6/5));
-        fPoints(1,0) = -sqrt(3/7-2/7*sqrt(6/5));
-        fPoints(2,0) = sqrt(3/7-2/7*sqrt(6/5));
-        fPoints(3,0) = sqrt(3/7+2/7*sqrt(6/5));
+        fPoints(0,0) = -1./(sqrt (3));
+        fPoints(1,0) = -1./(sqrt (3));
+        fPoints(2,0) = 1./(sqrt (3));
+        fPoints(3,0) = 1./(sqrt (3));
+        fPoints(0,1) = -1./(sqrt (3));
+        fPoints(1,1) = 1./(sqrt (3));
+        fPoints(2,1) = -1./(sqrt (3));
+        fPoints(3,1) = 1./(sqrt (3));
+
+        fWeights(0) = 1.;
+        fWeights(1) = 1.;
+        fWeights(2) = 1.;
+        fWeights(3) = 1.;
+        break;
+    case 4:
+    case 5:
+        fPoints.resize(3,Dimension());
+        fWeights.resize(3);
+        fPoints(0,0) = -sqrt (3./5);
+        fPoints(1,0) = 0.;
+        fPoints(2,0) = sqrt (3./5);
+        fWeights(0) = 5./9;
+        fWeights(1) = 8./9;
+        fWeights(2) = 5./9;
+        break;
+    case 6:
+    case 7: 
+        fPoints.resize(4,Dimension());
+        fWeights.resize(4);
+        fPoints(0,0) = -sqrt(3./7+2/7*sqrt(6./5));
+        fPoints(1,0) = -sqrt(3./7-2/7*sqrt(6./5));
+        fPoints(2,0) = sqrt(3./7-2./7*sqrt(6./5));
+        fPoints(3,0) = sqrt(3./7+2./7*sqrt(6./5));
         fWeights(0) = (18- sqrt(30))/36;
         fWeights(1) = (18+ sqrt(30))/36;
         fWeights(2) = (18+ sqrt(30))/36;
         fWeights(2) = (18- sqrt(30))/36;
         break;
-    case 5:
-        DebugStop();
     default:
         DebugStop();
         break;
