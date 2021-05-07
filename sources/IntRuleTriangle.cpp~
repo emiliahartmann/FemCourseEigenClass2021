@@ -8,6 +8,7 @@
 #include "IntRuleTriangle.h"
 #include "tpanic.h"
 
+vvv
 IntRuleTriangle::IntRuleTriangle(){
 
 }

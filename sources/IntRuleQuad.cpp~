@@ -22,11 +22,11 @@ void IntRuleQuad::SetOrder(int order) {
     switch (order){
     case 0: 
     case 1:
-//        fPoints.resize(1,Dimension());
-//        fWeights.resize(1);
-//        fPoints(0,0) = 0;
-//        fWeights(0) = 2.;
-//        break;
+        fPoints.resize(1,Dimension());
+        fWeights.resize(1);
+        fPoints(0,0) = 0;
+        fWeights(0) = 2.;
+        break;
         {
         fPoints.resize(1,Dimension());
         fWeights.resize(1);

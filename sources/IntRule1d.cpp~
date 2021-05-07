@@ -43,18 +43,6 @@ void IntRule1d::SetOrder(int order) {
         fWeights(0) = 1.;
         fWeights(1) = 1.;
         break;
-    case 4:
-    case 5:
-    {
-        fPoints.resize(3,Dimension());
-        fWeights.resize(3);
-        VecDouble temp(3);
-        gauleg(-1.,1.,temp,fWeights);
-        fPoints(0,0) = temp[0];
-        fPoints(1,0) = temp[1];
-        fPoints(2,0) = temp[2];
-    }
-        break;
     default:
         DebugStop();
         break;
