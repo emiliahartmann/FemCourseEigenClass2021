@@ -26,7 +26,7 @@ void IntRuleQuad::SetOrder(int order) {
     case 1:
         fPoints.resize(1,Dimension());
         fWeights.resize(1);
-        fPoints(0,0) = 0;
+        fPoints(0,0) = 0.;
         fWeights(0) = 4.;
         break;
 //        {
@@ -57,27 +57,34 @@ void IntRuleQuad::SetOrder(int order) {
         break;
     case 4:
     case 5:
-        fPoints.resize(3,Dimension());
-        fWeights.resize(3);
-        fPoints(0,0) = -sqrt (3./5);
-        fPoints(1,0) = 0.;
-        fPoints(2,0) = sqrt (3./5);
+        fPoints.resize(8,Dimension());
+        fWeights.resize(8);
+        fPoints(0,0) = - sqrt (3./5);
+        fPoints(1,0) = - sqrt (3./5);
+        fPoints(2,0) = - sqrt (3./5);
+        fPoints(3,0) = 0.;
+        fPoints(4,0) = 0.;
+        fPoints(5,0) = sqrt (3./5);
+        fPoints(6,0) = sqrt (3./5);
+        fPoints(7,0) = sqrt (3./5);
+
+        fPoints(0,1) = - sqrt (3./5);
+        fPoints(1,1) = 0.;
+        fPoints(2,1) = sqrt (3./5);
+        fPoints(3,1) = 0.;
+        fPoints(4,1) = 0.;
+        fPoints(5,1) = - sqrt (3./5);
+        fPoints(6,1) = 0.;
+        fPoints(7,1) = sqrt (3./5);
+
         fWeights(0) = 5./9;
         fWeights(1) = 8./9;
         fWeights(2) = 5./9;
-        break;
-    case 6:
-    case 7: 
-        fPoints.resize(4,Dimension());
-        fWeights.resize(4);
-        fPoints(0,0) = -sqrt(3./7+2/7*sqrt(6./5));
-        fPoints(1,0) = -sqrt(3./7-2/7*sqrt(6./5));
-        fPoints(2,0) = sqrt(3./7-2./7*sqrt(6./5));
-        fPoints(3,0) = sqrt(3./7+2./7*sqrt(6./5));
-        fWeights(0) = (18- sqrt(30))/36;
-        fWeights(1) = (18+ sqrt(30))/36;
-        fWeights(2) = (18+ sqrt(30))/36;
-        fWeights(2) = (18- sqrt(30))/36;
+        fWeights(3) = 8./9;
+        fWeights(4) = 8./9;
+        fWeights(5) = 5./9;
+        fWeights(6) = 8./9;
+        fWeights(7) = 5./9;
         break;
     default:
         DebugStop();
