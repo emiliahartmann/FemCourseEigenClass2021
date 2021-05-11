@@ -46,6 +46,7 @@ void IntRuleQuad::SetOrder(int order) {
         fPoints(1,0) = -1./(sqrt (3));
         fPoints(2,0) = 1./(sqrt (3));
         fPoints(3,0) = 1./(sqrt (3));
+
         fPoints(0,1) = -1./(sqrt (3));
         fPoints(1,1) = 1./(sqrt (3));
         fPoints(2,1) = -1./(sqrt (3));

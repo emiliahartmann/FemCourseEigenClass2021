@@ -58,90 +58,6 @@ void IntRuleQuad::SetOrder(int order) {
         break;
     case 4:
     case 5:
-////  Com 8 pontos numa diferente ordem
-//        fPoints.resize(8,Dimension());
-//        fWeights.resize(8);
-//        fPoints(0,0) = - sqrt (3./5);
-//        fPoints(1,0) = - sqrt (3./5);
-//        fPoints(2,0) = sqrt (3./5);
-//        fPoints(3,0) = sqrt (3./5);
-
-//        fPoints(4,0) = - sqrt (3./5);
-//        fPoints(5,0) = 0.;
-//        fPoints(6,0) = 0.;
-
-//        fPoints(7,0) = sqrt (3./5);
-
-//        fPoints(0,1) = - sqrt (3./5);
-//        fPoints(1,1) = sqrt (3./5);
-//        fPoints(2,1) = - sqrt (3./5);
-//        fPoints(3,1) = sqrt (3./5);
-//        fPoints(4,1) = 0.;
-//        fPoints(5,1) = -sqrt (3./5);
-//        fPoints(6,1) = sqrt (3./5);
-//        fPoints(7,1) = 0.;
-
-
-//        fWeights(0) = 5./9;
-//        fWeights(1) = 5./9;
-//        fWeights(2) = 5./9;
-//        fWeights(3) = 5./9;
-//        fWeights(4) = 8./9;
-//        fWeights(5) = 8./9;
-//        fWeights(6) = 8./9;
-//        fWeights(7) = 8./9;
-
-////  Com 6 pontos na horizontal
-//        fPoints.resize(6,Dimension());
-//        fWeights.resize(6);
-//        fPoints(0,0) = - sqrt (3./5);
-//        fPoints(1,0) = - sqrt (3./5);
-//        fPoints(2,0) = 0.;
-//        fPoints(3,0) = 0.;
-//        fPoints(4,0) = sqrt (3./5);
-//        fPoints(5,0) = sqrt (3./5);
-
-
-//        fPoints(0,1) = - sqrt (3./5);
-//        fPoints(1,1) = sqrt (3./5);
-//        fPoints(2,1) = 0.; //- sqrt (3./5);
-//        fPoints(3,1) = 0.; // sqrt (3./5);
-//        fPoints(4,1) = - sqrt (3./5);
-//        fPoints(5,1) = sqrt (3./5);
-
-//        fWeights(0) = 5./9;
-//        fWeights(1) = 5./9;
-//        fWeights(2) = 8./9;
-//        fWeights(3) = 8./9;
-//        fWeights(4) = 5./9;
-//        fWeights(5) = 5./9;
-
-////  Com 6 pontos na vertical
-//        fPoints.resize(6,Dimension());
-//        fWeights.resize(6);
-//        fPoints(0,0) = - sqrt (3./5);
-//        fPoints(1,0) = - sqrt (3./5);
-//        fPoints(2,0) = - sqrt (3./5);
-//        fPoints(3,0) = sqrt (3./5);
-//        fPoints(4,0) = sqrt (3./5);
-//        fPoints(5,0) = sqrt (3./5);
-
-
-//        fPoints(0,1) = - sqrt (3./5);
-//        fPoints(1,1) = 0.;
-//        fPoints(2,1) = sqrt (3./5); //- sqrt (3./5);
-//        fPoints(3,1) = -sqrt (3./5); // sqrt (3./5);
-//        fPoints(4,1) = 0.;
-//        fPoints(5,1) = sqrt (3./5);
-
-//        fWeights(0) = 5./9;
-//        fWeights(1) = 8./9;
-//        fWeights(2) = 5./9;
-//        fWeights(3) = 5./9;
-//        fWeights(4) = 8./9;
-//        fWeights(5) = 5./9;
-
-//  Com 9 pontos
         fPoints.resize(9,Dimension());
         fWeights.resize(9);
         fPoints(0,0) = - sqrt (3./5);
@@ -173,37 +89,6 @@ void IntRuleQuad::SetOrder(int order) {
         fWeights(6) = 25./81;
         fWeights(7) = 40./81;
         fWeights(8) = 25./81;
-
-////  Com 8 pontos
-//        fPoints.resize(8,Dimension());
-//        fWeights.resize(8);
-//        fPoints(0,0) = - sqrt (3./5);
-//        fPoints(1,0) = - sqrt (3./5);
-//        fPoints(2,0) = - sqrt (3./5);
-//        fPoints(3,0) = 0.;
-//        fPoints(4,0) = 0.;
-//        fPoints(5,0) = sqrt (3./5);
-//        fPoints(6,0) = sqrt (3./5);
-//        fPoints(7,0) = sqrt (3./5);
-
-//        fPoints(0,1) = - sqrt (3./5);
-//        fPoints(1,1) = 0.;
-//        fPoints(2,1) = sqrt (3./5);
-//        fPoints(3,1) = -sqrt (3./5);
-//        fPoints(4,1) = sqrt (3./5);
-
-//        fPoints(5,1) = - sqrt (3./5);
-//        fPoints(6,1) = 0.;
-//        fPoints(7,1) = sqrt (3./5);
-
-//        fWeights(0) = 5./9;
-//        fWeights(1) = 8./9;
-//        fWeights(2) = 5./9;
-//        fWeights(3) = 8./9;
-//        fWeights(4) = 8./9;
-//        fWeights(5) = 5./9;
-//        fWeights(6) = 8./9;
-//        fWeights(7) = 5./9;
         break;
     default:
         DebugStop();
