@@ -25,7 +25,7 @@ void Geom1d::Shape(const VecDouble &xi, VecDouble &phi, MatrixDouble &dphi) {
     phi.resize(2);
 //    phi(0) = (1.-xi)/2;
 //    phi(1) = (1.+xi)/2;
-    dphi.resize(1,2);
+    dphi.resize(2,1);
 //    dphi(0,1) = -1./2;
 //    dphi(1,1) = 1./2;
 //    DebugStop();

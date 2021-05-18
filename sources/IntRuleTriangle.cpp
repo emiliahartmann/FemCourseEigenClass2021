@@ -30,9 +30,9 @@ void IntRuleTriangle::SetOrder(int order) {
             fWeights(0) = 1./2;
             break;
         case 2:
-        case 3:
             fPoints.resize(3,Dimension());
             fWeights.resize(3);
+//          Primeira opcao (pontos nas arestas)
 //            fPoints(0,0) = 1./2;    
 //            fPoints(1,0) = 0.;
 //            fPoints(2,0) = 1./2;
@@ -45,7 +45,7 @@ void IntRuleTriangle::SetOrder(int order) {
 //            fWeights(1) = 1./6;
 //            fWeights(2) = 1./6;
 
-//          Segunda opcao
+//          Segunda opcao (pontos dentro do elemento, nas bissetrizes)
             fPoints(0,0) = 1./6;    
             fPoints(1,0) = 2./3;
             fPoints(2,0) = 1./6;
@@ -58,8 +58,7 @@ void IntRuleTriangle::SetOrder(int order) {
             fWeights(1) = 1./6;
             fWeights(2) = 1./6;
             break;
-        case 4:
-        case 5:
+        case 3:
             fPoints.resize(4,Dimension());
             fWeights.resize(4);
             fPoints(0,0) = 1./3;    
@@ -69,14 +68,41 @@ void IntRuleTriangle::SetOrder(int order) {
 
             fPoints(0,1) = 1./3;    
             fPoints(1,1) = 1./5;
-            fPoints(2,1) = 1./5;
-            fPoints(3,1) = 3./5;
+            fPoints(2,1) = 3./5;
+            fPoints(3,1) = 1./5;
 
             fWeights(0) = -27./96;
             fWeights(1) = 25./96;
             fWeights(2) = 25./96;
             fWeights(3) = 25./96;
             break;
+        case 4:  
+        case 5:
+            fPoints.resize(6,Dimension());
+            fWeights.resize(6);
+            fPoints(0,0) = 949./1440;    
+            fPoints(1,0) = 949./1440;
+            fPoints(2,0) = 613./2643;
+            fPoints(3,0) = 613./2643;
+            fPoints(4,0) = 573./5255;
+            fPoints(5,0) = 573./5255;
+
+            fPoints(0,1) = 613./2643;    
+            fPoints(1,1) = 573./5255;
+            fPoints(2,1) = 949./1440;
+            fPoints(3,1) = 573./5255;
+            fPoints(4,0) = 949./1440;
+            fPoints(5,0) = 613./2643;
+
+            fWeights(0) = 1./6;
+            fWeights(1) = 1./6;
+            fWeights(2) = 1./6;
+            fWeights(3) = 1./6;
+            fWeights(4) = 1./6;
+            fWeights(5) = 1./6;
+            break;
+
+        break;
         default:
             DebugStop();
             break;
