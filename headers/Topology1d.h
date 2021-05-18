@@ -11,6 +11,12 @@
 #include "DataTypes.h"
 #include "IntRule1d.h"
 
+/**
+ @brief Defines the topology associated with a 1d element
+ @ingroup topology
+ 
+ represents a one dimensional line between -1 and 1
+ */
 class Topology1d
 {
 public:
@@ -31,7 +37,7 @@ public:
     static int NSideNodes(int side);
     
     // Local node index of a node associated with a side
-    static int SideNodeIndex(int side, int node);
+    static int SideNodeLocIndex(int side, int node);
     
     // Return the enumerated element type
     static MElementType Type();

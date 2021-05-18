@@ -33,7 +33,7 @@ void GeoElementSide::SetNeighbour(const GeoElementSide &neighbour) {
     fElement->SetNeighbour(fSide, neighbour);
 }
 
-bool GeoElementSide::IsNeighbour(const GeoElementSide &candidate) {
+bool GeoElementSide::IsNeighbour(const GeoElementSide &candidate) const {
     if (candidate == *this) return true;
     GeoElementSide neighbour = Neighbour();
     if (!(neighbour.Element() != 0 && neighbour.Side() > -1)) return false;
@@ -52,7 +52,7 @@ void GeoElementSide::IsertConnectivity(GeoElementSide &candidate) {
     candidate.SetNeighbour(neigh1);
 }
 
-void GeoElementSide::AllNeighbours(std::vector<GeoElementSide> &allneigh) {
+void GeoElementSide::AllNeighbours(std::vector<GeoElementSide> &allneigh) const {
     GeoElementSide neigh = Neighbour();
 
     while (neigh != *this) {
@@ -145,8 +145,3 @@ void GeoElementSide::ComputeNeighbours(std::vector<GeoElementSide> &compneigh) {
 
 }
 
-bool GeoElementSide::DataConsistency(GeoElementSide &candidate) {
-    std::cout << "Not implemented" << std::endl;
-    DebugStop();
-    return false;
-}

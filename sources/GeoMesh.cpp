@@ -44,12 +44,16 @@ void GeoMesh::SetNumElements(int numelements) {
     Elements.resize(numelements);
 }
 
-int GeoMesh::NumNodes() {
+int GeoMesh::NumNodes() const {
     return Nodes.size();
 }
 
-int GeoMesh::NumElements() {
+int GeoMesh::NumElements() const {
     return Elements.size();
+}
+
+const GeoNode &GeoMesh::Node(int node) const {
+    return Nodes[node];
 }
 
 GeoNode &GeoMesh::Node(int node) {
@@ -60,18 +64,36 @@ void GeoMesh::SetElement(int elindex, GeoElement *gel) {
     Elements[elindex] = gel;
 }
 
-GeoElement *GeoMesh::Element(int elindex) {
+GeoElement *GeoMesh::Element(int elindex) const {
     return Elements[elindex];
 }
 
 void GeoMesh::BuildConnectivity() {
-    VecInt sides(this->NumNodes(), -1);
-    VecInt vetor(this->NumNodes(), -1);
+    // for each node : an element index / side connected to the node
+    // if the value == -1, the datastructure hasn't been initialized yet
+    int numnodes = NumNodes();
+    VecInt sides(numnodes);
+    sides.setConstant(-1);
+    VecInt vetor(numnodes);
+    vetor.setConstant(-1);
 
 
     int64_t nelem = this->NumElements();
     int64_t iel = 0;
 
+    // reset the connectivity
+    for (iel = 0; iel < nelem; iel++) {
+        GeoElement *gel = Elements[iel];
+        if (!gel) continue;
+        int nsides = gel->NSides();
+        for(int is=0; is<nsides; is++)
+        {
+            GeoElementSide gelside(gel,is);
+            gel->SetNeighbour(is, gelside);
+        }
+    }
+
+    // set the connectivity along the nodes
     for (iel = 0; iel < nelem; iel++) {
         GeoElement *gel = Elements[iel];
         if (!gel) continue;
@@ -96,7 +118,9 @@ void GeoMesh::BuildConnectivity() {
             }
         }
     }
-
+    // at this point all neighbours along the nodes have been initialized
+    
+    // the line, triangle or quad neighbours are identified by the intersection of neighbours along nodes
     for (iel = 0; iel < nelem; iel++) {
         GeoElement *gel = Elements[iel];
         if (!gel) continue;
@@ -105,18 +129,28 @@ void GeoMesh::BuildConnectivity() {
         int is;
         for (is = ncor; is < nsides; is++) {
             GeoElementSide gelside(gel, is);
+            GeoElementSide neigh = gelside.Neighbour();
+            if(gelside != neigh)
+            {
+                continue;
+            }
+            // the neighbours are the intersection of all neighbours along the nodes
             std::vector<GeoElementSide> neighbours;
             gelside.ComputeNeighbours(neighbours);
             int64_t nneigh = neighbours.size();
-            int64_t in;
-            for (in = 0; in < nneigh; in++) {
+//            for(int in=0; in<nneigh; in++)
+//            {
+//                neighbours[in].Print(std::cout);
+//            }
+//            std::cout << std::endl;
+            for (int in = 0; in < nneigh; in++) {
                 gelside.IsertConnectivity(neighbours[in]);
             }
         }
     }
 }
 
-void GeoMesh::Print(std::ostream &out) {
+void GeoMesh::Print(std::ostream &out) const {
     out << "\n\t\tGEOMETRIC MESH INFORMATION\n\n";
     out << "Number of nodes:\t" << this->NumNodes() << std::endl;
     out << "Number of elements:\t" << this->NumElements() << std::endl;

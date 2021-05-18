@@ -13,6 +13,10 @@
 #include "DataTypes.h"
 #include "IntRule.h"
 
+/**
+@brief Integration rule associated with a quadrilateral
+@ingroup integration
+*/
 class IntRuleQuad : public IntRule
 {
     
@@ -26,7 +30,7 @@ class IntRuleQuad : public IntRule
     IntRuleQuad(int order);
   
     // Dimension of the integration rule
-    virtual int Dimension() override{
+    virtual int Dimension() const override{
         return 2;
     }
     
@@ -37,7 +41,7 @@ class IntRuleQuad : public IntRule
     }
 
     // Return the maximum polynomial order that can be integrated exactly
-    virtual int MaxOrder() override
+    virtual int MaxOrder() const override
     {
         return gMaxOrder();
     }
@@ -45,7 +49,7 @@ class IntRuleQuad : public IntRule
     virtual void SetOrder(int order) override;
   
     // Integration rule 2D (quadrilateral elements) method obtained from Numerical Recipes
-    void gaulegQuad(const double x1, const double x2, VecDouble &x, VecDouble &w);
+    static void gaulegQuad(const double x1, const double x2, VecDouble &x, VecDouble &w);
 
 };
 

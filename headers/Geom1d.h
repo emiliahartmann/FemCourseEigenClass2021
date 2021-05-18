@@ -11,6 +11,10 @@
 #include "Topology1d.h"
 #include "GeoElementSide.h"
 
+/**
+ @brief One dimensional geometry
+ @ingroup geometrymap
+ */
 class Geom1d : public Topology1d
 {
 public:
@@ -43,13 +47,13 @@ public:
     void SetNodes(const VecInt &nodes);
     
     // Set the node indices of the element
-    void GetNodes(VecInt &nodes);
+    void GetNodes(VecInt &nodes) const;
     
     // Return the index of a node
-    int NodeIndex(int node);
+    int NodeIndex(int node) const;
     
     // Return the neighbour along side
-    GeoElementSide Neighbour(int side);
+    GeoElementSide Neighbour(int side) const;
     
     // Initialize the neighbour data structure
     void SetNeighbour(int side, const GeoElementSide &neighbour);

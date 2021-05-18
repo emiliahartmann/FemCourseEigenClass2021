@@ -44,11 +44,11 @@ void Geom1d::SetNodes(const VecInt &nodes) {
     fNodeIndices = nodes;
 }
 
-void Geom1d::GetNodes(VecInt &nodes) {
+void Geom1d::GetNodes(VecInt &nodes) const{
     nodes = fNodeIndices;
 }
 
-int Geom1d::NodeIndex(int node) {
+int Geom1d::NodeIndex(int node) const{
     return fNodeIndices[node];
 }
 
@@ -56,7 +56,7 @@ int Geom1d::NumNodes() {
     return nCorners;    
 }
 
-GeoElementSide Geom1d::Neighbour(int side) {
+GeoElementSide Geom1d::Neighbour(int side) const {
     return fNeighbours[side];
 }
 

@@ -28,7 +28,7 @@ public:
     virtual void SetOrder(int order) override;
     
     // Dimension of the integration rule
-    virtual int Dimension() override
+    virtual int Dimension() const override
     {
         return 1;
     }
@@ -40,13 +40,13 @@ public:
     }
 
     // Return the maximum polynomial order that can be integrated exactly
-    virtual int MaxOrder() override
+    virtual int MaxOrder() const override
     {
         return gMaxOrder();
     }
 
     // Integration rule 1D method obtained from Numerical Recipes
-    void gauleg(const double x1, const double x2, VecDouble &x, VecDouble &w);
+    static void gauleg(const double x1, const double x2, VecDouble &x, VecDouble &w);
     
 };
 

@@ -1,29 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//
+//  Topology1d.cpp
+//  FemSC
+//
+//  Created by Karolinne Oliveira Coelho on 4/28/18.
+//
+//
 
 #include "Topology1d.h"
-#include <iostream>
+#include "tpanic.h"
 
-int Topology1d::NSideNodes(int side) {
-    if(side < 0 || side > 2) DebugStop();
-    static int nsidenodes[3] = {1, 1, 2};
+// Number of sides associated with 1D elements
+const int Topology1d::nSides;
+
+// Number of corner nodes associated with 1D elements
+const int Topology1d::nCorners;
+
+// Dimension of 1D elements
+const int Topology1d::Dimension;
+
+
+int Topology1d::NSideNodes(int side)
+{
+    if (side>2) {
+        std::cout << "TopologyQuad::NSideNodes: Bad parameter side" << std::endl;
+        DebugStop();
+        return EXIT_FAILURE;
+    }
+    
+    int nsidenodes[3] = {1,1,2};
     return nsidenodes[side];
 }
 
-int Topology1d::SideNodeIndex(int side, int node) {
-    if (side < 2 && node == 0) return side;
-    if (side == 2 && node < 2) return node;
-    DebugStop();
-    std::cout << "Topology1d::SideNodeIndex inconsistent side or node " << side
-            << ' ' << node << std::endl;
+// local node index of a node associated with a side
+int Topology1d::SideNodeLocIndex(int side, int node)
+{
+    if(side <2 && node == 0)
+        return side;
+    if(side == 2 && node <2)
+        return node;
+    std::cout << "Topology1d::SideNodeIndex inconsistent side or node" << std::endl;
     return -1;
 }
 
-MElementType Topology1d::Type() {
-
+// return the enumerated element type
+MElementType Topology1d::Type(){
     return EOned;
-
 }
