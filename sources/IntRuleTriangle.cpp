@@ -102,28 +102,6 @@ void IntRuleTriangle::SetOrder(int order) {
             fWeights(4) = ((620. - sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.;
             fWeights(5) = ((620. - sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.; 
 
-//            fPoints.resize(6,Dimension());
-//            fWeights.resize(6);
-//            fPoints(0,0) = 949./1440;    
-//            fPoints(1,0) = 949./1440;
-//            fPoints(2,0) = 613./2643;
-//            fPoints(3,0) = 613./2643;
-//            fPoints(4,0) = 573./5255;
-//            fPoints(5,0) = 573./5255;
-
-//            fPoints(0,1) = 613./2643;    
-//            fPoints(1,1) = 573./5255;
-//            fPoints(2,1) = 949./1440;
-//            fPoints(3,1) = 573./5255;
-//            fPoints(4,1) = 949./1440;
-//            fPoints(5,1) = 613./2643;
-
-//            fWeights(0) = 1./6;
-//            fWeights(1) = 1./6;
-//            fWeights(2) = 1./6;
-//            fWeights(3) = 1./6;
-//            fWeights(4) = 1./6;
-//            fWeights(5) = 1./6; 
             break;
         case 5:
             fPoints.resize(7,Dimension());

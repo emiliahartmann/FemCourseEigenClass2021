@@ -79,26 +79,28 @@ void IntRuleTriangle::SetOrder(int order) {
         case 4: 
             fPoints.resize(6,Dimension());
             fWeights.resize(6);
-            fPoints(0,0) = -0.108103018168070;    
-            fPoints(1,0) = -0.108103018168070;
-            fPoints(2,0) = -0.783793963663860;
-            fPoints(3,0) = -0.816847572980458;
-            fPoints(4,0) = -0.816847572980458;
-            fPoints(5,0) =  0.633695145960918;
+            fPoints(0,0) = (8.-sqrt(10.)+sqrt(38.-44.*sqrt(2./5.)))/18.;    
+            fPoints(1,0) = (8.-sqrt(10.)+sqrt(38.-44.*sqrt(2./5.)))/18.;
+            fPoints(2,0) = 1.L-2.L*(8.-sqrt(10.)+sqrt(38.-44.*sqrt(2./5.)))/18.;
 
-            fPoints(0,1) = -0.108103018168070;    
-            fPoints(1,1) = -0.783793963663860;
-            fPoints(2,1) = -0.108103018168070;
-            fPoints(3,1) = -0.816847572980458;
-            fPoints(4,1) =  0.633695145960918;
-            fPoints(5,1) = -0.816847572980458;
+            fPoints(3,0) = (8.-sqrt(10.)-sqrt(38.-44.*sqrt(2./5.)))/18.;    
+            fPoints(4,0) = (8.-sqrt(10.)-sqrt(38.-44.*sqrt(2./5.)))/18.;
+            fPoints(5,0) = 1.L-2.L*(8.-sqrt(10.)-sqrt(38.-44.*sqrt(2./5.)))/18.;
 
-            fWeights(0) = (0.446763179356022)/1.;
-            fWeights(1) = (0.446763179356022)/1.;
-            fWeights(2) = (0.446763179356022)/1.;
-            fWeights(3) = (0.219903487310644)/1.;
-            fWeights(4) = (0.219903487310644)/1.;
-            fWeights(5) = (0.219903487310644)/1.; 
+            fPoints(0,1) = (8.-sqrt(10.)+sqrt(38.-44.*sqrt(2./5.)))/18.;    
+            fPoints(1,1) = 1.L-2.L*(8.-sqrt(10.)+sqrt(38.-44.*sqrt(2./5.)))/18.;
+            fPoints(2,1) = (8.-sqrt(10.)+sqrt(38.-44.*sqrt(2./5.)))/18.;
+
+            fPoints(3,1) = (8.-sqrt(10.)-sqrt(38.-44.*sqrt(2./5.)))/18.;
+            fPoints(4,1) = 1.L-2.L*(8.-sqrt(10.)-sqrt(38.-44.*sqrt(2./5.)))/18.;
+            fPoints(5,1) = (8.-sqrt(10.)-sqrt(38.-44.*sqrt(2./5.)))/18.;
+
+            fWeights(0) = ((620. + sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.;
+            fWeights(1) = ((620. + sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.;
+            fWeights(2) = ((620. + sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.;
+            fWeights(3) = ((620. - sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.;
+            fWeights(4) = ((620. - sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.;
+            fWeights(5) = ((620. - sqrt(213125. - 53320. * sqrt(10.))) / 3720.)/2.; 
 
 //            fPoints.resize(6,Dimension());
 //            fWeights.resize(6);

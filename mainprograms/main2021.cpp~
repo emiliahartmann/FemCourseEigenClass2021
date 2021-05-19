@@ -20,7 +20,7 @@ using std::cin;
 
 int main ()
 {
-<<<<<<< HEAD
+
 //    VecDouble vec1(2);
 //    VecDouble phir(2), phiTheta(2);  
 //    MatrixDouble dphir(1,2),dphiTheta(1,2);
@@ -41,7 +41,7 @@ int main ()
 //        double theta = M_PI/2.*
 
 //    }
-=======
+
     VecDouble phir(2),phitheta(2);
     MatrixDouble dphir(1,2),dphitheta(1,2);
     VecDouble xp;
@@ -77,6 +77,6 @@ int main ()
     
     std::cout << "order = " << order << " integral aproximada " << Integral <<
     " erro " << 6.*M_PI-Integral << std::endl;
->>>>>>> 9b464be9bf941cc36a7ae0f9f4854ea61e5463c0
+
     return 0;
 }
