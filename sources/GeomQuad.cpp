@@ -47,7 +47,23 @@ void GeomQuad::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     if(xi.size() != Dimension) DebugStop();
     if(x.size() != NodeCo.rows()) DebugStop();
     if(NodeCo.cols() != nCorners) DebugStop();
-    DebugStop();
+
+    int nrow=NodeCo.rows();
+    int ncol=NodeCo.cols();
+
+    x.resize(nrow);
+    x.setZero();
+
+    VecDouble phi(4);
+    MatrixDouble dphi(Dimension,4);
+    Shape(xi, phi, dphi);
+    for(int i = 0; i < ncol; i++){
+        for(int j = 0; j < nrow; j++){
+            x[j] += NodeCo(j,i) * phi[i];      
+        } 
+    }
+
+//    DebugStop();
 }
 
 void GeomQuad::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, MatrixDouble &gradx) {
@@ -55,7 +71,26 @@ void GeomQuad::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Ma
     if(xi.size() != Dimension) DebugStop();
     if(x.size() != NodeCo.rows()) DebugStop();
     if(NodeCo.cols() != nCorners) DebugStop();
-    DebugStop();
+
+    int nrow=NodeCo.rows();
+    int ncol=NodeCo.cols();
+
+    gradx.resize(nrow,2);
+    gradx.setZero();
+    x.resize(nrow);
+    x.setZero();
+
+    VecDouble phi(4);
+    MatrixDouble dphi(Dimension,4);
+    Shape(xi, phi, dphi);
+    for(int i = 0; i < ncol; i++){
+        for(int j = 0; j < nrow; j++){
+            x[j] += NodeCo(j,i) * phi[i];
+            gradx(j, 0) += NodeCo(j, i) * dphi(0, i);       
+        } 
+    }
+
+//    DebugStop();
 }
 
 void GeomQuad::SetNodes(const VecInt &nodes) {
