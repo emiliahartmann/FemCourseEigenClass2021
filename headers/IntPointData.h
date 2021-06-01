@@ -11,6 +11,9 @@
 #include "DataTypes.h"
 #include "tpanic.h"
 
+/** @brief Container for data associated with an integration point
+    @ingroup mathstatement
+ */
 class IntPointData
 {
 public:

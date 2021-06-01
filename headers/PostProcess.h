@@ -12,6 +12,10 @@
 
 class Analysis;
 
+/**
+ @brief Generates a .vtk file to graphically represent the results
+ @ingroup global
+ */
 class PostProcess
 {
 protected:

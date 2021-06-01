@@ -18,6 +18,10 @@
 
 class PostProcess;
 
+/**
+ @brief Implements post processing for a particular math statement
+ @ingroup global
+ */
 template<class math>
 class PostProcessTemplate: public PostProcess
 {
@@ -91,8 +95,12 @@ class PostProcessTemplate: public PostProcess
         
         if (nsol==1) {
             scalarnames.push_back(name);
-        }else{
+        }else if(nsol > 1){
             vectornames.push_back(name);
+        }
+        else
+        {
+            DebugStop();
         }
         
     }

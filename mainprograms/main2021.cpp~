@@ -13,41 +13,16 @@
 #include "TopologyTetrahedron.h"
 #include "DataTypes.h"
 #include "Analysis.h"
+#include "VTKGeoMesh.h"
+#include "ReadGmsh.h"
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-int main ()
-{
+int main (){
 
-//    VecDouble vec1(2);
-//    VecDouble phir(2), phiTheta(2);  
-//    MatrixDouble dphir(1,2),dphiTheta(1,2);
-//    VecDouble xp;
-//    int order = 1;
-//    IntRuleQuad rule(1);
-//    int np= rule.NPoints();
-//    MatrixDouble jacobiano(2,2);
-
-//    for(int ip=0; ip<np; ip++)
-//    {
-//        VecDouble xip(2);
-//        double wp;
-//        rule.Point(ip, xip, wp);
-
-//        double r = (xip[0]-1.)/2.+5.*(xip[0]+1.)/2.;
-//        double drdxi = 1./2.+5./2.;
-//        double theta = M_PI/2.*
-
-//    }
-
-    VecDouble phir(2),phitheta(2);
-    MatrixDouble dphir(1,2),dphitheta(1,2);
-    VecDouble xp;
-    int order = 1;
-    MatrixDouble jac(2,2);
-
+<<<<<<< HEAD
     double Integral = 0;
     IntRuleQuad rule(1);
     int np = rule.NPoints();
@@ -78,5 +53,7 @@ int main ()
     std::cout << "order = " << order << " integral aproximada " << Integral <<
     " erro " << 6.*M_PI-Integral << std::endl;
 
+=======
+>>>>>>> 0b0ce9c20b5fada91d44fa21bfdb362a3643ef59
     return 0;
 }

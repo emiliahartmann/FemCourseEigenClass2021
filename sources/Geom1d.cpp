@@ -85,13 +85,14 @@ void Geom1d::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Matr
 }
 
 void Geom1d::SetNodes(const VecInt &nodes) {
-    if(nodes.rows() != 2) {DebugStop();}
+    if(nodes.rows() != 2) DebugStop();
     fNodeIndices = nodes;
 }
 
-void Geom1d::GetNodes(VecInt &nodes) const{
+void Geom1d::GetNodes(VecInt &nodes) const {
     nodes = fNodeIndices;
 }
+
 
 int Geom1d::NodeIndex(int node) const{
     // implementando a seguinte linha como extra
@@ -99,9 +100,10 @@ int Geom1d::NodeIndex(int node) const{
     return fNodeIndices[node];
 }
 
-int Geom1d::NumNodes() {
+int Geom1d::NumNodes(){
     return nCorners;    
 }
+
 
 GeoElementSide Geom1d::Neighbour(int side) const {
     // implementando a seguinte linha como extra

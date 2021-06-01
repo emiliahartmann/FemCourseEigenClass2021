@@ -85,32 +85,49 @@ void Geom1d::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Matr
 }
 
 void Geom1d::SetNodes(const VecInt &nodes) {
+<<<<<<< HEAD
     if(nodes.rows() != 2) {DebugStop();}
+=======
+    if(nodes.rows() != 2) DebugStop();
+>>>>>>> 0b0ce9c20b5fada91d44fa21bfdb362a3643ef59
     fNodeIndices = nodes;
 }
 
-void Geom1d::GetNodes(VecInt &nodes) const{
+void Geom1d::GetNodes(VecInt &nodes) const {
     nodes = fNodeIndices;
 }
 
+<<<<<<< HEAD
 int Geom1d::NodeIndex(int node) const{
     // implementando a seguinte linha como extra
     if(node < 0 || node > 2) DebugStop();
+=======
+int Geom1d::NodeIndex(int node) const {
+    if(node<0 || node > 2) DebugStop();
+>>>>>>> 0b0ce9c20b5fada91d44fa21bfdb362a3643ef59
     return fNodeIndices[node];
 }
 
-int Geom1d::NumNodes() {
+int Geom1d::NumNodes(){
     return nCorners;    
 }
 
+<<<<<<< HEAD
 GeoElementSide Geom1d::Neighbour(int side) const {
     // implementando a seguinte linha como extra
     if(side < 0 || side > 2) DebugStop();
+=======
+GeoElementSide Geom1d::Neighbour(int side) const{
+    if(side <0 || side>2) DebugStop();
+>>>>>>> 0b0ce9c20b5fada91d44fa21bfdb362a3643ef59
     return fNeighbours[side];
 }
 
 void Geom1d::SetNeighbour(int side, const GeoElementSide &neighbour) {
+<<<<<<< HEAD
     // implementando a seguinte linha como extra
+=======
+>>>>>>> 0b0ce9c20b5fada91d44fa21bfdb362a3643ef59
     if(side < 0 || side > 2) DebugStop();
     fNeighbours[side]=neighbour;
 }

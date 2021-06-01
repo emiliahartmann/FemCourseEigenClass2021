@@ -13,18 +13,14 @@
 #include "TopologyTetrahedron.h"
 #include "DataTypes.h"
 #include "Analysis.h"
+#include "VTKGeoMesh.h"
+#include "ReadGmsh.h"
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-int main ()
-{
-    VecDouble phir(2),phitheta(2);
-    MatrixDouble dphir(1,2),dphitheta(1,2);
-    VecDouble xp;
-    int order = 1;
-    MatrixDouble jac(2,2);
+int main (){
 
     double Integral = 0;
     IntRuleQuad rule(1);

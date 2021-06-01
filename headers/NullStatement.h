@@ -13,6 +13,12 @@
 #include  "IntPointData.h"
 #include <functional>
 
+/**
+ @brief Implements a NULL variational formulation
+ @ingroup mathstatement
+ 
+ This class contributes zero to the stiffness matrix and right hand side
+ */
 class NullStatement : public MathStatement
 {
 

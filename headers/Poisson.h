@@ -13,6 +13,10 @@
 #include  "IntPointData.h"
 #include <functional>
 
+/**
+ @brief Implements a poisson problem in 1-, 2- or 3-dimensions
+ @ingroup mathstatement
+ */
 class Poisson : public MathStatement
 {
 
@@ -72,7 +76,7 @@ public:
     
     // Return the number of state variables
     virtual int NState() const {
-        return 2;
+        return 1;
     };
     
     virtual int NEvalErrors() const;

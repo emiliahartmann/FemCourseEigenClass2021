@@ -15,6 +15,10 @@ class GeoMesh;
 class CompMesh;
 class PostProcess;
 
+/**
+ @brief Output a .vtk file for a geometric mesh, computational mesh or PostProcess object
+ @ingroup global
+ */
 class VTKGeoMesh
 {
     public:

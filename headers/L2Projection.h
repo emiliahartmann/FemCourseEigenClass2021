@@ -13,6 +13,10 @@
 #include  "IntPointData.h"
 #include <functional>
 
+/**
+ @brief Implements and L2 projection
+ @ingroup mathstatement
+ */
 class L2Projection : public MathStatement
 {
     // Boundary condition ID

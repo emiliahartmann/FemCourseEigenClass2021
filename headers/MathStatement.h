@@ -12,6 +12,19 @@
 #include "IntPointData.h"
 #include "PostProcess.h"
 
+/**
+ @defgroup mathstatement
+ @brief Defines/implements the variational statement
+ */
+
+/**
+ @brief Defines the variational statement interface
+ @ingroup mathstatement
+ 
+ A math statement involves computing the contribution to the stiffness matrix at an integration point\n
+ Declaring the number of state variables \n
+ Post processing the results
+ */
 class MathStatement
 {
     
@@ -28,12 +41,12 @@ public:
     
     // Constructor of MathStatement
     MathStatement();
-    
+
     // Constructor with matid
     MathStatement(int Pmatid) : MathDim(-1), matid(Pmatid)
     {
     }
-    
+
     // Copy constructor of MathStatement
     MathStatement(const MathStatement &copy);
     
@@ -78,7 +91,7 @@ public:
     virtual void PostProcessSolution(const IntPointData &integrationpointdata, const int var, VecDouble &sol) const = 0;
     
     
-    virtual void Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv) const;
+    virtual void Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv, bool colMajor = true) const;
     
     //Method to print MathStatement
     virtual void Print(std::ostream &out);

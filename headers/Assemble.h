@@ -14,7 +14,12 @@
 
 class CompMesh;
 
-// class geared towards the assembly of the global system of equations
+/**
+ @brief Assembly process of the global system of equations
+ @ingroup global
+ 
+ class geared towards the assembly of the global system of equations
+ */
 class Assemble
 {
     CompMesh *cmesh = 0;

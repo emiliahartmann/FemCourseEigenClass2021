@@ -23,7 +23,7 @@ MathStatement &MathStatement::operator=(const MathStatement &copy) {
 MathStatement::~MathStatement() {
 }
 
-void MathStatement::Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv) const {
+void MathStatement::Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv, bool colMajor) const {
     MatrixDouble axes(axesv.rows(), axesv.cols());
     for (int r = 0; r < axes.rows(); r++) {
         for (int c = 0; c < axes.cols(); c++) {

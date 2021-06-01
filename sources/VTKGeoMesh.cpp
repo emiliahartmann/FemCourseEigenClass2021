@@ -183,7 +183,7 @@ void VTKGeoMesh::PrintGMeshVTK(GeoMesh * gmesh, const std::string &filename)
         }
        
         MatrixDouble ParamCo = NodeCoordinates(gel->Type());
-        int elNnodes = ParamCo.rows();
+        int elNnodes = ParamCo.rows() + (gel->Type() == EPoint);
         
         Size += (1+elNnodes);
         connectivity << elNnodes;
@@ -191,6 +191,7 @@ void VTKGeoMesh::PrintGMeshVTK(GeoMesh * gmesh, const std::string &filename)
         for(int t = 0; t < elNnodes; t++)
         {
             VecDouble xi(ParamCo.cols()), xco(3);
+            xco.setZero();
             for(int i=0; i< xi.size(); i++) xi[i] = ParamCo(t,i);
             gel->X(xi, xco);
             for (int i=0; i<3; i++) {
@@ -258,7 +259,7 @@ void VTKGeoMesh::PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &file
         gel = cel->GetGeoElement();
         
         MatrixDouble ParamCo = NodeCoordinates(gel->Type());
-        int elNnodes = ParamCo.rows();
+        int elNnodes = ParamCo.rows() + (gel->Type() == EPoint);
         
         Size += (1+elNnodes);
         connectivity << elNnodes;

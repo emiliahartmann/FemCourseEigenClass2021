@@ -20,6 +20,17 @@ class CompMesh;
 
 class PostProcess;
 
+/**
+ @defgroup global
+ @brief Classes that orchestrate the computation of a finite element approximation
+ */
+
+/**
+ @brief Performs a finite element computation and performs post processing
+ @ingroup global
+ 
+ Combines a computational mesh, an assembly process and matrix inversion to compute a finite element approximation
+ */
 class Analysis
 {
 protected:

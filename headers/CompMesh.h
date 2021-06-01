@@ -21,6 +21,13 @@ class GeoMesh;
 
 class DOF;
 
+/**
+ @brief Definition of a computational mesh
+ 
+ @ingroup approximation
+ groups computational elements, degrees of freedom and pointers to the mathematical statement\n
+ the computational mesh is essentially a database for the above mentioned objects
+ */
 class CompMesh
 {
     /// pointer to the geometric mesh
