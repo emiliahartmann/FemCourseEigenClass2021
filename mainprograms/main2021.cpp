@@ -53,4 +53,14 @@ int main (){
     " erro " << 6.*M_PI-Integral << std::endl;
 
     return 0;
+
+// Leitura da malha 'malha_teste.msh'
+    GeoMesh gmesh;
+        ReadGmsh read;
+        read.Read(gmesh,"malha_teste.msh");
+
+
+
+
+
 }
