@@ -48,7 +48,7 @@ void Shape1d::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, MatrixD
 
 //    if(orders[2] == 2) {
 
-//        phi[2] = 1. - csi * csi;   
+//        phi[2] = - csi * csi;   
 //        dphi(0,2) =  - 2. * csi;
 
 //    }

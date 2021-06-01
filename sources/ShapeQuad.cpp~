@@ -95,7 +95,7 @@ void ShapeQuad::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matri
         dphi(0, count) = 4. * (dphi(0, id) * (phi[id2] + phi[id3]) + (dphi(0, id2) + dphi(0, id3)));
         dphi(1, count) = 4. * (dphi(1, id) * (phi[id2] + phi[id3]) + (dphi(1, id2) + dphi(1, id3)));
         count++;
-        std :: cout << "contador" << count << endl;
+//        std :: cout << "contador" << count << endl;
         }  
         else if(orders[ip] != 1) DebugStop();
     }
@@ -147,7 +147,7 @@ int ShapeQuad::NShapeFunctions(int side, int order){
         return ((order-1)*(order-1));
     
     std::cout << "ShapeQuad::NShapeFunctions, bad parameter side " << side << std::endl;
-    DebugStop();
+/    DebugStop();
     
     return 0;
 }

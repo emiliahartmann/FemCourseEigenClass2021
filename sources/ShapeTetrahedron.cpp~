@@ -51,7 +51,7 @@ void ShapeTetrahedron::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi
 int ShapeTetrahedron::NShapeFunctions(int side, int order) {
     if(side < 0 || side >= nSides) DebugStop();
     if(order != 1 && order != 2) DebugStop();
-    if (side < 4) return 1; 
+    if (side < 4) return 1; DebugStop();
     if (side < 10) return order - 1; 
     return 0;
 }

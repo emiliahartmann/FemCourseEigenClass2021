@@ -21,7 +21,7 @@ int Shape0d::NShapeFunctions(int side, int order) {
         return 1;
     }
     // Code should not reach this point. This return is only here to stop compiler warnings.
-    DebugStop();
+//    DebugStop();
     return -1;
 }
 

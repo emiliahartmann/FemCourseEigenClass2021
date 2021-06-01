@@ -63,7 +63,7 @@ void ShapeTriangle::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, M
         } 
         else if (orders[is] != 1) DebugStop();
     }
-    if(count != nf) DebugStop();
+    if(count != nshape) DebugStop();
     for(int is = 6 ; is< nSides; is++) if(orders[is] != 1 && orders[is] != 2) DebugStop();
 
 //    if(orders[6] == 3) //Caso separado o lado 6

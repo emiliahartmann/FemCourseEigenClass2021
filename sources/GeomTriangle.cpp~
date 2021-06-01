@@ -24,7 +24,11 @@ GeomTriangle& GeomTriangle::operator=(const GeomTriangle& copy) {
 }
 
 void GeomTriangle::Shape(const VecDouble& xi, VecDouble& phi, MatrixDouble& dphi) {
-    if(xi.size() != Dimension || phi.size() != nCorners || dphi.rows() != Dimension || dphi.cols() != nCorners) DebugStop();
+    if(xi.size() <=0 || xi.size() > Dimension) DebugStop();
+//    if(xi.size() != Dimension) DebugStop();
+// || phi.size() != nCorners || dphi.rows() != Dimension || dphi.cols() != nCorners
+    phi.resize(nCorners);
+    dphi.resize(Dimension, nCorners);
 
     double csi = xi[0];
     double eta = xi[1];
@@ -46,7 +50,7 @@ void GeomTriangle::Shape(const VecDouble& xi, VecDouble& phi, MatrixDouble& dphi
 
 void GeomTriangle::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     if(xi.size() != Dimension) DebugStop();
-    if(x.size() != NodeCo.rows()) DebugStop();
+    if(x.size() < NodeCo.rows()) DebugStop(); // x.size() != NodeCo.rows()
     if(NodeCo.cols() != nCorners) DebugStop();
 
     int nrow=NodeCo.rows();
@@ -55,9 +59,10 @@ void GeomTriangle::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     x.resize(nrow);
     x.setZero();
 
-    VecDouble phi(3);
-    MatrixDouble dphi(Dimension,3);
+    VecDouble phi(3);                   // phi
+    MatrixDouble dphi(Dimension,3);     // dphi
     Shape(xi, phi, dphi);
+
     for(int i = 0; i < ncol; i++){
         for(int j = 0; j < nrow; j++){
             x[j] += NodeCo(j,i) * phi[i];      
@@ -69,13 +74,35 @@ void GeomTriangle::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
 
 void GeomTriangle::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, MatrixDouble &gradx) {
     if(xi.size() != Dimension) DebugStop();
-    if(x.size() != NodeCo.rows()) DebugStop();
+    if(x.size() != NodeCo.rows()) DebugStop();  // x.size() < NodeCo.rows()
     if(NodeCo.cols() != nCorners) DebugStop();
-    DebugStop();
+
+    int nrow=NodeCo.rows();
+    int ncol=NodeCo.cols();
+
+    gradx.resize(nrow, Dimension);
+    gradx.setZero();
+
+    x.resize(nrow);
+    x.setZero();
+
+    VecDouble phi(nCorners);
+    MatrixDouble dphi(Dimension, nCorners);
+    Shape(xi, phi, dphi);
+
+    for(int i = 0; i < ncol; i++){
+        for(int j = 0; j < nrow; j++){
+            x[j] += NodeCo(j,i) * phi[i];
+            gradx(j, 0) += NodeCo(j, i) * dphi(0, i);  
+            gradx(j, 1) += NodeCo(j, i) * dphi(1, i);      
+        } 
+    }
+
+//    DebugStop();
 }
 
 void GeomTriangle::SetNodes(const VecInt &nodes) {
-    if(nodes.size() != nCorners) DebugStop();
+    if(nodes.size() != nCorners) {DebugStop();}
     fNodeIndices = nodes;
 }
 
