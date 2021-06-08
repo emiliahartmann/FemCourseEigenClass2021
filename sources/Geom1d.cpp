@@ -22,7 +22,7 @@ Geom1d& Geom1d::operator=(const Geom1d& copy) {
 
 void Geom1d::Shape(const VecDouble &xi, VecDouble &phi, MatrixDouble &dphi) {
 //    std::cout << __PRETTY_FUNCTION__ << std::endl;
-    if(xi.size() <=0 || xi.size() > Dimension) DebugStop();
+    if(xi.size() <= 0 || xi.size() > Dimension) DebugStop();
 //    if(xi.size() !=Dimension ) DebugStop();
 //|| phi.size() !=nCorners || dphi.rows() !=Dimension || dphi.cols() !=nCorners
     phi.resize(nCorners);
@@ -40,7 +40,7 @@ void Geom1d::Shape(const VecDouble &xi, VecDouble &phi, MatrixDouble &dphi) {
 
 void Geom1d::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     if(xi.size() != Dimension) DebugStop();
-    if(x.size() < NodeCo.rows()) DebugStop(); // x.size() != NodeCo.rows()
+    // if(x.size() < NodeCo.rows()) DebugStop(); // x.size() != NodeCo.rows()
     if(NodeCo.cols() !=nCorners) DebugStop();
 
     int nrow=NodeCo.rows();

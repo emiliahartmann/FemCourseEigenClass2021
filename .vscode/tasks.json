@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "make",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-j2"
+            ],
+            "options": {
+                "cwd": "/home/emilia/Repositórios/FemCourseEigenClass2021/build"
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "options": {
+                "cwd": "/home/emilia/Repositórios/FemCourseEigenClass2021/build"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": ["make"]
+        }
+    ]
+}

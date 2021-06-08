@@ -107,7 +107,7 @@ void CompMesh::SetDOFVec(const std::vector<DOF> &dofvec) {
 
 void CompMesh::SetMathVec(const std::vector<MathStatement *> &mathvec) {
     int c = mathvec.size();
-
+    mathstatements.resize(c);
     for (int i = 0; i < c; i++) {
         mathstatements[i] = mathvec[i];
     }

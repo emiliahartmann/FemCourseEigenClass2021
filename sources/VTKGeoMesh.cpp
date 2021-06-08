@@ -194,8 +194,14 @@ void VTKGeoMesh::PrintGMeshVTK(GeoMesh * gmesh, const std::string &filename)
             xco.setZero();
             for(int i=0; i< xi.size(); i++) xi[i] = ParamCo(t,i);
             gel->X(xi, xco);
+            if (xco.size() == 2){
+                node << xco[0] << " ";
+                node << xco[1] << " 0.0";    
+            } 
+            else{
             for (int i=0; i<3; i++) {
                 node << xco[i] << " ";
+            }
             }
             node << std::endl;
             actualNode++;
