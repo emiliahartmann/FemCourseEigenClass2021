@@ -49,7 +49,7 @@ public:
         
         if(coefs.size()%phi.size())
         {
-        //    DebugStop();
+            DebugStop();
         }
         int nstate = coefs.size()/phi.size();
         solution.resize(nstate);
@@ -60,7 +60,8 @@ public:
         dsoldksi.setZero();
          
         int dim = dphidx.rows();
-        for (int iphi=0; iphi<phi.size(); iphi++) {
+        int nphi = phi.size();
+        for (int iphi=0; iphi<nphi; iphi++) {
             double phival = phi[iphi];
             for (int istate=0; istate<nstate; istate++) {
                 solution[istate] += phival*coefs[iphi*nstate+istate];

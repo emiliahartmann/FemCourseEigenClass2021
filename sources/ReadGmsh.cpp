@@ -24,7 +24,7 @@
 
 static void InsertElement(GeoMesh &gmesh, int elindex, std::ifstream & line);
 static std::string GetFileVersion(const std::string& file_name);
-GeoElement* InsertElement(GeoMesh * gmesh, int & physical_identifier, int & el_type, int & el_identifier, std::vector<int> & node_identifiers);
+GeoElement* InsertElement(GeoMesh * gmesh, int & physical_identifier, int & el_type, int  el_identifier, std::vector<int> & node_identifiers);
 
 int GetNumberofNodes(int & el_type){
     
@@ -296,14 +296,13 @@ static std::string GetFileVersion(const std::string& file_name){
 
 void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
     int max_dimension = 0;
-    /** vector of 4 positions 
-     * (first index is the dimension). 
-     * For each dimension there is a map. 
-     * I guess that the first key of the map is the entity tag as it apears in gmesh
-     * I guess that the second key of the map is the number as it appears in .gmsh file
-     * @note This is here for the case when you've attributed multiple material ids to the same element. (but I don't think it's a complete solution)
-    */ 
-    std::array< std::map<int, std::vector<int> >,4 > dim_entity_tag_and_physical_tag;
+    // vector of 4 positions
+    // first index is the dimension
+    // for each dimension there is a map
+    // I guess that the first key of the map is the entity tag as it apears in gmesh
+    // I guess that the second key of the map is the number as it appears in .gmsh file
+    std::array<std::map<int, std::vector<int>>,4> m_dim_entity_tag_and_physical_tag;
+    std::array<std::map<int, int>,4> m_dim_physical_tag_and_physical_tag;
 
     std::ifstream read(file_name.c_str());
     if(!read)
@@ -370,29 +369,32 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
             continue;
         } // Physical Names
 
+        // if(str == "$Entities" || str == "$Entities\r")
+        // {
+        //     std::string line;
+        //     // We're ignoring Geometrical Entities for this code
+        //     while(getline(read, line) && line != "$EndEntities"){/*void*/}
+        //     continue;
+        // }// Entities
         if(str == "$Entities" || str == "$Entities\r")
         {
-            int n_points, n_curves, n_surfaces, n_volumes;
-            read >> n_points;
-            read >> n_curves;
-            read >> n_surfaces;
-            read >> n_volumes;
+            int m_n_points,m_n_curves,m_n_surfaces,m_n_volumes;
+            read >> m_n_points;
+            read >> m_n_curves;
+            read >> m_n_surfaces;
+            read >> m_n_volumes;
 
-            max_dimension = ( n_curves > 0 ?   1 : max_dimension);
-            max_dimension = ( n_surfaces > 0 ? 2 : max_dimension);
-            max_dimension = ( n_volumes > 0 ?  3 : max_dimension);
+            max_dimension = (m_n_curves > 0 ?   1 : max_dimension);
+            max_dimension = (m_n_surfaces > 0 ? 2 : max_dimension);
+            max_dimension = (m_n_volumes > 0 ?  3 : max_dimension);
             
             int n_physical_tag;
             std::pair<int, std::vector<int> > chunk;
-            /// Entity bounding box data [we don't use these... they're just placeholders so we can move on with the file parsing]
+            /// Entity bounding box data
             double x_min, y_min, z_min;
             double x_max, y_max, z_max;
-
-            std::array<int,4> n_entities = { n_points, n_curves, n_surfaces, n_volumes};
-
-            /** Number of entities that have a physical tag. Separated by dimension. Depending on how you export your mesh file in gmsh, you may get geom
-             * @example: thisvector[1] has the number of Line entities with any arbitrary physical tag*/
-            std::array<int,4> n_entities_with_physical_tag = {0,0,0,0};
+            std::vector<int> n_entities = {m_n_points,m_n_curves,m_n_surfaces,m_n_volumes};
+            std::vector<int> n_entities_with_physical_tag = {0,0,0,0};
             
             
             for (int i_dim = 0; i_dim <4; i_dim++) {
@@ -423,19 +425,19 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
                         size_t n_bounding_points;
                         read >> n_bounding_points;
                         for (int i_data = 0; i_data < n_bounding_points; i_data++) {
-                            int point_tag; // We don't use these, so just move on with the file parsing
+                            int point_tag;
                             read >> point_tag;
                         }
                     }
                     n_entities_with_physical_tag[i_dim] += n_physical_tag;
-                    dim_entity_tag_and_physical_tag[i_dim].insert(chunk);
+                    m_dim_entity_tag_and_physical_tag[i_dim].insert(chunk);
                 }
             }
 
-            int n_physical_points = n_entities_with_physical_tag[0];
-            int n_physical_curves = n_entities_with_physical_tag[1];
-            int n_physical_surfaces = n_entities_with_physical_tag[2];
-            int n_physical_volumes = n_entities_with_physical_tag[3];
+            int m_n_physical_points = n_entities_with_physical_tag[0];
+            int m_n_physical_curves = n_entities_with_physical_tag[1];
+            int m_n_physical_surfaces = n_entities_with_physical_tag[2];
+            int m_n_physical_volumes = n_entities_with_physical_tag[3];
             
             char buf_end[1024];
             read.getline(buf_end, 1024);
@@ -443,8 +445,8 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
             std::string str_end(buf_end);
             if(str_end == "$EndEntities" || str_end == "$EndEntities\r")
             {
-                std::cout << "Read mesh entities = " <<  n_points + n_curves + n_surfaces + n_volumes << std::endl;
-                std::cout << "Read mesh entities with physical tags = " <<  n_physical_points + n_physical_curves + n_physical_surfaces + n_physical_volumes << std::endl;
+                std::cout << "Read mesh entities = " <<  m_n_points + m_n_curves + m_n_surfaces + m_n_volumes << std::endl;
+                std::cout << "Read mesh entities with physical tags = " <<  m_n_physical_points + m_n_physical_curves + m_n_physical_surfaces + m_n_physical_volumes << std::endl;
             }
             continue;
         }
@@ -510,6 +512,7 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
             read >> min_element_tag;
             read >> max_element_tag;
             gmesh.SetNumElements(n_elements);
+            int64_t elcount = 0;
             
             int entity_tag, entity_dim, entity_el_type, entity_elements;
             for (int64_t i_block = 0; i_block < n_entity_blocks; i_block++)
@@ -525,16 +528,27 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
                 }
                 
                 for (int64_t iel = 0; iel < entity_elements; iel++) {
+                    int physical_identifier;
                     int n_physical_identifier = 0;
-                    if( dim_entity_tag_and_physical_tag[entity_dim].find(entity_tag) != dim_entity_tag_and_physical_tag[entity_dim].end())
+                    if(m_dim_entity_tag_and_physical_tag[entity_dim].find(entity_tag) != m_dim_entity_tag_and_physical_tag[entity_dim].end())
                     {
-                        n_physical_identifier = dim_entity_tag_and_physical_tag[entity_dim][entity_tag].size();
+                        n_physical_identifier = m_dim_entity_tag_and_physical_tag[entity_dim][entity_tag].size();
                     }
                     bool physical_identifier_Q = n_physical_identifier != 0;
                     if(physical_identifier_Q)
                     {
-                        int gmsh_physical_identifier = dim_entity_tag_and_physical_tag[entity_dim][entity_tag][0];
-                        if(n_physical_identifier !=1){ std::cerr << "\nMultiple physical tags for the same element is unsupported.\n";}
+                        int gmsh_physical_identifier = m_dim_entity_tag_and_physical_tag[entity_dim][entity_tag][0];
+                        physical_identifier = m_dim_physical_tag_and_physical_tag[entity_dim][gmsh_physical_identifier];
+                        if(n_physical_identifier !=1){
+                            std::cout << "The entity with tag " << entity_tag << std::endl;
+                            std::cout << "Has associated the following physical tags : " << std::endl;
+                            for (int i_data = 0; i_data < n_physical_identifier; i_data++) {
+                                std::cout << m_dim_entity_tag_and_physical_tag[entity_dim][entity_tag][i_data] << std::endl;
+                            }
+                            
+                            std::cout << "Automatically, the assgined pz physical tag = " << physical_identifier << " is used.  The other ones are dropped out." << std::endl;
+                        }
+                        
                         
                         read.getline(buf, 1024);
                         int el_identifier, n_el_nodes;
@@ -545,7 +559,8 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
                             read >> node_identifiers[i_node];
                         }
                         /// Internally the nodes index and element index is converted to zero based indexation
-                        InsertElement(&gmesh, gmsh_physical_identifier, entity_el_type, el_identifier, node_identifiers);
+                        InsertElement(&gmesh, gmsh_physical_identifier, entity_el_type, elcount, node_identifiers);
+                        elcount++;
                         
                     }else{
                         read.getline(buf, 1024);
@@ -576,6 +591,7 @@ void ReadGmsh::Read4(GeoMesh &gmesh, const std::string &file_name){
     }
 
     gmesh.SetDimension(max_dimension);
+    gmesh.BuildConnectivity();
 }
 
 /** @brief Insert elements following msh file format */
@@ -954,7 +970,7 @@ void ReadGmsh::Read(GeoMesh& gmesh, const std::string& file_name){
 
 
 
-GeoElement* InsertElement(GeoMesh * gmesh, int & physical_identifier, int & el_type, int & el_identifier, std::vector<int> & node_identifiers){
+GeoElement* InsertElement(GeoMesh * gmesh, int & physical_identifier, int & el_type, int  el_identifier, std::vector<int> & node_identifiers){
     
     VecInt Topology;
     int n_nodes = node_identifiers.size();
@@ -964,7 +980,8 @@ GeoElement* InsertElement(GeoMesh * gmesh, int & physical_identifier, int & el_t
         Topology[k_node] = node_identifiers[k_node]-GMSH_SHIFT;
     }
     GeoElement* gel = nullptr;
-    el_identifier -= GMSH_SHIFT;
+//    el_identifier -= GMSH_SHIFT;
+    
     switch (el_type) {
         case 1:
         {   // Line
@@ -1058,7 +1075,7 @@ GeoElement* InsertElement(GeoMesh * gmesh, int & physical_identifier, int & el_t
             break;
         default:
         {
-            std::cout << "Element not impelemented." << std::endl;
+            std::cout << "Element not implemented." << std::endl;
             DebugStop();
         }
             break;

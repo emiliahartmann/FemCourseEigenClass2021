@@ -13,6 +13,10 @@
 #include <stdio.h>
 #include "IntRule.h"
 
+/**
+@brief Integration rule associated with a line
+@ingroup integration
+*/
 class IntRule1d : public IntRule
 {
     

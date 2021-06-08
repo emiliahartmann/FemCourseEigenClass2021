@@ -79,6 +79,9 @@ public:
     // Local node index of a node associated with a side
     virtual int SideNodeIndex(int side, int node) const = 0;
     
+    // Local node index of a node associated with a side
+    virtual int SideNodeLocIndex(int side, int node) const = 0;
+    
     /// Set the node indices of the element
     virtual void GetNodes(VecInt &nodes) const = 0;
     

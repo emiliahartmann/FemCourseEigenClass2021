@@ -116,8 +116,9 @@ public:
     virtual void CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const;
     
     // Compute error and exact solution
-    virtual void EvaluateError(VecDouble &errors) const;
-                                       
+    virtual void EvaluateError(std::function<void(const VecDouble &loc,VecDouble &val,MatrixDouble &deriv)> fp,
+                               VecDouble &errors) const;
+    
     // Compute shape functions set at point x
     virtual void ShapeFunctions(const VecDouble &intpoint, VecDouble &phi, MatrixDouble &dphi) const = 0;
     

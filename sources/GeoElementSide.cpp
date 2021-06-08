@@ -53,9 +53,14 @@ void GeoElementSide::IsertConnectivity(GeoElementSide &candidate) {
 }
 
 void GeoElementSide::AllNeighbours(std::vector<GeoElementSide> &allneigh) const {
+    
+    if(fElement->NSideNodes(fSide) != 1) DebugStop();
     GeoElementSide neigh = Neighbour();
 
+    int nodeindex = fElement->SideNodeIndex(fSide, 0);
     while (neigh != *this) {
+        int neighnode = neigh.fElement->SideNodeIndex(neigh.fSide, 0);
+        if(neighnode != nodeindex) DebugStop();
         allneigh.push_back(neigh);
         neigh = neigh.Neighbour();
     }
@@ -69,15 +74,29 @@ void GeoElementSide::ComputeNeighbours(std::vector<GeoElementSide> &compneigh) {
     int nsnodes = fElement->NSideNodes(fSide);
     std::vector<GeoElementSide> GeoElSideSet;
     std::vector<std::vector<int> > GeoElSet;
-    GeoElSet.resize(27);
+    GeoElSet.resize(nsnodes);
     int in;
     VecInt nodeindexes(nsnodes);
     for (in = 0; in < nsnodes; in++) {
-        nodeindexes[in] = fElement->NodeIndex(fElement->SideNodeIndex(fSide, in));
-        int locnod = fElement->SideNodeIndex(fSide, in);
+        int nodeindex = fElement->SideNodeIndex(fSide, in);
+        nodeindexes[in] = nodeindex;
+    }
+    // compute the neighbours along the cornernodes
+    for (in = 0; in < nsnodes; in++) {
+        int locindex = fElement->SideNodeLocIndex(fSide, in);
+        int nodeindex = fElement->SideNodeIndex(fSide, in);
         GeoElSideSet.resize(0);
-        GeoElementSide locside(fElement, locnod);
+        GeoElementSide locside(fElement, locindex);
+        
+        int nodeindex_again = locside.Element()->SideNodeIndex(locside.Side(), 0);
+        if(nodeindex != nodeindex_again) DebugStop();
+        
         locside.AllNeighbours(GeoElSideSet);
+        for(auto &gelside : GeoElSideSet)
+        {
+            int node = gelside.Element()->SideNodeIndex(gelside.Side(), 0);
+            if(node != nodeindex) DebugStop();
+        }
         int nel = GeoElSideSet.size();
         int el;
         for (el = 0; el < nel; el++) {
@@ -87,6 +106,7 @@ void GeoElementSide::ComputeNeighbours(std::vector<GeoElementSide> &compneigh) {
     }
     std::vector<int> result;
     std::vector<int> result_aux;
+    // build the neighbours along the higher dimension sides
     switch (nsnodes) {
         case 1:
         {
@@ -132,6 +152,25 @@ void GeoElementSide::ComputeNeighbours(std::vector<GeoElementSide> &compneigh) {
     for (el = 0; el < nel; el++) {
         GeoElement * gelResult = geoMesh->Element(result[el]);
         int whichSd = gelResult->WhichSide(nodeindexes);
+        if(whichSd < 0)
+        {
+            std::cout << "nodeindexes " << nodeindexes << std::endl;
+            std::cout << "neighbouring element index " << gelResult->GetIndex() << std::endl;
+
+            std::cout << "neighbouring element nodes ";
+            for(int i=0; i<gelResult->NNodes(); i++) std::cout << gelResult->NodeIndex(i) << " ";
+            std::cout << std::endl;
+            for(int i=0; i<nsnodes; i++)
+            {
+                auto gelset = GeoElSet[i];
+                std::cout << "GeoElSet along node " << i << " is ";
+                for(auto g : gelset) std::cout << g << " ";
+                std::cout << std::endl;
+            }
+            DebugStop();
+        }
+        GeoElementSide gelside(gelResult,whichSd);
+        if(gelside == *this) continue;
         if (whichSd > 0) {
             compneigh.push_back(GeoElementSide(gelResult, whichSd));
         }
@@ -143,5 +182,18 @@ void GeoElementSide::ComputeNeighbours(std::vector<GeoElementSide> &compneigh) {
     result_aux.clear();
 
 
+}
+
+// Print the element index and side
+void GeoElementSide::Print(std::ostream &out) const
+{
+    if(!fElement)
+    {
+        out << "GeoElSide empty\n";
+    }
+    else
+    {
+        out << "elid " << fElement->GetIndex() << " side " << fSide << std::endl;
+    }
 }
 

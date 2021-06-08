@@ -41,12 +41,7 @@ public:
     
     // Constructor of MathStatement
     MathStatement();
-
-    // Constructor with matid
-    MathStatement(int Pmatid) : MathDim(-1), matid(Pmatid)
-    {
-    }
-
+    
     // Copy constructor of MathStatement
     MathStatement(const MathStatement &copy);
     
@@ -69,7 +64,7 @@ public:
     virtual void Contribute(IntPointData &integrationpointdata, double weight, MatrixDouble &EK, MatrixDouble &EF) const = 0;
     
     // Method to implement error over element's volume
-    virtual void ContributeError(IntPointData &integrationpointdata, VecDouble &errors) const = 0;
+    virtual void ContributeError(IntPointData &integrationpointdata, VecDouble &u_exact, MatrixDouble &du_exact, VecDouble &errors) const = 0;
     
     virtual void SetMatID(int indexmat){
         matid = indexmat;

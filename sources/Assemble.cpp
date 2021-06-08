@@ -65,9 +65,10 @@ void Assemble::Compute(MatrixDouble &globmat, MatrixDouble &rhs) {
 //        
 //        ek.Print();
 //        ef.Print();
-
-        // Implement the assembly method
-        std::cout << "Please implement me\n";
+        //+++++++++++++++++
+        // Please implement me
+        std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
         DebugStop();
+    //+++++++++++++++++
     }
 }

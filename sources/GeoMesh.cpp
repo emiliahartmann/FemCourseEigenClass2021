@@ -53,6 +53,7 @@ int GeoMesh::NumElements() const {
 }
 
 const GeoNode &GeoMesh::Node(int node) const {
+    if(node <0 || node >= Nodes.size()) DebugStop();
     return Nodes[node];
 }
 
@@ -61,10 +62,12 @@ GeoNode &GeoMesh::Node(int node) {
 }
 
 void GeoMesh::SetElement(int elindex, GeoElement *gel) {
+    if(elindex >= Elements.size()) DebugStop();
     Elements[elindex] = gel;
 }
 
 GeoElement *GeoMesh::Element(int elindex) const {
+    if(elindex < 0 || elindex >= Elements.size()) DebugStop();
     return Elements[elindex];
 }
 

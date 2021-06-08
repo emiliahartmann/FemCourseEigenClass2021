@@ -95,20 +95,21 @@ void CompElement::InitializeIntPointData(IntPointData &data) const {
 
     data.weight = 0;
     data.detjac = 0;
-    data.phi.resize(nshape, 0);
+    data.phi.resize(nshape);
     data.dphidx.resize(dim, nshape);
     data.dphidksi.resize(dim, nshape);
     data.x.resize(3);
-    data.ksi.resize(dim, 0);
+    data.ksi.resize(dim);
     data.gradx.resize(dim, nshape);
     data.axes.resize(dim, 3);
-    data.solution.resize(1, 0);
+    data.solution.resize(1);
     data.dsoldksi.resize(1, 1);
     data.dsoldx.resize(1, 1);
 
 }
 
 void CompElement::ComputeRequiredData(IntPointData &data, VecDouble &intpoint) const {
+    
     data.ksi = intpoint;
 
     int dim = this->Dimension();
@@ -142,7 +143,7 @@ void CompElement::Convert2Axes(const MatrixDouble &dphi, const MatrixDouble &jac
         case 1:
         {
             for (ieq = 0; ieq < nshape; ieq++) {
-                dphidx(0, ieq) *= jacinv(0, 0);
+                dphidx(0, ieq) = dphi(0,ieq)*jacinv(0, 0);
             }
         }
             break;
@@ -167,29 +168,24 @@ void CompElement::Convert2Axes(const MatrixDouble &dphi, const MatrixDouble &jac
 }
 
 void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
+    // First thing you need is the variational formulation
     MathStatement *material = this->GetStatement();
     if (!material) {
         std::cout << "Error at CompElement::CalcStiff" << std::endl;
         return;
     }
-    
+    // Second, you should clear the matrices you're going to compute
     ek.setZero();
     ef.setZero();
 
-    IntPointData data;
-    this->InitializeIntPointData(data);
-    double weight = 0.;
-
-    IntRule *intrule = this->GetIntRule();
-    int intrulepoints = intrule->NPoints();    
-
-    for (int int_ind = 0; int_ind < intrulepoints; ++int_ind) {
-        std::cout << "Please insert the correct code\n";
-        DebugStop();
-    }
+    //+++++++++++++++++
+    // Please implement me
+    std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+    DebugStop();
+    //+++++++++++++++++
 }
 
-void CompElement::EvaluateError(VecDouble &errors) const {
+void CompElement::EvaluateError(std::function<void(const VecDouble &loc, VecDouble &val, MatrixDouble &deriv) > fp, VecDouble &errors) const {
     MathStatement * material = this->GetStatement();
 
     if (!material) {
@@ -217,6 +213,7 @@ void CompElement::EvaluateError(VecDouble &errors) const {
 
     VecDouble u_exact(nstate);
     MatrixDouble du_exact(dim, nstate);
+    fp(data.x, u_exact, du_exact);
 
     for (int nint = 0; nint < nintpoints; nint++) {
         values.setZero();
@@ -224,9 +221,10 @@ void CompElement::EvaluateError(VecDouble &errors) const {
         this->ComputeRequiredData(data, data.ksi);
         weight *= fabs(data.detjac);
 
+        fp(data.x, u_exact, du_exact);
         this->GetMultiplyingCoeficients(data.coefs);
         data.ComputeSolution();
-        material->ContributeError(data, values);
+        material->ContributeError(data, u_exact, du_exact, values);
 
         for (int ier = 0; ier < NErrors; ier++)
             errors[ier] += weight * values[ier];
@@ -249,6 +247,6 @@ void CompElement::Solution(VecDouble &intpoint, int var, VecDouble &sol) const {
     this->ComputeRequiredData(data, intpoint);
     this->GetMultiplyingCoeficients(data.coefs);
     data.ComputeSolution();
-
+    
     material->PostProcessSolution(data, var, sol);
 }

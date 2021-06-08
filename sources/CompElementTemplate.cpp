@@ -57,6 +57,7 @@ CompElementTemplate<Shape>::CompElementTemplate(int64_t ind, CompMesh *cmesh, Ge
             int nstate = mat->NState();
             dof.SetNShapeStateOrder(nshape, nstate, order);
 
+            if(nstate != 1) DebugStop();
             int64_t ndof = cmesh->GetNumberDOF();
             ndof++;
             cmesh->SetNumberDOF(ndof);
@@ -109,21 +110,28 @@ template<class Shape>
 void CompElementTemplate<Shape>::GetMultiplyingCoeficients(VecDouble & coefs) const {
     int ndof = this->NDOF();
 
-    VecInt iglob(0);
-    int ni = 0;
-
+    int ncoef = 0;
     for (int64_t i = 0; i < ndof; i++) {
         int dofindex = dofindexes[i];
         class DOF dof = this->GetCompMesh()->GetDOF(dofindex);
-        for (int j = 0; j < dof.GetNShape() * dof.GetNState(); j++) {
-            iglob.resize(ni + 1);
-            coefs.resize(ni + 1);
-            iglob[ni] = dof.GetFirstEquation() + j;
-            coefs[ni] = this->GetCompMesh()->Solution()[iglob[ni]];
+        int dof_neq = dof.GetNShape()*dof.GetNState();
+        ncoef+= dof_neq;
+    }
+    coefs.resize(ncoef);
+    coefs.setZero();
+
+    int ni = 0;
+    for (int64_t i = 0; i < ndof; i++) {
+        int dofindex = dofindexes[i];
+        class DOF dof = this->GetCompMesh()->GetDOF(dofindex);
+        int dof_first = dof.GetFirstEquation();
+        int dof_neq = dof.GetNShape()*dof.GetNState();
+        for (int j = 0; j < dof_neq; j++) {
+            int iglob = dof_first + j;
+            coefs[ni] = this->GetCompMesh()->Solution()[iglob];
             ni++;
         }
     }
-    iglob.resize(0);
 }
 
 template<class Shape>

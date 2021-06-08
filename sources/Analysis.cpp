@@ -106,7 +106,7 @@ VecDouble Analysis::PostProcessError(std::ostream &out, PostProcess &defPostProc
             if (el->GetStatement()->GetMatID() == 1) {
                 errors.setZero();
                 fExact = defPostProc.GetExact();
-                el->EvaluateError(errors);
+                el->EvaluateError(fExact, errors);
                 int nerrors = errors.size();
                 values.resize(nerrors, 0.);
                 for (int ier = 0; ier < nerrors; ier++) {

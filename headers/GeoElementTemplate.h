@@ -27,8 +27,6 @@ protected:
     // Definition of an element type
     TGeom Geom;
     
-    // Index in the vector
-    int Index;
     
 public:
     
@@ -85,6 +83,12 @@ public:
         return Geom.NodeIndex(Geom.SideNodeLocIndex(side,node));
     }
     
+    // Local node index of a node associated with a side
+    virtual int SideNodeLocIndex(int side, int node) const
+    {
+        return Geom.SideNodeLocIndex(side,node);
+    }
+    
     /// Return the node indices of the element
     virtual void GetNodes(VecInt &nodes) const
     {
@@ -94,7 +98,7 @@ public:
     // Return the index of an element node
     virtual int NodeIndex(int node) const
     {
-        if(node<0 || node>=Geom.NumNodes()) return -1;
+        if(node<0 || node>=Geom.NumNodes()) DebugStop();
         return Geom.NodeIndex(node);
     }
     

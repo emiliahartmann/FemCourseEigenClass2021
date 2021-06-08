@@ -34,6 +34,7 @@ public:
     // Constructor of GeoElementSide
     GeoElementSide(GeoElement *element, int side) : fElement(element), fSide(side)
     {
+        if(!element || side >= element->NSides()) DebugStop();
 
     }
     

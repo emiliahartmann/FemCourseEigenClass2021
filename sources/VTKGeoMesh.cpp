@@ -119,6 +119,9 @@ static MatrixDouble NodeCoordinates(MElementType eltype)
     
 
     switch (eltype) {
+        case EPoint:
+            result.resize(1,0);
+            break;
         case EOned:
             result.resize (3, 1);
             result(0,0) = -1.;
@@ -183,7 +186,7 @@ void VTKGeoMesh::PrintGMeshVTK(GeoMesh * gmesh, const std::string &filename)
         }
        
         MatrixDouble ParamCo = NodeCoordinates(gel->Type());
-        int elNnodes = ParamCo.rows() + (gel->Type() == EPoint);
+        int elNnodes = ParamCo.rows();
         
         Size += (1+elNnodes);
         connectivity << elNnodes;
@@ -263,9 +266,8 @@ void VTKGeoMesh::PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &file
     for(auto cel:cmesh->GetElementVec())
     {
         gel = cel->GetGeoElement();
-        
         MatrixDouble ParamCo = NodeCoordinates(gel->Type());
-        int elNnodes = ParamCo.rows() + (gel->Type() == EPoint);
+        int elNnodes = ParamCo.rows();
         
         Size += (1+elNnodes);
         connectivity << elNnodes;
@@ -273,19 +275,24 @@ void VTKGeoMesh::PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &file
         for(int t = 0; t < elNnodes; t++)
         {
             VecDouble xi(ParamCo.cols()), xco(3);
+            xco.setZero();
             for(int i=0; i< xi.size(); i++) xi[i] = ParamCo(t,i);
             gel->X(xi, xco);
             for (int i=0; i<3; i++) {
                 node << xco[i] << " ";
             }
             node << std::endl;
-            VecDouble sol(1);
-            MatrixDouble dsol(2,1);
-//            cel->Solution(xi, 1, sol, dsol);
+            VecDouble sol(1), dsol(2);
+            cel->Solution(xi, 1, sol);
+            cel->Solution(xi, 2, dsol);
+//            if(dsol.rows() > 0 && abs(dsol[0]) != 0.)
+//            {
+//                std::cout << "dsol " << dsol[0] << std::endl;
+//            }
             solution << sol[0] << " " << std::endl;
             int i;
             for (i=0; i<dsol.rows(); i++) {
-                gradsol << dsol(i,0) << " ";
+                gradsol << dsol[i] << " ";
             }
             for( ; i<3; i++) gradsol << "0 ";
             gradsol << std::endl;
@@ -293,7 +300,7 @@ void VTKGeoMesh::PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &file
             connectivity << " " << actualNode;
         }
         connectivity << std::endl;
-        solution << std::endl;
+//        solution << std::endl;
         
         int elType = GetVTK_ElType(gel->Type());
         Type << elType << std::endl;
