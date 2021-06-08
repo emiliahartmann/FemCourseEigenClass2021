@@ -22,7 +22,6 @@ using std::cin;
 
 int main (){
 
-<<<<<<< HEAD
     double Integral = 0;
     IntRuleQuad rule(1);
     int np = rule.NPoints();
@@ -53,7 +52,15 @@ int main (){
     std::cout << "order = " << order << " integral aproximada " << Integral <<
     " erro " << 6.*M_PI-Integral << std::endl;
 
-=======
->>>>>>> 0b0ce9c20b5fada91d44fa21bfdb362a3643ef59
     return 0;
+
+// Leitura da malha 'malha_teste.msh'
+GeoMesh gmesh;
+    ReadGmsh read;
+    read.Read(gmesh,"malha_teste.msh");
+
+
+
+
+
 }

@@ -49,4 +49,14 @@ int main (){
         cmesh.SetMathVec(mathvec); 
         plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_malha.vtk");
     return 0;
+
+// Leitura da malha 'malha_teste.msh'
+    GeoMesh gmesh;
+        ReadGmsh read;
+        read.Read(gmesh,"malha_teste.msh");
+
+
+
+
+
 }
