@@ -132,38 +132,54 @@ void L2Projection::PostProcessSolution(const IntPointData &data, const int var, 
     int cols = data.dsoldx.cols();
     MatrixDouble gradu(rows, cols);
     gradu = data.dsoldx;
+//    if(data.dsoldx.rows() > 0 && data.dsoldx(0,0) != 0.)
+//    {
+//        std::cout << "L2Proj " << data.dsoldx(0,0) << std::endl;
+//    }
 
     int nstate = this->NState();
 
     switch (var) {
-        case 0: //None
-        {
-            std::cout << " Var index not implemented " << std::endl;
-            DebugStop();
+      case 0: //None
+      {
+          std::cout << " Var index not implemented " << std::endl;
+          DebugStop();
         }
-        case 1: //ESol
-        {
-            //+++++++++++++++++
-            // Please implement me
-            std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-            DebugStop();
-            //+++++++++++++++++
-        }
-            break;
 
-        case 2: //EDSol
-        {
-            //+++++++++++++++++
-            // Please implement me
-            std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-            DebugStop();
-            //+++++++++++++++++
-        }
-            break;
-        default:
-        {
-            std::cout << " Var index not implemented " << std::endl;
-            DebugStop();
-        }
-    }
+      case 1: //ESol
+      {
+        //+++++++++++++++++
+        // Please implement me
+        // DebugStop();
+          Solout.resize(nstate);
+          for (int i = 0; i < nstate; i++) {
+              Solout[i] = sol[i];
+          }
+        //+++++++++++++++++
+      }
+      break;
+
+      case 2: //EDSol
+      {
+          //+++++++++++++++++
+        // Please implement me
+        // DebugStop();
+     
+          Solout.resize(rows * cols);
+          for (int i = 0; i < rows; i++) {
+              for (int j = 0; j < cols; j++) {
+                  Solout[i * cols + j] = gradu(i, j);
+              }
+          }
+          //+++++++++++++++++
+
+      }
+      break;
+
+      default:
+      {
+          std::cout << " Var index not implemented " << std::endl;
+          DebugStop();
+      }
+  }          
 }

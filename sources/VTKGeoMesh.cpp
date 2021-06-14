@@ -262,6 +262,9 @@ void VTKGeoMesh::PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &file
 
     std::stringstream node, connectivity, Type, material, elindex, solution, gradsol;
     int64_t nelements = cmesh->GetElementVec().size();
+    for (int i = 0; i < nelements; i++){
+        std::cout << "i= " << i << " "<< (void*) cmesh-> GetElementVec()[i] << std::endl;
+    }
     GeoElement *gel;
     for(auto cel:cmesh->GetElementVec())
     {

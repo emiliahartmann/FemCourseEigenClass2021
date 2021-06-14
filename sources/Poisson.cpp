@@ -173,6 +173,7 @@ void Poisson::PostProcessSolution(const IntPointData &data, const int var, VecDo
             //+++++++++++++++++
             // Please implement me
             std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+            return;
             DebugStop();
             //+++++++++++++++++
         }
@@ -183,6 +184,7 @@ void Poisson::PostProcessSolution(const IntPointData &data, const int var, VecDo
             //+++++++++++++++++
             // Please implement me
             std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+            return;
             DebugStop();
             //+++++++++++++++++
         }

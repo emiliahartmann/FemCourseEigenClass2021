@@ -56,7 +56,10 @@ void GeomQuad::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     int nrow=NodeCo.rows();
     int ncol=NodeCo.cols();
 
-    x.resize(nrow);
+    if (x.size() < nrow){
+        x.resize(nrow);
+    }
+    
     x.setZero();
 
     VecDouble phi(nCorners);  // nCorners == 4

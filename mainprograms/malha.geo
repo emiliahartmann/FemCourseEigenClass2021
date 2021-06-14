@@ -24,16 +24,16 @@ Recombine Surface{1};
 //+
 Curve Loop(2) = {2, -1, -4, 3};
 //+
-Physical Curve("BottomLine", 5) = {1};
+//Physical Curve("BottomLine", 2) = {1};
 //+
-Physical Curve("TopLine", 6) = {3};
+//Physical Curve("TopLine", 2) = {3};
 //+
-Physical Curve("LeftLine", 7) = {4};
+//Physical Curve("LeftLine", 2) = {4};
 //+
-Physical Curve("RightLine", 8) = {2};
+//Physical Curve("RightLine", 2) = {2};
 //+
 Physical Surface("Surface", 1) = {1};
 //+
-Physical Point("Point", 11) = {3, 2, 1, 4};
+//Physical Point("Point", 11) = {3, 2, 1, 4};
 //+
-Physical Curve("Line", 10) = {4, 1, 2, 3};
+Physical Curve("Line", 2) = {4, 1, 2, 3};
