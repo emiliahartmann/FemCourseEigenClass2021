@@ -177,11 +177,36 @@ void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
     // Second, you should clear the matrices you're going to compute
     ek.setZero();
     ef.setZero();
-
+    
     //+++++++++++++++++
     // Please implement me
     std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
     DebugStop();
+
+    IntRule *intrule = this->GetIntRule();
+    int maxIntOrder = 5;
+    intrule->SetOrder(maxIntOrder);
+
+    IntPointData data;
+    this->InitializeIntPointData(data);
+    int nintpoints = intrule->NPoints();
+
+    // double weight = 0.;
+
+    for (int nint = 0; nint < nintpoints; nint++) {
+        // intrule->Point(nint, data.ksi, weight);
+        // this->ComputeRequiredData(data, data.ksi);
+        // weight *= fabs(data.detjac);
+
+        // ou
+
+        intrule->Point(nint, data.ksi, data.weight);
+        this->ComputeRequiredData(data, data.ksi);
+        material -> Contribute(data, data.weight, ek, ef);
+    }
+
+
+
     //+++++++++++++++++
 }
 
