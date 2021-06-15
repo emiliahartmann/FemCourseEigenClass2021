@@ -44,11 +44,11 @@ int main (){
         val1.setZero();
         val2.setZero();
         L2Projection *bc_linha = new L2Projection(0, 2, proj, val1, val2);
-        L2Projection *bc_point = new L2Projection(0, 11, proj, val1, val2);
-        std::vector<MathStatement*>mathvec (12);
+        L2Projection *bc_point = new L2Projection(0, 3, proj, val1, val2);
+        std::vector<MathStatement*>mathvec (3);
         mathvec[1] = mat1;
         mathvec[2] = bc_linha;
-        mathvec[11] = bc_point;
+        mathvec[3] = bc_point;
         //= {0, mat1, bc_linha, bc_point}; // o meu material tem id igual a 1
         cmesh.SetMathVec(mathvec); 
         cmesh.AutoBuild();

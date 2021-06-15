@@ -34,6 +34,6 @@ Curve Loop(2) = {2, -1, -4, 3};
 //+
 Physical Surface("Surface", 1) = {1};
 //+
-//Physical Point("Point", 11) = {3, 2, 1, 4};
+Physical Point("Point", 3) = {3, 2, 1, 4};
 //+
 Physical Curve("Line", 2) = {4, 1, 2, 3};

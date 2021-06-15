@@ -179,17 +179,17 @@ void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
     ef.setZero();
     
     //+++++++++++++++++
-    // Please implement me
-    std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-    DebugStop();
+    // // Please implement me
+    // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+    // DebugStop();
 
     IntRule *intrule = this->GetIntRule();
     int maxIntOrder = 5;
     intrule->SetOrder(maxIntOrder);
 
-    IntPointData data;
-    this->InitializeIntPointData(data);
-    int nintpoints = intrule->NPoints();
+    IntPointData data;                      // Lendo a classe IntPointData
+    this->InitializeIntPointData(data);     // Inicializando as variaveis da classe com a funcao InitializeIntPointData
+    int nintpoints = intrule->NPoints();    // Para retornar os pontos de integracao
 
     // double weight = 0.;
 
@@ -200,9 +200,9 @@ void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
 
         // ou
 
-        intrule->Point(nint, data.ksi, data.weight);
-        this->ComputeRequiredData(data, data.ksi);
-        material -> Contribute(data, data.weight, ek, ef);
+        intrule->Point(nint, data.ksi, data.weight);        // Lendo as coordenadas e pesos dos pontos de integracao
+        this->ComputeRequiredData(data, data.ksi);          // Preenche a integracao dos pontos no objeto
+        material -> Contribute(data, data.weight, ek, ef);  // Integral sobre os elementos
     }
 
 

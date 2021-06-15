@@ -147,8 +147,22 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
 
     //+++++++++++++++++
     // Please implement me
-    std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-    DebugStop();
+    // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+    // DebugStop();
+    //
+    // Fazer o calculo da matriz de rigidez e da carga de forca aqui 
+    //
+    //double val=0.; 
+    for (int i = 0; i < nshape; i++) {
+        for (int j = 0; j < nshape; j++) {
+            for (int d=0; d < dim; d++) {
+                EK(i,j) = dphi(d,i)*dphi(d,j)*data.detjac*weight;
+            }
+        std::cout << "EK( " << i << "," << j << " ) " << EK(i,j) << " " << std::endl;  
+        }
+    //    EF[i] = phi[i]*data.x
+    } 
+    //
     //+++++++++++++++++
 }
 
