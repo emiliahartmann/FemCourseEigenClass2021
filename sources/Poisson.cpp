@@ -121,10 +121,29 @@ void Poisson::ContributeError(IntPointData &data, VecDouble &u_exact, MatrixDoub
 
 void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, MatrixDouble &EF) const {
     VecDouble phi = data.phi;
-    MatrixDouble dphi = data.dphidx;
-    MatrixDouble axes = data.axes;
+    MatrixDouble dphi = data.dphidx; // dphidx = dphidaxis na vdd
+    MatrixDouble axes = data.axes;   // por isso que precisamos reescrever os dphidx por dphi2 e dphi3
     MatrixDouble dphi2, dphi3;
 
+    // versao do professor
+    // dphi2 = data.axes.transpose()*data.dphidx;
+    // dphi3 = dphi2.transpose();
+    // MatrixDouble perm(3, 3);
+    // perm = this->GetPermeability();
+    // double res = 0.; // vamos fazer uma aproximacao aqui com menos laplaciano de u = fx (eq de Poisson)
+    // isso pode ser feito colocando um ponteiro que calcula fx 
+
+    // auto force = this->GetForceFunction();
+    // if(force)
+    // {
+    //     VecDouble resloc(nstate);
+    //     force(data.x, resloc);
+    //     res = resloc[0];
+    // }
+    // EF += phi*(res*weight);
+    // EK += dphi3*perm*dphi2*weight;
+
+    // versao a Emilia
     this->Axes2XYZ(dphi, dphi2, axes);
     dphi3 = dphi2.transpose();
 
@@ -136,34 +155,30 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
     std::function<void(const VecDouble &co, VecDouble & result) > force;
 
     perm = this->GetPermeability();
+    double resloc = 0.;
     force = this->GetForceFunction();
 
-    VecDouble res(nstate);
+    
     if(force)
     {
+        VecDouble res(nstate);
         force(data.x, res);
+        resloc = res[0];
     }
 
-
-    //+++++++++++++++++
-    // Please implement me
-    // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-    // DebugStop();
-    //
+    //  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Fazer o calculo da matriz de rigidez e da carga de forca aqui 
-    //
-    //double val=0.; 
     for (int i = 0; i < nshape; i++) {
         for (int j = 0; j < nshape; j++) {
             for (int d=0; d < dim; d++) {
-                EK(i,j) = dphi(d,i)*dphi(d,j)*data.detjac*weight;
+                EK(i,j) += dphi2(d,i)*dphi3(d,j)*weight*perm(i,j);
             }
-        std::cout << "EK( " << i << "," << j << " ) " << EK(i,j) << " " << std::endl;  
+        // std::cout << "EK( " << i << "," << j << " ) " << EK(i,j) << " " << std::endl;  
         }
-    //    EF[i] = phi[i]*data.x
+        EF(i,0) += phi(i,0)*weight*resloc;
     } 
-    //
-    //+++++++++++++++++
+
+    //  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
 
 void Poisson::PostProcessSolution(const IntPointData &data, const int var, VecDouble &Solout) const {
@@ -180,15 +195,18 @@ void Poisson::PostProcessSolution(const IntPointData &data, const int var, VecDo
         {
             std::cout << " Var index not implemented " << std::endl;
             DebugStop();
+
         }
 
         case 1: //ESol
         {
             //+++++++++++++++++
             // Please implement me
-            std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-            return;
-            DebugStop();
+            // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+            // return;
+            // DebugStop();
+            Solout.resize(solsize);
+            Solout = sol;
             //+++++++++++++++++
         }
             break;
@@ -197,10 +215,12 @@ void Poisson::PostProcessSolution(const IntPointData &data, const int var, VecDo
         {
             //+++++++++++++++++
             // Please implement me
-            std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-            return;
-            DebugStop();
-            //+++++++++++++++++
+            // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+            // return;
+            // DebugStop();
+            Solout.resize(rows, cols);
+            Solout = gradu;
+            //+++++++++++++++++           
         }
             break;
         case 3: //EFlux

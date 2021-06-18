@@ -49,7 +49,7 @@ void Geom0d::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Matr
     int nrow = NodeCo.rows();
     int ncol = nCorners;
 
-    gradx.resize(nrow, 1);
+    // gradx.resize(nrow, 1);
     gradx.setZero();
 
     VecDouble phi(1);

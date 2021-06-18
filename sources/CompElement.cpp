@@ -168,7 +168,8 @@ void CompElement::Convert2Axes(const MatrixDouble &dphi, const MatrixDouble &jac
 }
 
 void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
-    // First thing you need is the variational formulation
+    // First thing you need is the variational formulation;
+    // Without the material, you cant do the contribute calculation; Youll get an error.
     MathStatement *material = this->GetStatement();
     if (!material) {
         std::cout << "Error at CompElement::CalcStiff" << std::endl;
@@ -191,24 +192,54 @@ void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
     this->InitializeIntPointData(data);     // Inicializando as variaveis da classe com a funcao InitializeIntPointData
     int nintpoints = intrule->NPoints();    // Para retornar os pontos de integracao
 
-    // double weight = 0.;
+    double weight = 0.;
 
     for (int nint = 0; nint < nintpoints; nint++) {
-        // intrule->Point(nint, data.ksi, weight);
-        // this->ComputeRequiredData(data, data.ksi);
-        // weight *= fabs(data.detjac);
-
-        // ou
-
-        intrule->Point(nint, data.ksi, data.weight);        // Lendo as coordenadas e pesos dos pontos de integracao
-        this->ComputeRequiredData(data, data.ksi);          // Preenche a integracao dos pontos no objeto
-        material -> Contribute(data, data.weight, ek, ef);  // Integral sobre os elementos
+        intrule->Point(nint, data.ksi, weight);     // Lendo as coordenadas e pesos dos pontos de integracao
+        this->ComputeRequiredData(data, data.ksi);  // Preenche a integracao dos pontos no objeto
+        weight *= fabs(data.detjac);
+                
+        material -> Contribute(data, weight, ek, ef);  // Integral sobre os elementos
     }
-
-
-
     //+++++++++++++++++
+
+//     // Versao do professor
+//       MathStatement *material = this->GetStatement(); // variational formulation
+//     if (!material) {
+//         std::cout << "Error at CompElement::CalcStiff" << std::endl;
+//         return;
+//     }
+
+//     int nshape = NShapeFunction();
+//     int nstate = material->NState();
+//     ek.resize(nstate*nshape, nstate*nshape);
+//     ef.resize(nstate*nshape, 1);
+    
+//     ek.setZero();
+//     ef.setZero();
+    
+//     IntPointData data;                      // Lendo a classe IntPointData
+//     this->InitializeIntPointData(data);     // Inicializando as variaveis da classe com a funcao InitializeIntPointData
+//     double weight = 0.;
+
+//     IntRule *intrule = this->GetIntRule();
+//     int intrulepoints = intrule->NPoints();    // Para retornar os pontos de integracao
+
+//     // int maxIntOrder = 5;
+//     // intrule->SetOrder(maxIntOrder);
+    
+//     for (int int_ind = 0; int_ind < intrulepoints; int_ind++) {
+//         intrule->Point(int_ind, data.ksi, weight); // Lendo as coordenadas e pesos dos pontos de integracao
+
+//         this->ComputeRequiredData(data, data.ksi); // Preenche a integracao dos pontos no objeto
+//         weight *= fabs(data.detjac);
+
+//         material -> Contribute(data, weight, ek, ef);  // Integral sobre os elementos  
+//      }
+//     // FALTA FAZER UM DELETE DA INTEGRACAO: intrule - como faz?
+//     // delete intrule // ASSIM ???
 }
+
 
 void CompElement::EvaluateError(std::function<void(const VecDouble &loc, VecDouble &val, MatrixDouble &deriv) > fp, VecDouble &errors) const {
     MathStatement * material = this->GetStatement();

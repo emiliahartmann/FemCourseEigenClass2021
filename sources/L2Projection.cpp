@@ -66,18 +66,37 @@ void L2Projection::Contribute(IntPointData &data, double weight, MatrixDouble &E
 
     //+++++++++++++++++
     // Please implement me
-    std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-    DebugStop();
+    // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+    // DebugStop();
     switch (this->GetBCType()) {
 
         case 0:
-        {
+        {   // Para condicao de contorno Dirichlet
+            EF += (MathStatement::gBigNumber*result[0]*weight)*data.phi;
+            EK += (MathStatement::gBigNumber*weight)*data.phi*data.phi.transpose();  
+
+            // // forma que estava comentada
+            // for (int i = 0; i < nstate; i++) {      // i=iv
+            //     for (int j = 0; j < nshape; j++) {  // j=in
+            //         EK(nstate*j+i,0) += MathStatement::gBigNumber*result[i]*data.phi[j]*weight;
+            //         for (int jn = 0; jn < nshape; jn++) {
+            //             EK(nstate*j+i,nstate*jn+i) += MathStatement::gBigNumber*data.phi[j]*data.phi[jn]*weight;
+            //         }                    
+            //     }  
+            // }     
             // Your code here
             break;
         }
 
         case 1:
-        {
+        {   // Para condicao de contorno Neumann
+            EF += (result[0]*weight)*data.phi;
+            // // forma que estava comentada
+            // for (int i = 0; i < nstate; i++){
+            //     for (int j = 0; j < nshape; j++){
+            //         EF(state*j+i, 0) += Val2()(i, 0) * data.phi[j]*weight;
+            //     }
+            // }
             // Your code here
             break;
         }

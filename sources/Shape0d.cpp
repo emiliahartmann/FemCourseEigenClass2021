@@ -8,10 +8,18 @@
 //#include "TMatrix.h"
 
 void Shape0d::Shape(const VecDouble& xi, VecInt& orders, VecDouble& phi, MatrixDouble& dphi) {
-    int n = NShapeFunctions(orders);
-    
-    phi[0] = 1.;
+    // if(xi.size() != Dimension) DebugStop();
+    // if(orders.size() != nSides) DebugStop();
 
+    int nshape = NShapeFunctions(orders);
+    // int nsides = nSides;
+
+    // phi.resize(nshape);
+    // dphi.resize(1,nshape);
+    // orders.resize(nSides); 
+
+    phi[0] = 1.;
+    // dphi(0,0) = 0.;
 }
 
 int Shape0d::NShapeFunctions(int side, int order) {

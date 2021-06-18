@@ -40,7 +40,7 @@ void Geom1d::Shape(const VecDouble &xi, VecDouble &phi, MatrixDouble &dphi) {
 
 void Geom1d::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     if(xi.size() != Dimension) DebugStop();
-    // if(x.size() < NodeCo.rows()) DebugStop(); // x.size() != NodeCo.rows()
+    if(x.size() < NodeCo.rows()) DebugStop(); // x.size() != NodeCo.rows()
     if(NodeCo.cols() !=nCorners) DebugStop();
 
     int nrow=NodeCo.rows();
@@ -63,24 +63,34 @@ void Geom1d::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Matr
     if(NodeCo.cols() !=nCorners) DebugStop();
 
     int nrow=NodeCo.rows();
-    int ncol=NodeCo.cols();
+    int ncol=NodeCo.cols(); // x, y, z 
 
-    gradx.resize(nrow, Dimension);
+    if (gradx.cols()<nrow) gradx.resize(nrow,1);
+//    gradx.resize(nrow, Dimension);
     gradx.setZero();
-    x.resize(nrow);
+    // x.resize(nrow);
     x.setZero();
 
-    VecDouble phi(nCorners); // porque nCorners == 2
+    VecDouble phi(nCorners); // porque nCorners == 2 --  numero de funcoes de forma
     MatrixDouble dphi(Dimension, nCorners);
     Shape(xi, phi, dphi);
-//    X(xi, NodeCo, x);
-
-    for(int i = 0; i < ncol; i++){
-        for(int j = 0; j < nrow; j++){
+    
+    for (int j = 0; j < nrow; j++) {
+        for (int i = 0; i < nCorners; i++) {
             x[j] += NodeCo(j,i) * phi[i];
-            gradx(j, 0) += NodeCo(j, i) * dphi(0, i);       
-        } 
+            gradx(j,0) += NodeCo(j, i) * dphi(0, i);
+        }
     }
+
+
+// //    X(xi, NodeCo, x);
+
+//     for(int i = 0; i < ncol; i++){
+//         for(int j = 0; j < nrow; j++){
+//             x[j] += NodeCo(j,i) * phi[i];
+//             gradx(j, 0) += NodeCo(j, i) * dphi(0, i);       
+//         } 
+//     }
 
 }
 

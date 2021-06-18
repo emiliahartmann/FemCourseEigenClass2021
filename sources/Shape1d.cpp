@@ -59,7 +59,7 @@ void Shape1d::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, MatrixD
             {
             phi[2] = 1. - csi * csi;
          
-            dphi(0, 2) =  - 2. * csi;
+            dphi(0,2) =  - 2. * csi;
             }
         else if(orders[ip] != 1) DebugStop();
     }
