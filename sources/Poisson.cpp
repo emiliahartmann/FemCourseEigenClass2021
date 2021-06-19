@@ -126,57 +126,66 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
     MatrixDouble dphi2, dphi3;
 
     // versao do professor
-    // dphi2 = data.axes.transpose()*data.dphidx;
-    // dphi3 = dphi2.transpose();
-    // MatrixDouble perm(3, 3);
-    // perm = this->GetPermeability();
-    // double res = 0.; // vamos fazer uma aproximacao aqui com menos laplaciano de u = fx (eq de Poisson)
-    // isso pode ser feito colocando um ponteiro que calcula fx 
-
-    // auto force = this->GetForceFunction();
-    // if(force)
-    // {
-    //     VecDouble resloc(nstate);
-    //     force(data.x, resloc);
-    //     res = resloc[0];
-    // }
-    // EF += phi*(res*weight);
-    // EK += dphi3*perm*dphi2*weight;
-
-    // versao a Emilia
-    this->Axes2XYZ(dphi, dphi2, axes);
+    int nstate = this->NState();
+    dphi2 = data.axes.transpose()*data.dphidx;
     dphi3 = dphi2.transpose();
 
-    int nshape = phi.size();
-    int nstate = this->NState();
-    int dim = dphi.rows();
-
     MatrixDouble perm(3, 3);
-    std::function<void(const VecDouble &co, VecDouble & result) > force;
-
     perm = this->GetPermeability();
-    double resloc = 0.;
-    force = this->GetForceFunction();
+    double res = 0.; // vamos fazer uma aproximacao aqui com menos laplaciano de u = fx (eq de Poisson)
+                     // isso pode ser feito colocando um ponteiro que calcula fx 
 
-    
+    auto force = this->GetForceFunction();
     if(force)
     {
-        VecDouble res(nstate);
-        force(data.x, res);
-        resloc = res[0];
+        VecDouble resloc(nstate);
+        force(data.x, resloc);
+        res = resloc[0];
     }
 
-    //  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // Fazer o calculo da matriz de rigidez e da carga de forca aqui 
-    for (int i = 0; i < nshape; i++) {
-        for (int j = 0; j < nshape; j++) {
-            for (int d=0; d < dim; d++) {
-                EK(i,j) += dphi2(d,i)*dphi3(d,j)*weight*perm(i,j);
-            }
-        // std::cout << "EK( " << i << "," << j << " ) " << EK(i,j) << " " << std::endl;  
-        }
-        EF(i,0) += phi(i,0)*weight*resloc;
-    } 
+    std::cout << "perm/n" << perm << std::endl;
+    std::cout << "dphi2/n" << dphi2 << std::endl;    
+    std::cout << "dphi3/n" << dphi3 << std::endl;
+    std::cout << "res/n" << res << std::endl;    
+
+    EF += phi*(res*weight);
+    EK += dphi3*perm*dphi2*weight;
+
+    // versao a Emilia
+    // this->Axes2XYZ(dphi, dphi2, axes);
+    // dphi3 = dphi2.transpose();
+
+    // int nshape = phi.size();
+    // int nstate = this->NState();
+    // int dim = dphi.rows();
+
+    // MatrixDouble perm(3, 3);
+    // std::function<void(const VecDouble &co, VecDouble & result) > force;
+
+    // perm = this->GetPermeability();
+    // double resloc = 0.;
+    // force = this->GetForceFunction();
+
+    
+    // if(force)
+    // {
+    //     VecDouble res(nstate);
+    //     force(data.x, res);
+    //     resloc = res[0];
+    // }
+
+    // //  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // // Fazer o calculo da matriz de rigidez e da carga de forca aqui 
+    // for (int i = 0; i < nshape; i++) {
+    //     for (int j = 0; j < nshape; j++) {
+    //         for (int d=0; d < dim; d++) {
+    //             EK(i,j) += dphi2(d,i)*dphi3(d,j)*weight*perm(i,j);
+    //         }
+    //         EF(i,0) += phi(i,0)*weight*resloc;
+    //     // std::cout << "EK( " << i << "," << j << " ) " << EK(i,j) << " " << std::endl;  
+    //     }
+        
+    // } 
 
     //  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }

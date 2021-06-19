@@ -18,9 +18,9 @@ Line(4) = {4, 1};
 Curve Loop(1) = {3, 2, -1, -4};
 //+
 Plane Surface(1) = {1};
-//Transfinite Curve{1,2,3,4} = 4 Using Progression 1;
-//Transfinite Surface{1};
-//Recombine Surface{1};
+Transfinite Curve{1,2,3,4} = 2 Using Progression 1;
+Transfinite Surface{1};
+Recombine Surface{1};
 //+
 Curve Loop(2) = {2, -1, -4, 3};
 //+

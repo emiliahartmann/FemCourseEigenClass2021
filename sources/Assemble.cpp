@@ -46,10 +46,15 @@ void Assemble::OptimizeBandwidth() {
 }
 
 void Assemble::Compute(MatrixDouble &globmat, MatrixDouble &rhs) {
-    int nelem = cmesh->GetGeoMesh()->NumElements();
+    int nelem = cmesh->GetGeoMesh()->NumElements();     // int64_t: qual a diferenca?
     int ne = this->NEquations();
 
-    int IG = 0, JG = 0;
+    globmat.resize(ne, ne);
+    globmat.setZero();
+    rhs.resize(ne, 1);
+    rhs.setZero();
+
+    // int IG = 0, JG = 0;
 
     for (int el = 0; el < nelem; el++) {
         CompElement *cel = cmesh->GetElement(el);
@@ -66,9 +71,31 @@ void Assemble::Compute(MatrixDouble &globmat, MatrixDouble &rhs) {
 //        ek.Print();
 //        ef.Print();
         //+++++++++++++++++
-        // Please implement me
-        std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
-        DebugStop();
+        // // Please implement me
+        // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
+        // DebugStop();
+
+        int ndof = cel->NDOF();
+        VecInt iglob(ne, 1);
+        int ni = 0;
+        for (int i = 0; i < ndof; i++){
+            int dofindex = cel->GetDOFIndex(i);
+            DOF dof = cmesh->GetDOF(dofindex);
+            for (int j = 0; j < dof.GetNShape()*dof.GetNState(); j++){
+                iglob[ni] = dof.GetFirstEquation() + j;
+                ni++;
+            } //j
+        } //i
+
+        for (int i = 0; i < ek.rows(); i++){
+            int IG = iglob[i];
+            rhs(IG, 0) += ef(i, 0);
+
+            for (int j = 0; j < ek.rows(); j++){
+                int JG = iglob[j];
+                globmat(IG, JG) += ek(i, j);
+            } //j
+        } //i
     //+++++++++++++++++
     }
 }

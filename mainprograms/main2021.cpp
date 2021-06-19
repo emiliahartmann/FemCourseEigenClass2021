@@ -18,7 +18,9 @@
 #include "CompMesh.h"
 #include "Poisson.h"
 #include "L2Projection.h"   // vai ser usado para função de contorno
-//#include "CompElement.h"
+#include "CompElement.h"
+#include "GeoElement.h"
+#include "Assemble.h"
 //#include "MathStatement.h"
 
 using std::cout;
@@ -70,17 +72,18 @@ int main (){
         plotmesh.PrintGMeshVTK(&gmesh, "malha.vtk");
 
     CompMesh cmesh(&gmesh);  // criar uma malha computacional
-        MatrixDouble perm(2,2);
+        MatrixDouble perm(3,3);
         perm.setZero();
         perm(0,0) = 1.;
         perm(1,1) = 1.;
+        perm(2,2) = 1.;
         Poisson *mat1 = new Poisson(1, perm);
 
         MatrixDouble proj(1,1), val1(1,1), val2(1,1);
         proj.setZero();
         val1.setZero();
-        // val2.setZero();
-        val2.setOnes();
+        val2.setZero();
+        // val2.setOnes();
         L2Projection *bc_linha = new L2Projection(0, 2, proj, val1, val2); // 0 -> 1 para condicao de Neumann
         L2Projection *bc_point = new L2Projection(0, 3, proj, val1, val2);
         std::vector<MathStatement*>mathvec (4);
@@ -92,8 +95,46 @@ int main (){
         cmesh.SetMathVec(mathvec); 
         cmesh.AutoBuild();
         cmesh.Resequence();
-        cmesh.Solution() (100,0) = 1.;    // apenas para teste, excluir esta linha depois -- para visualizar as funcoes de forma
+        cmesh.Solution() (0,0) = 1.;    // apenas para teste, excluir esta linha depois -- para visualizar as funcoes de forma
         plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_malha.vtk"); 
+        
+
+        // Calculo da matriz de rigidez: mostrado em aula pelo professor
+    // for(auto cel:cmesh.GetElementVec())
+    // {
+    //     MatrixDouble ek, ef;
+    //     auto gel = cel->GetGeoElement();
+    //     auto nnodes = gel->NNodes();
+    //     VecInt nodeindices;
+    //     // IOFormat CommaInitFmt(StreamPresicion, DontAlignCols, ", ", ", ", "", "", "", "");
+    //     // IOFormat HeavyFmt(FullPresicion, 0, ", ", "\n", "{", "}", "{", "}");
+    //     gel->GetNodes(nodeindices);
+    //     std::cout << "element index " << cel->GetIndex() << std::endl;        
+    //     std::cout << "coord = { ";
+    //     for(auto in=0; in<nnodes; in++){
+    //         GeoNode &node = gmesh.Node(nodeindices[in]);
+    //         // std::cout << "{ " << node.Co().format(CommaInitFmt) << "}";
+    //         std::cout << "{ " << node.Co() << "}";           
+    //         if(in < nnodes-1) std::cout << ",";
+    //     } 
+    //     std::cout << "};\n";
+    //     cel->CalcStiff(ek,ef);
+    //     // std::cout << "ek = " << ek.format(HeavyFmt) << ";\n";
+    //     // std::cout << "ef = " << ef.format(HeavyFmt) << ";\n";
+    //     // std::cout << "ek = " << ek << ";\n";
+    //     // std::cout << "ef = " << ef << ";";        
+    // }    
+
+    //  CalcStiff by Jefferson
+    Analysis Analysis(&cmesh);
+    Analysis.RunSimulation();
+
+
+    // Assemblagem
+    Assemble assemble(&cmesh);
+    auto ne = assemble.NEquations();
+    MatrixDouble globmat(ne, ne), rhs(ne, 1);
+    assemble.Compute(globmat, rhs);
     return 0;
 
 }

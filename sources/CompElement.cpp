@@ -199,8 +199,13 @@ void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
         this->ComputeRequiredData(data, data.ksi);  // Preenche a integracao dos pontos no objeto
         weight *= fabs(data.detjac);
                 
-        material -> Contribute(data, weight, ek, ef);  // Integral sobre os elementos
+        material->Contribute(data, weight, ek, ef);  // Integral sobre os elementos
+
+        std::cout << "ek/n" << ek << std::endl;
+	    std::cout << "ef/n" << ef << std::endl;
     }
+
+
     //+++++++++++++++++
 
 //     // Versao do professor
