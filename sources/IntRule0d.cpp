@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-#include <iostream> 
 #include "IntRule0d.h"
+///\cond
+#include <iostream> 
 #include <vector>
 #include <math.h>
 #include <cmath>
-#include "tpanic.h"
+///\endcond
 using namespace std;
 
 

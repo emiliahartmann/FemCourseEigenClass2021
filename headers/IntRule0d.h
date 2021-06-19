@@ -9,8 +9,10 @@
 #ifndef __FemSC__IntRule0d__
 #define __FemSC__IntRule0d__
 
+///\cond
 #include <cmath>
 #include <stdio.h>
+///\endcond
 #include "IntRule.h"
 
 /**

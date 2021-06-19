@@ -5,10 +5,11 @@
 //  Created by Philippe Devloo on 17/04/18.
 //
 
+///\cond
 #include <stdio.h>
 #include <fstream>
+///\endcond
 #include "ReadGmsh.h"
-#include "tpanic.h"
 
 #include "GeoElementTemplate.h"
 #include "Geom0d.h"

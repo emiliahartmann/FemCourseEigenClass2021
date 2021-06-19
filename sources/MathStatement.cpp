@@ -23,30 +23,14 @@ MathStatement &MathStatement::operator=(const MathStatement &copy) {
 MathStatement::~MathStatement() {
 }
 
-void MathStatement::Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv, bool colMajor) const {
-    MatrixDouble axes(axesv.rows(), axesv.cols());
-    for (int r = 0; r < axes.rows(); r++) {
-        for (int c = 0; c < axes.cols(); c++) {
-            axes(r, c) = axesv(r, c);
-        }
-    }
-
-    if (colMajor) {
+void MathStatement::Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv) const {
         MatrixDouble axesT;
-        axesT = axes.transpose();
+        axesT = axesv.transpose();
 
         if (dudx.rows() != axesT.rows() || dudx.cols() != dudaxes.cols()) {
             dudx.resize(axesT.rows(), dudaxes.cols());
         }
-        dudx.setZero();
         dudx = axesT*dudaxes;
-//        axesT.Multiply(dudaxes, dudx, 0);
-    } else {
-        dudx.resize(dudaxes.rows(), axes.cols());
-        dudx.setZero();
-        dudx = dudaxes*axes;
-//        dudaxes.Multiply(axes, dudx, 0);
-    }
 }
 
 void MathStatement::Print(std::ostream &out) {

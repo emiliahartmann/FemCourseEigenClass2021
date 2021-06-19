@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 
+///\cond
 #include <iostream> 
+///\endcond
 #include "IntRule1d.h"
 #include "IntRuleQuad.h"
-#include "tpanic.h"
 
 IntRuleQuad::IntRuleQuad(){
 }

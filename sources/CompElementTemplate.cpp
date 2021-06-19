@@ -4,19 +4,15 @@
  * and open the template in the editor.
  */
 #include "CompElementTemplate.h"
-#include "CompElement.h"
 #include "CompMesh.h"
-#include "DataTypes.h"
 #include "CompMesh.h"
 #include "Shape0d.h"
 #include "Shape1d.h"
 #include "ShapeQuad.h"
 #include "ShapeTetrahedron.h"
 #include "ShapeTriangle.h"
-#include "GeoElement.h"
-#include "MathStatement.h"
 #include "GeoElementSide.h"
-#include "DOF.h"
+#include "MathStatement.h"
 
 template<class Shape>
 CompElementTemplate<Shape>::CompElementTemplate() : dofindexes(0) {
@@ -165,7 +161,7 @@ int64_t CompElementTemplate<Shape>::GetDOFIndex(int i) const {
 }
 
 template<class Shape>
-int CompElementTemplate<Shape>::NDOF() const {
+int64_t CompElementTemplate<Shape>::NDOF() const {
     return dofindexes.size();
 }
 

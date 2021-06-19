@@ -5,16 +5,17 @@
 //  Created by Philippe Devloo on 17/04/18.
 //
 
-#include <stdio.h>
 #include "PostProcess.h"
 #include "VTKGeoMesh.h"
 #include "GeoMesh.h"
 #include "CompMesh.h"
 #include "GeoElement.h"
 #include "CompElement.h"
-#include "tpanic.h"
+///\cond
 #include <fstream>
 #include <sstream>
+#include <stdio.h>
+///\endcond
 
 static int GetVTK_ElType(MElementType ElType)
 {    

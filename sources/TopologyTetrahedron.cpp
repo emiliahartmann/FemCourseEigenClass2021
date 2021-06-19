@@ -5,7 +5,6 @@
  */
 
 #include "TopologyTetrahedron.h"
-#include "tpanic.h"
 
 // Number of sides associated with tetrahedron elements elements
 const int TopologyTetrahedron::nSides;

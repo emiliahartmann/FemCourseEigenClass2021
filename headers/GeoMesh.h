@@ -9,7 +9,10 @@
 #define GeoMesh_h
 
 #include "GeoNode.h"
+///\cond
 #include <string>
+///\endcond
+
 class CompMesh;
 class GeoElement;
 
@@ -53,19 +56,19 @@ public:
     void SetNumElements(int numelements);
     
     // Number of nodes of the mesh
-    int NumNodes() const;
+    int64_t NumNodes() const;
     
     // Return the number of elements
-    int NumElements() const;
+    int64_t NumElements() const;
     
     // Return the node associated with a index
-    const GeoNode &Node(int node) const;
+    const GeoNode &Node(int64_t node) const;
     
     // Return the node associated with a index
-    GeoNode &Node(int node);
+    GeoNode &Node(int64_t node);
     
     // Set computational element pointer
-    void SetElement(int elindex, GeoElement *gel);
+    void SetElement(int64_t elindex, GeoElement *gel);
     
     // Set Dimension
     void SetDimension(int dim){fDim = dim;}
@@ -74,7 +77,7 @@ public:
     int Dimension() const {return fDim;}
 
     // Return the elements associated with a index
-    GeoElement *Element(int elindex) const;
+    GeoElement *Element(int64_t elindex) const;
     
     // Build the connectivity of the grid
     void BuildConnectivity();

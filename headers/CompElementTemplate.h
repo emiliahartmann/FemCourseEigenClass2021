@@ -9,7 +9,6 @@
 #define CompElementTemplate_h
 
 #include "CompElement.h"
-#include "IntRule.h"
 #include "DOF.h"
 
 /**
@@ -69,7 +68,7 @@ public:
     virtual int64_t GetDOFIndex(int i) const;
     
     // Return the number of degree of freedom
-    virtual int NDOF() const;
+    virtual int64_t NDOF() const;
     
     // Return the number of shape functions stored in the DOF data structure
     virtual int NShapeFunctions(int doflocindex) const;

@@ -5,7 +5,9 @@
  */
 
 #include "TopologyTriangle.h"
+///\cond
 #include <iostream>
+///\endcond
 
 // Number of sides associated with triangle elements elements
 const int TopologyTriangle::nSides;

@@ -8,7 +8,6 @@
 #ifndef Shape0d_h
 #define Shape0d_h
 
-#include "DataTypes.h"
 #include "Topology0d.h"
 
 /**

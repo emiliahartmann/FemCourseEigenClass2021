@@ -1,14 +1,13 @@
 
-
+///\cond
 #include <iostream>
 #include <math.h>
-#include "DataTypes.h"
+///\endcond
+
 #include "Geom1d.h"
 #include "GeomQuad.h"
 #include "GeomTriangle.h"
 #include "GeomTetrahedron.h"
-#include "tpanic.h"
-#include "DataTypes.h"
 
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>

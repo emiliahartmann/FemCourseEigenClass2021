@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 
+///\cond
 #include <iostream> 
+///\endcond
 #include "IntRuleTriangle.h"
-#include "tpanic.h"
 
 IntRuleTriangle::IntRuleTriangle(){
 

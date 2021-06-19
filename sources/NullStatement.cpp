@@ -5,9 +5,11 @@
  */
 
 #include "NullStatement.h"
-#include "PostProcess.h"
+
+///\cond
 #include <functional>
 #include <string.h>
+///\endcond
 
 NullStatement::NullStatement() {
 }

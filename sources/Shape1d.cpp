@@ -4,11 +4,10 @@
 //
 //  Created by Philippe Devloo on 03/04/18.
 //
-
+///\cond
 #include <cmath>
 #include <math.h>
-#include "tpanic.h"
-#include "DataTypes.h"
+///\endcond
 #include "Shape1d.h"
 
 void Shape1d::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, MatrixDouble &dphi){

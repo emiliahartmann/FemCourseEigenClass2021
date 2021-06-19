@@ -8,9 +8,11 @@
 #ifndef ReadGmsh_h
 #define ReadGmsh_h
 
+///\cond
 #include <string>
 #include <vector>
 #include <map>
+///\endcond
 #include "GeoMesh.h"
 
 /**

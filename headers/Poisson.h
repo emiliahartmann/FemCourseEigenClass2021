@@ -9,10 +9,9 @@
 #define Poisson_h
 
 #include "MathStatement.h"
-#include "DataTypes.h"
-#include  "IntPointData.h"
+///\cond
 #include <functional>
-
+///\endcond
 /**
  @brief Implements a poisson problem in 1-, 2- or 3-dimensions
  @ingroup mathstatement

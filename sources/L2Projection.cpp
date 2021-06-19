@@ -5,9 +5,9 @@
  */
 
 #include "L2Projection.h"
-#include "PostProcess.h"
-#include "tpanic.h"
+///\cond
 #include <string.h>
+///\endcond
 
 L2Projection::L2Projection() {
 }

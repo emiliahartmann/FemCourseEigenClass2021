@@ -67,9 +67,7 @@ void Assemble::Compute(MatrixDouble &globmat, MatrixDouble &rhs) {
         ef.setZero();
 
         cel->CalcStiff(ek, ef);
-//        
-//        ek.Print();
-//        ef.Print();
+        
         //+++++++++++++++++
         // // Please implement me
         // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;

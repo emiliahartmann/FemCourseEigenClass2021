@@ -9,7 +9,6 @@
 #define IntPointData_h
 
 #include "DataTypes.h"
-#include "tpanic.h"
 
 /** @brief Container for data associated with an integration point
     @ingroup mathstatement
@@ -51,7 +50,7 @@ public:
         {
             DebugStop();
         }
-        int nstate = coefs.size()/phi.size();
+        auto nstate = coefs.size()/phi.size();
         solution.resize(nstate);
         solution.setZero();
         dsoldksi.resize(dphidx.rows(), nstate);
@@ -59,13 +58,13 @@ public:
         dsoldx.setZero();
         dsoldksi.setZero();
          
-        int dim = dphidx.rows();
-        int nphi = phi.size();
-        for (int iphi=0; iphi<nphi; iphi++) {
+        auto dim = dphidx.rows();
+        auto nphi = phi.size();
+        for (auto iphi=0; iphi<nphi; iphi++) {
             double phival = phi[iphi];
-            for (int istate=0; istate<nstate; istate++) {
+            for (auto istate=0; istate<nstate; istate++) {
                 solution[istate] += phival*coefs[iphi*nstate+istate];
-                for (int d=0; d < dim; d++) {
+                for (auto d=0; d < dim; d++) {
                     dsoldksi(d,istate) += coefs[iphi*nstate+istate]*dphidksi(d,iphi);
                     dsoldx(d,istate) += coefs[iphi*nstate+istate]*dphidx(d,iphi);
                 }

@@ -9,8 +9,9 @@
 #ifndef __FemSC__IntRuleQuad__
 #define __FemSC__IntRuleQuad__
 
+///\cond
 #include <stdio.h>
-#include "DataTypes.h"
+///\endcond
 #include "IntRule.h"
 
 /**

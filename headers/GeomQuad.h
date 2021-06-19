@@ -10,7 +10,10 @@
 
 #include "TopologyQuad.h"
 #include "GeoElementSide.h"
+
+///\cond
 #include <array>
+///\endcond
 
 /**
  @brief Geometric map of a quadrilateral element

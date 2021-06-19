@@ -6,9 +6,11 @@
 //
 //
 
+///\cond
 #include <stdio.h>
+///\endcond
 #include "IntRuleTetrahedron.h"
-#include "tpanic.h"
+
 
 static int ComputingSymmetricCubatureRule(int order, MatrixDouble &Points, VecDouble &Weights);
 void TransformBarycentricCoordInCartesianCoord(long double baryvec[], long double weightvec[], MatrixDouble &Points, VecDouble &Weight);

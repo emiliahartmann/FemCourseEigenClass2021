@@ -8,11 +8,11 @@
 #ifndef CompElement_h
 #define CompElement_h
 
-#include "DataTypes.h"
 #include "IntRule.h"
-//#include "IntPointData.h"
-//#include "PostProcess.h"
+
+///\cond
 #include <functional>
+///\endcond
 
 class CompMesh;
 class GeoElement;
@@ -144,7 +144,7 @@ public:
     DOF &GetDOF(int i) const;
     
     // Return the number of degree of freedom
-    virtual int NDOF() const = 0;
+    virtual int64_t NDOF() const = 0;
     
     // Return the number of shape functions stored in the DOF data structure
     virtual int NShapeFunctions(int doflocindex) const = 0;

@@ -8,7 +8,6 @@
 #ifndef Topology1d_h
 #define Topology1d_h
 
-#include "DataTypes.h"
 #include "IntRule1d.h"
 
 /**

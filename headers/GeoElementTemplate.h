@@ -8,9 +8,7 @@
 #ifndef GeoElementTemplate_h
 #define GeoElementTemplate_h
 
-#include "GeoElement.h"
 #include "GeoElementSide.h"
-#include "DataTypes.h"
 
 /**
 @brief Geometric element defined based on a @ref geometrymap

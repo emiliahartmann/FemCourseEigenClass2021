@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 
+#include "IntRule.h"
+///\cond
 #include <iostream> 
 #include <vector> 
-#include "IntRule.h"
 #include <cmath>
 #include <iomanip>
+///\endcond
 
 using namespace std;
 

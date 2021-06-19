@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 
-#include "tpanic.h"
-#include "GeoElement.h"
 #include "GeoElementSide.h"
+///\cond
 #include <set>
+///\endcond
 
-#include "tpanic.h"
- 
 GeoElement::GeoElement() : GMesh(0), MaterialId(-1), Reference(0), Index(-1) {
 
 }
@@ -63,6 +61,9 @@ void GeoElement::Jacobian(const MatrixDouble &gradx, MatrixDouble &jac, MatrixDo
     jac.setZero();
 
     switch (dim) {
+        case 0:
+            detjac = 1.;
+            break;
         case 1:
         {
             axes.resize(dim, 3);

@@ -9,8 +9,10 @@
 #ifndef __FemSC__IntRule__
 #define __FemSC__IntRule__
 
+///\cond
 #include <cmath>
 #include <stdio.h>
+///\endcond
 #include "DataTypes.h"
 
 /**

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-#include <stdio.h>
+
 #include "GeoElementTemplate.h"
 #include "Geom0d.h"
 #include "Geom1d.h"
@@ -12,8 +12,11 @@
 #include "GeomTriangle.h"
 #include "GeomTetrahedron.h"
 #include "GeoMesh.h"
-#include "tpanic.h"
+///\cond
 #include <math.h> 
+#include <stdio.h>
+///\endcond
+
 using namespace std;
 
 template<class TGeom>

@@ -5,7 +5,9 @@
  */
 
 #include "TopologyQuad.h"
+///\cond
 #include <iostream>
+///\endcond
 
 // Number of sides associated with quadrilateral elements elements
 const int TopologyQuad::nSides;

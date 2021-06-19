@@ -8,7 +8,6 @@
 #ifndef ShapeQuad_h
 #define ShapeQuad_h
 
-#include "DataTypes.h"
 #include "TopologyQuad.h"
 
 /**

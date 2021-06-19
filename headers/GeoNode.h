@@ -54,7 +54,7 @@ public:
     }
     
     // Return the coordinates of the current node
-    VecDouble Co() const
+    const VecDouble &Co() const
     {
         return xco;
     }

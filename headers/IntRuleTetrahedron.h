@@ -9,7 +9,9 @@
 #ifndef __FemSC__IntRuleTetrahedron__
 #define __FemSC__IntRuleTetrahedron__
 
+///\cond
 #include <stdio.h>
+///\endcond
 #include "IntRule.h"
 
 /**

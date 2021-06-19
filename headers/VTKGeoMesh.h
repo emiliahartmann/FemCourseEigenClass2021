@@ -7,8 +7,9 @@
 
 #ifndef VTKGeoMesh_h
 #define VTKGeoMesh_h
-
+///\cond
 #include <string>
+///\endcond
 #include "DataTypes.h"
 
 class GeoMesh;

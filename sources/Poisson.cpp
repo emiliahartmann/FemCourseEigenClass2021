@@ -5,9 +5,10 @@
  */
 
 #include "Poisson.h"
-#include "PostProcess.h"
+///\cond
 #include <functional>
 #include <string.h>
+///\endcond
 
 Poisson::Poisson() {
 }
@@ -120,6 +121,7 @@ void Poisson::ContributeError(IntPointData &data, VecDouble &u_exact, MatrixDoub
 }
 
 void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, MatrixDouble &EF) const {
+
     VecDouble phi = data.phi;
     MatrixDouble dphi = data.dphidx; // dphidx = dphidaxis na vdd
     MatrixDouble axes = data.axes;   // por isso que precisamos reescrever os dphidx por dphi2 e dphi3
@@ -197,6 +199,7 @@ void Poisson::PostProcessSolution(const IntPointData &data, const int var, VecDo
     int cols = data.dsoldx.cols();
     MatrixDouble gradu(rows, cols);
     gradu = data.dsoldx;
+    
     int nstate = this->NState();
 
     switch (var) {

@@ -8,8 +8,9 @@
 #ifndef DOF_h
 #define DOF_h
 #include "DataTypes.h"
+///\cond
 #include <iostream>
-
+///\endcond
 class CompMesh;
 
 /**

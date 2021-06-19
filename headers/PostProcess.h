@@ -7,7 +7,10 @@
 
 #ifndef PostProcess_h
 #define PostProcess_h
+
+///\cond
 #include <functional>
+///\endcond
 #include "DataTypes.h"
 
 class Analysis;

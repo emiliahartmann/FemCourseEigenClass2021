@@ -1,8 +1,8 @@
 
-
+///\cond
 #include <iostream>
 #include <math.h>
-#include "DataTypes.h"
+///\endcond
 #include "Geom0d.h"
 #include "Geom1d.h"
 #include "GeomQuad.h"
@@ -15,13 +15,6 @@
 #include "ShapeTetrahedron.h"
 #include "GeoElementTemplate.h"
 #include "GeoMesh.h"
-#include "tpanic.h"
-#include "DataTypes.h"
-#include "IntRule0d.h"
-#include "IntRule1d.h"
-#include "IntRuleTriangle.h"
-#include "IntRuleQuad.h"
-#include "IntRuleTetrahedron.h"
 #include "CompMesh.h"
 #include "CompElement.h"
 #include "NullStatement.h"

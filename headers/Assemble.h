@@ -8,9 +8,10 @@
 #ifndef Assemble_h
 #define Assemble_h
 
-#include "DataTypes.h"
 #include "PostProcess.h"
-#include <iostream>\
+///\cond
+#include <iostream>
+///\endcond
 
 class CompMesh;
 

@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 
-#include <stdio.h>
 #include "GeoMesh.h"
 #include "GeoElementSide.h"
+///\cond
+#include <stdio.h>
 #include <algorithm>
-#include "tpanic.h"
+///\endcond
+
 
 GeoElementSide::GeoElementSide() {
 

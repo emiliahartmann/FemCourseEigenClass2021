@@ -9,8 +9,9 @@
 #ifndef __FemSC__IntRuleTriangle__
 #define __FemSC__IntRuleTriangle__
 
+///\cond
 #include <stdio.h>
-#include "DataTypes.h"
+///\endcond
 #include "IntRule.h"
 
 

@@ -8,13 +8,12 @@
 #ifndef PostProcessTemplate_h
 #define PostProcessTemplate_h
 
-#include "MathStatement.h"
 #include "Poisson.h"
 #include "Analysis.h"
 #include "L2Projection.h"
-#include "IntPointData.h"
-#include "PostProcess.h"
+///\cond
 #include <list>
+///\endcond
 
 class PostProcess;
 

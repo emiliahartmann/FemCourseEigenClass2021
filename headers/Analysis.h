@@ -10,9 +10,10 @@
 
 
 #include "DataTypes.h"
+///\cond
 #include <string>
 #include <iostream>
-
+///\endcond
 //#include <armadillo>
 //using namespace arma;
 

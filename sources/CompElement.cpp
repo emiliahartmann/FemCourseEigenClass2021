@@ -8,8 +8,9 @@
 #include "GeoElement.h"
 #include "MathStatement.h"
 #include "CompMesh.h"
-#include "tpanic.h"
+///\cond
 #include <math.h> 
+///\endcond
 using namespace std;
 
 CompElement::CompElement() {

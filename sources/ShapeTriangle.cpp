@@ -6,8 +6,6 @@
 //
 
 #include "ShapeTriangle.h"
-#include "DataTypes.h"
-#include "tpanic.h"
 #include "Shape1d.h"
 
 /// computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)

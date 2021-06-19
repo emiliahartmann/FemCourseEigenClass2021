@@ -8,7 +8,6 @@
 #ifndef GeomTetrahedron_h
 #define GeomTetrahedron_h
 
-#include "DataTypes.h"
 #include "TopologyTetrahedron.h"
 #include "GeoElementSide.h"
 

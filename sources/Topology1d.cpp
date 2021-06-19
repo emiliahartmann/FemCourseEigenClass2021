@@ -5,7 +5,9 @@
  */
 
 #include "Topology1d.h"
+///\cond
 #include <iostream>
+///\endcond
 
 // Number of sides associated with 1D elements
 const int Topology1d::nSides;

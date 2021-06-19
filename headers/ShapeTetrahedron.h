@@ -8,7 +8,6 @@
 #ifndef ShapeTetrahedron_h
 #define ShapeTetrahedron_h
 
-#include "DataTypes.h"
 #include "TopologyTetrahedron.h"
 
 /**

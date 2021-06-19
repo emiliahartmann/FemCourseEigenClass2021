@@ -5,8 +5,6 @@
 //  Created by Philippe Devloo on 03/04/18.
 //
 
-#include "DataTypes.h"
-#include "tpanic.h"
 #include "Shape1d.h"
 #include "ShapeQuad.h"
 

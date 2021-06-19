@@ -9,10 +9,9 @@
 #define NULL_h
 
 #include "MathStatement.h"
-#include "DataTypes.h"
-#include  "IntPointData.h"
+///\cond
 #include <functional>
-
+///\endcond
 /**
  @brief Implements a NULL variational formulation
  @ingroup mathstatement

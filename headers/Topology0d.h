@@ -19,9 +19,6 @@ A topology can be associated with each side. The topology associated with the la
 
 */
 
-
-
-#include "DataTypes.h"
 #include "IntRule0d.h"
 
 /*

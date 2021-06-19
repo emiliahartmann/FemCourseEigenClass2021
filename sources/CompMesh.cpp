@@ -8,7 +8,6 @@
 #include "GeoMesh.h"
 #include "MathStatement.h"
 #include "GeoElement.h"
-#include "CompElement.h"
 #include "CompElementTemplate.h"
 
 CompMesh::CompMesh() : geomesh(0), compelements(0), dofs(0), mathstatements(0), solution(0) {
@@ -77,15 +76,15 @@ MathStatement *CompMesh::GetMath(int matindex) const {
     return mathstatements[matindex];
 }
 
-std::vector<CompElement *> CompMesh::GetElementVec() const {
+const std::vector<CompElement *> &CompMesh::GetElementVec() const {
     return compelements;
 }
 
-std::vector<DOF> CompMesh::GetDOFVec() const {
+const std::vector<DOF> &CompMesh::GetDOFVec() const {
     return dofs;
 }
 
-std::vector<MathStatement *> CompMesh::GetMathVec() const {
+const std::vector<MathStatement *> &CompMesh::GetMathVec() const {
     return mathstatements;
 }
 

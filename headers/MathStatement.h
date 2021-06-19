@@ -8,7 +8,6 @@
 #ifndef MathStatement_h
 #define MathStatement_h
 
-#include "DataTypes.h"
 #include "IntPointData.h"
 #include "PostProcess.h"
 
@@ -86,7 +85,7 @@ public:
     virtual void PostProcessSolution(const IntPointData &integrationpointdata, const int var, VecDouble &sol) const = 0;
     
     
-    virtual void Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv, bool colMajor = true) const;
+    virtual void Axes2XYZ(const MatrixDouble &dudaxes, MatrixDouble &dudx, const MatrixDouble &axesv) const;
     
     //Method to print MathStatement
     virtual void Print(std::ostream &out);
