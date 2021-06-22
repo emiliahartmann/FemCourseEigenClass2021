@@ -1,0 +1,4 @@
+<map id="IntRuleQuad" name="IntRuleQuad">
+<area shape="rect" id="node1" title="Integration rule associated with a quadrilateral." alt="" coords="5,80,108,107"/>
+<area shape="rect" id="node2" href="$class_int_rule.html" title="Root class for integration rules This class stores the integration points and weights an integration ..." alt="" coords="23,5,91,32"/>
+</map>

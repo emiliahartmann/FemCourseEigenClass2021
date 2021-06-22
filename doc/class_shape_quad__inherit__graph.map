@@ -1,0 +1,4 @@
+<map id="ShapeQuad" name="ShapeQuad">
+<area shape="rect" id="node1" title="Shape functions associated with a quadrilateral." alt="" coords="15,80,111,107"/>
+<area shape="rect" id="node2" href="$class_topology_quad.html" title="Defines the topology associated with a quadrilateral." alt="" coords="5,5,120,32"/>
+</map>

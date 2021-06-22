@@ -1,0 +1,4 @@
+<map id="GeomTetrahedron" name="GeomTetrahedron">
+<area shape="rect" id="node1" title="Geometric map of a tetrahedron." alt="" coords="15,80,153,107"/>
+<area shape="rect" id="node2" href="$class_topology_tetrahedron.html" title="Defines the topology associated with a tetrahedron." alt="" coords="5,5,163,32"/>
+</map>

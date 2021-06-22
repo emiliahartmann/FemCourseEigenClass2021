@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_topology_triangle.html" title="Defines the topology associated with a triangle." alt="" coords="5,31,137,57"/>
+<area shape="rect" id="node2" href="$class_geom_triangle.html" title="Geometric map of a triangular element." alt="" coords="186,5,299,32"/>
+<area shape="rect" id="node3" href="$class_shape_triangle.html" title="Shape functions associated with a triangle." alt="" coords="185,56,300,83"/>
+</map>

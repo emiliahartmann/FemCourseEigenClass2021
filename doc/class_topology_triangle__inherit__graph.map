@@ -1,0 +1,5 @@
+<map id="TopologyTriangle" name="TopologyTriangle">
+<area shape="rect" id="node1" title="Defines the topology associated with a triangle." alt="" coords="65,5,197,32"/>
+<area shape="rect" id="node2" href="$class_geom_triangle.html" title="Geometric map of a triangular element." alt="" coords="5,80,119,107"/>
+<area shape="rect" id="node3" href="$class_shape_triangle.html" title="Shape functions associated with a triangle." alt="" coords="143,80,258,107"/>
+</map>

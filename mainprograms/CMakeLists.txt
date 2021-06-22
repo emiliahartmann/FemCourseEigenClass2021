@@ -18,3 +18,6 @@ target_link_libraries (TestOneDProblem Eigen3::Eigen)
 
 add_executable(TestTwoDProblem TestTwoDProblem.cpp ${SOURCES} ${HEADERS})
 target_link_libraries (TestTwoDProblem Eigen3::Eigen)
+
+add_executable(mainContribute mainContribute.cpp ${SOURCES})
+target_link_libraries (mainContribute Eigen3::Eigen)

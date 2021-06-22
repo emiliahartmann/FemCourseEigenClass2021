@@ -1,0 +1,8 @@
+<map id="GeoElement" name="GeoElement">
+<area shape="rect" id="node1" title="Root element class that defines a geometric element." alt="" coords="65,184,168,211"/>
+<area shape="rect" id="node2" href="$class_comp_element.html" title="Root class for computational elements." alt="" coords="67,273,182,300"/>
+<area shape="rect" id="node3" href="$class_comp_mesh.html" title="Definition of a computational mesh." alt="" coords="5,5,100,32"/>
+<area shape="rect" id="node4" href="$class_geo_mesh.html" title="Geometric mesh class." alt="" coords="75,95,158,121"/>
+<area shape="rect" id="node5" href="$class_int_rule.html" title="Root class for integration rules This class stores the integration points and weights an integration ..." alt="" coords="192,184,260,211"/>
+<area shape="rect" id="node6" href="$class_math_statement.html" title="Defines the variational statement interface." alt="" coords="285,184,407,211"/>
+</map>

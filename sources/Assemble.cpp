@@ -46,7 +46,7 @@ void Assemble::OptimizeBandwidth() {
 }
 
 void Assemble::Compute(MatrixDouble &globmat, MatrixDouble &rhs) {
-    int nelem = cmesh->GetGeoMesh()->NumElements();     // int64_t: qual a diferenca?
+    int64_t nelem = cmesh->GetGeoMesh()->NumElements();     // int64_t: qual a diferenca?
     int ne = this->NEquations();
 
     globmat.resize(ne, ne);
@@ -73,7 +73,7 @@ void Assemble::Compute(MatrixDouble &globmat, MatrixDouble &rhs) {
         // std::cout << "\nPLEASE IMPLEMENT ME\n" << __PRETTY_FUNCTION__ << std::endl;
         // DebugStop();
 
-        int ndof = cel->NDOF();
+        int ndof = cel->NDOF();  //NDOF is the degree of freedom of each equation, right?
         VecInt iglob(ne, 1);
         int ni = 0;
         for (int i = 0; i < ndof; i++){

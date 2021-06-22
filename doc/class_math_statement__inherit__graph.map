@@ -1,0 +1,6 @@
+<map id="MathStatement" name="MathStatement">
+<area shape="rect" id="node1" title="Defines the variational statement interface." alt="" coords="129,5,251,32"/>
+<area shape="rect" id="node2" href="$class_l2_projection.html" title="Implements and L2 projection." alt="" coords="5,80,108,107"/>
+<area shape="rect" id="node3" href="$class_null_statement.html" title="Implements a NULL variational formulation." alt="" coords="132,80,248,107"/>
+<area shape="rect" id="node4" href="$class_poisson.html" title="Implements a poisson problem in 1&#45;, 2&#45; or 3&#45;dimensions." alt="" coords="273,80,345,107"/>
+</map>

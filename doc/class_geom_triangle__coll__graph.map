@@ -1,0 +1,11 @@
+<map id="GeomTriangle" name="GeomTriangle">
+<area shape="rect" id="node1" title="Geometric map of a triangular element." alt="" coords="36,363,149,389"/>
+<area shape="rect" id="node2" href="$class_topology_triangle.html" title="Defines the topology associated with a triangle." alt="" coords="5,273,137,300"/>
+<area shape="rect" id="node3" href="$class_geo_element_side.html" title="Clas associating an element with a side." alt="" coords="162,273,293,300"/>
+<area shape="rect" id="node4" href="$class_geo_element.html" title="Root element class that defines a geometric element." alt="" coords="271,184,373,211"/>
+<area shape="rect" id="node5" href="$class_comp_element.html" title="Root class for computational elements." alt="" coords="427,273,542,300"/>
+<area shape="rect" id="node6" href="$class_comp_mesh.html" title="Definition of a computational mesh." alt="" coords="352,5,447,32"/>
+<area shape="rect" id="node7" href="$class_geo_mesh.html" title="Geometric mesh class." alt="" coords="281,95,363,121"/>
+<area shape="rect" id="node8" href="$class_int_rule.html" title="Root class for integration rules This class stores the integration points and weights an integration ..." alt="" coords="523,184,591,211"/>
+<area shape="rect" id="node9" href="$class_math_statement.html" title="Defines the variational statement interface." alt="" coords="615,184,738,211"/>
+</map>

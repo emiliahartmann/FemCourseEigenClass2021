@@ -1,0 +1,4 @@
+<map id="ShapeTriangle" name="ShapeTriangle">
+<area shape="rect" id="node1" title="Shape functions associated with a triangle." alt="" coords="14,80,129,107"/>
+<area shape="rect" id="node2" href="$class_topology_triangle.html" title="Defines the topology associated with a triangle." alt="" coords="5,5,137,32"/>
+</map>

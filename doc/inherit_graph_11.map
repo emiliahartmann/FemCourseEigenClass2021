@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_math_statement.html" title="Defines the variational statement interface." alt="" coords="5,56,128,83"/>
+<area shape="rect" id="node2" href="$class_l2_projection.html" title="Implements and L2 projection." alt="" coords="183,5,285,32"/>
+<area shape="rect" id="node3" href="$class_null_statement.html" title="Implements a NULL variational formulation." alt="" coords="176,56,292,83"/>
+<area shape="rect" id="node4" href="$class_poisson.html" title="Implements a poisson problem in 1&#45;, 2&#45; or 3&#45;dimensions." alt="" coords="198,107,270,133"/>
+</map>

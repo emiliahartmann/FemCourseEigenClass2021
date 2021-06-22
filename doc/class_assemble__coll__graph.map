@@ -1,0 +1,5 @@
+<map id="Assemble" name="Assemble">
+<area shape="rect" id="node1" title="Assembly process of the global system of equations." alt="" coords="5,95,92,121"/>
+<area shape="rect" id="node2" href="$class_comp_mesh.html" title="Definition of a computational mesh." alt="" coords="80,5,175,32"/>
+<area shape="rect" id="node3" href="$class_geo_mesh.html" title="Geometric mesh class." alt="" coords="151,95,234,121"/>
+</map>
