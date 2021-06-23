@@ -16,7 +16,6 @@
 #include "CompElement.h"
 #include "GeoElement.h"
 #include "Assemble.h"
-//#include "MathStatement.h"
 
 using std::cout;
 using std::endl;
@@ -41,37 +40,42 @@ int main (){
         proj.setZero();
         val1.setZero();
         val2.setOnes();
-        // val2.setOnes();
-        L2Projection *bc_linha = new L2Projection(0, 2, proj, val1, val2); // 0 -> 1 para condicao de Neumann
+        L2Projection *bc_linha = new L2Projection(0, 2, proj, val1, val2);
         L2Projection *bc_point = new L2Projection(0, 1, proj, val1, val2);
         std::vector<MathStatement*>mathvec = {0, bc_point, bc_linha, mat1};
-        // cmesh.SetDefaultOrder(1); // se for 2, vai associar a funcoes quadraticas.
-        cmesh.SetMathVec(mathvec); 
+        cmesh.SetDefaultOrder(1);
+        cmesh.SetMathVec(mathvec);
         cmesh.AutoBuild();
         cmesh.Resequence();
 
     //  Calculo da matriz de rigidez: mostrado em aula pelo professor
     for(auto cel:cmesh.GetElementVec())
-    {
-        MatrixDouble ek, ef;
+    {   
+        int nshape = cel->NShapeFunctions();
+        auto nstate = cel->GetStatement()->NState();
+        MatrixDouble ek(nstate * nshape, nstate * nshape);
+        MatrixDouble ef(nstate * nshape, 1);
+        ek.setZero();
+        ef.setZero();
+
         auto gel = cel->GetGeoElement();
         auto nnodes = gel->NNodes();
         VecInt nodeindices;
-        // IOFormat CommaInitFmt(StreamPresicion, DontAlignCols, ", ", ", ", "", "", "", "");
-        // IOFormat HeavyFmt(FullPresicion, 0, ", ", "\n", "{", "}", "{", "}");
+        IOFormat CommaInitFmt(StreamPrecision, DontAlignCols, ", ", ", ", "", "", "", "");
+        IOFormat HeavyFmt(FullPrecision, 0, ", ", "\n", "{", "}", "{", "}");
         gel->GetNodes(nodeindices);
         std::cout << "element index " << cel->GetIndex() << std::endl;        
         std::cout << "coord = { ";
         for(auto in=0; in<nnodes; in++){
             GeoNode &node = gmesh.Node(nodeindices[in]);
-            // std::cout << "{ " << node.Co().format(CommaInitFmt) << "}";
-            std::cout << "{ " << node.Co() << "}";           
+            std::cout << "{ " << node.Co().format(CommaInitFmt) << "}";
+            // std::cout << "{ " << node.Co() << "}";           
             if(in < nnodes-1) std::cout << ",";
         } 
         std::cout << "};\n";
         cel->CalcStiff(ek,ef);
-        // std::cout << "ek = " << ek.format(HeavyFmt) << ";\n";
-        // std::cout << "ef = " << ef.format(HeavyFmt) << ";\n";
+        std::cout << "ek = " << ek.format(HeavyFmt) << ";\n";
+        std::cout << "ef = " << ef.format(HeavyFmt) << ";\n";
         // std::cout << "ek = " << ek << ";\n";
         // std::cout << "ef = " << ef << ";";        
     }    

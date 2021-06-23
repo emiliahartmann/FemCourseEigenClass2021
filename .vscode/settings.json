@@ -89,6 +89,11 @@
         "bit": "cpp",
         "regex": "cpp",
         "hash_map": "cpp",
-        "shared_mutex": "cpp"
+        "shared_mutex": "cpp",
+        "*.entry": "cpp",
+        "alignedvector3": "cpp",
+        "fft": "cpp",
+        "openglsupport": "cpp",
+        "dense": "cpp"
     }
 }

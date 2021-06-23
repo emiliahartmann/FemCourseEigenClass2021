@@ -56,8 +56,8 @@ int main (){
         Integral += detjac * wp;
     }
     
-    std::cout << "order = " << order << " integral aproximada " << Integral <<
-    " erro " << 6.*M_PI-Integral << std::endl;
+    // std::cout << "order = " << order << " integral aproximada " << Integral <<
+    // " erro " << 6.*M_PI-Integral << std::endl;
 
 
     GeoMesh gmesh;          // ler a malha que criamos

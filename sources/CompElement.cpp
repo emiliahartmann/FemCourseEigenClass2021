@@ -202,8 +202,8 @@ void CompElement::CalcStiff(MatrixDouble &ek, MatrixDouble &ef) const {
                 
         material->Contribute(data, weight, ek, ef);  // Integral sobre os elementos
 
-        std::cout << "ek/n" << ek << std::endl;
-	    std::cout << "ef/n" << ef << std::endl;
+        // std::cout << "ek/n" << ek << std::endl;
+	    // std::cout << "ef/n" << ef << std::endl;
     }
 
 

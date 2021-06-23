@@ -2,6 +2,12 @@
 SetFactory("OpenCASCADE");
 Rectangle(1) = {0, 0, 0, 1, 1, 0};
 //+
+//Transfinite Curve{1,2,3,4} = 2 Using Progression 1;
+//+
+Transfinite Surface{1};
+//+
+Recombine Surface{1};
+//+
 Physical Point("fix", 1) = {1};
 //+
 Physical Curve("contorno", 2) = {4, 1, 2, 3};

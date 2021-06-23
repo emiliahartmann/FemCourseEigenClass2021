@@ -145,10 +145,10 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
         res = resloc[0];
     }
 
-    std::cout << "perm/n" << perm << std::endl;
-    std::cout << "dphi2/n" << dphi2 << std::endl;    
-    std::cout << "dphi3/n" << dphi3 << std::endl;
-    std::cout << "res/n" << res << std::endl;    
+    // std::cout << "perm/n" << perm << std::endl;
+    // std::cout << "dphi2/n" << dphi2 << std::endl;    
+    // std::cout << "dphi3/n" << dphi3 << std::endl;
+    // std::cout << "res/n" << res << std::endl;    
 
     EF += phi*(res*weight);
     EK += dphi3*perm*dphi2*weight;
