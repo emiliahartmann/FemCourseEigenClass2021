@@ -87,7 +87,7 @@ int main (){
         mathvec[2] = bc_linha;
         mathvec[3] = bc_point;
         //= {0, mat1, bc_linha, bc_point}; // o meu material tem id igual a 1
-        // cmesh.SetDefaultOrder(1);
+        // cmesh.SetDefaultOrder(1); // se for 2, vai associar a funcoes quadraticas.
         cmesh.SetMathVec(mathvec); 
         cmesh.AutoBuild();
         cmesh.Resequence();
