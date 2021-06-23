@@ -16,6 +16,8 @@
 #include "CompMesh.h"
 #include "Poisson.h"
 #include "L2Projection.h"   // vai ser usado para função de contorno
+#include "PostProcessTemplate.h"
+#include "PostProcess.h"
 
 using std::cout;
 using std::endl;
@@ -98,8 +100,8 @@ data.dsoldx(1,0) = 2.;
     postprocess.AppendVariable("Force");
     postprocess.AppendVariable("DSolExact");
 
-    int64_t nscal = postprocess.NumScalarvariables();
-    int64_t nvecs = postprocess.NumVectorvariables();
+    int64_t nscal = postprocess.NumScalarVariables();
+    int64_t nvecs = postprocess.NumVectorVariables();
 
 	std::cout << "Scalar post processing/n";
     for (int i = 0; i < nscal; i++){

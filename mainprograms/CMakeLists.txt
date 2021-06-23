@@ -22,5 +22,8 @@ target_link_libraries (TestTwoDProblem Eigen3::Eigen)
 add_executable(Contribute mainContribute.cpp ${SOURCES})
 target_link_libraries (Contribute Eigen3::Eigen)
 
+add_executable(CalcStiff mainCalcStiff.cpp ${SOURCES})
+target_link_libraries (CalcStiff Eigen3::Eigen)
+
 add_executable(PostProcess mainPostProcess.cpp ${SOURCES})
 target_link_libraries (PostProcess Eigen3::Eigen)
