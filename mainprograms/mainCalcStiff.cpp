@@ -21,12 +21,21 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+        // Inserindo um force function
+        
+        auto force = [](const VecDouble &loc, VecDouble &f){
+            const auto &x = loc[0];
+            const auto &y = loc[1];
+
+            f[0] = x;
+        };
+
 int main (){
-    GeoMesh gmesh;          // ler a malha que criamos
+    GeoMesh gmesh;  // ler a malha que criamos
         ReadGmsh read;
-        read.Read(gmesh,"/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads.msh");
+        read.Read(gmesh,"/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads_irregular.msh");
         VTKGeoMesh plotmesh;
-        plotmesh.PrintGMeshVTK(&gmesh, "quads.vtk");
+        plotmesh.PrintGMeshVTK(&gmesh, "quads_irregular.vtk");
 
     CompMesh cmesh(&gmesh);  // criar uma malha computacional
         MatrixDouble perm(3,3);
@@ -48,6 +57,19 @@ int main (){
         cmesh.AutoBuild();
         cmesh.Resequence();
 
+        mat1->SetForceFunction(force);
+
+
+        // // std::function<void (const VecDouble node.Co(), VecDouble &result)> force
+        // IntPointData data;
+        // int nsize = data.x.size();
+        // // this->InitializeIntPointData(data);
+        // VecDouble force(nsize, nstate); // = this->GetForceFunction();
+        // VecDouble result(nstate);
+        // result(0) = 2;
+        // force(data.x, result);
+
+
     //  Calculo da matriz de rigidez: mostrado em aula pelo professor
     for(auto cel:cmesh.GetElementVec())
     {   
@@ -68,18 +90,16 @@ int main (){
         std::cout << "coord = { ";
         for(auto in=0; in<nnodes; in++){
             GeoNode &node = gmesh.Node(nodeindices[in]);
-            std::cout << "{ " << node.Co().format(CommaInitFmt) << "}";
-            // std::cout << "{ " << node.Co() << "}";           
+            std::cout << "{ " << node.Co().format(CommaInitFmt) << "}";          
             if(in < nnodes-1) std::cout << ",";
         } 
         std::cout << "};\n";
+
         cel->CalcStiff(ek,ef);
         std::cout << "ek = " << ek.format(HeavyFmt) << ";\n";
-        std::cout << "ef = " << ef.format(HeavyFmt) << ";\n";
-        // std::cout << "ek = " << ek << ";\n";
-        // std::cout << "ef = " << ef << ";";        
+        std::cout << "ef = " << ef.format(HeavyFmt) << ";\n";       
     }    
 
-    plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_quads.vtk"); 
+    plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_quads_irregular.vtk"); 
     return 0;
 }

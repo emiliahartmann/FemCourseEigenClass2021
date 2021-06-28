@@ -77,7 +77,7 @@ int main()
 	data.x[1] = 0.7;			
 
 data.solution.resize(1);
-data.solution[0] = 5.;
+data.solution[0] = 1;
 data.dsoldx.resize(2,1);
 data.dsoldx(0,0) = -5.;
 data.dsoldx(1,0) = 2.;
@@ -92,7 +92,7 @@ data.dsoldx(1,0) = 2.;
 
 	PostProcessTemplate<Poisson> postprocess;   // postprocess e o objeto
 
-    VecDouble solout;
+    VecDouble Solout;	// era solout
     postprocess.AppendVariable("Flux");
     postprocess.AppendVariable("Sol");
     postprocess.AppendVariable("DSol");

@@ -138,12 +138,13 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
                      // isso pode ser feito colocando um ponteiro que calcula fx 
 
     auto force = this->GetForceFunction();
-    if(force)
-    {
+    if(force){
         VecDouble resloc(nstate);
         force(data.x, resloc);
-        res = resloc[0];
+        res = resloc[0]; 
     }
+
+    // res = 1.; // Temporario, apenas para visualizar o vetor de carga diferente de zero
 
     // std::cout << "perm/n" << perm << std::endl;
     // std::cout << "dphi2/n" << dphi2 << std::endl;    
