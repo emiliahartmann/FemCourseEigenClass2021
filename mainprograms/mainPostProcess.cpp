@@ -77,10 +77,10 @@ int main()
 	data.x[1] = 0.7;			
 
 data.solution.resize(1);
-data.solution[0] = 1;
-data.dsoldx.resize(2,1);
-data.dsoldx(0,0) = -5.;
-data.dsoldx(1,0) = 2.;
+data.solution[0] = 1.;		// 1.
+data.dsoldx.resize(2,1); 	
+data.dsoldx(0,0) = -5.;		// 5.
+data.dsoldx(1,0) = 2.;		// 2.
 
 	// Criar o objeto Poisson
 	MatrixDouble perm(3,3);
@@ -89,6 +89,7 @@ data.dsoldx(1,0) = 2.;
 	perm(1,1) = 1.;
 	perm(2,2) = 1.;
 	Poisson matpoisson(1,perm);
+	matpoisson.SetDimension(2);
 
 	PostProcessTemplate<Poisson> postprocess;   // postprocess e o objeto
 
@@ -115,5 +116,6 @@ data.dsoldx(1,0) = 2.;
         std::cout << "name " << name << " post processed " << postprocess.PostProcResult(matpoisson, i+nscal , data) << std::endl;
     }
 
+	cout << "derivada objetiva " << data.axes.transpose()*data.dsoldx << std::endl;
 	return 0;
 }

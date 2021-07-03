@@ -94,7 +94,7 @@ int main (){
     plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_malha.vtk"); 
         
     //  CalcStiff by Jefferson
-    Analysis Analysis(&cmesh);
+    Analysis Analysis(&cmesh); // trocar esse nome de objeto analysis
     Analysis.RunSimulation();
 
     // Assemblagem
