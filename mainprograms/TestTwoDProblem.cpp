@@ -17,56 +17,128 @@
 //
 #include <iostream>
 #include <math.h>
-//#include "GeoNode.h"
-//#include "GeoElement.h"
-//#include "IntPointData.h"
+
 #include "CompElementTemplate.h"
 #include "Shape1d.h"
 #include "ShapeQuad.h"
 #include "CompMesh.h"
 #include "GeoMesh.h"
-//#include "GeoElement.h"
-//#include "GeoElementTemplate.h"
-//#include "MathStatement.h"
-// #include "Poisson.h"
-//#include "L2Projection.h"
-//#include "Analysis.h"
-//#include "IntRule.h"
-//#include "PostProcess.h"
+#include "ReadGmsh.h"
+#include "VTKGeoMesh.h"
+#include "Poisson.h"
+#include "L2Projection.h"
+#include "Analysis.h"
 #include "PostProcessTemplate.h"
+
+#include "Topology1d.h"
+#include "TopologyTriangle.h"
+#include "TopologyQuad.h"
+#include "TopologyTetrahedron.h"
+
+#include "CompElement.h"
+#include "GeoElement.h"
+#include "Assemble.h"
 
 #ifdef WIN32
 #define __PRETTY_FUNCTION__ __FUNCTION__
 #endif
 
-class CompMesh;
+// class CompMesh;
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-void CreateTestMesh(CompMesh &mesh, int order);
+// void CreateTestMesh(CompMesh &mesh, int order);
 
-void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv);
+// void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv);
+
+auto force = [](const VecDouble &loc, VecDouble &f)
+{
+    const auto &x = loc[0];
+    const auto &y = loc[1];
+
+    f[0] = 2.*(1.-x)*x + 2.*(1.-y)*y;
+    // res[0] = 2.*(1-x[0])*x[0] + 2.*(1-x[1])*x[1]; 
+};
 
 int main ()
 {
+    GeoMesh gmesh;  // ler a malha que criamos
+    ReadGmsh read;
+    // std::string filename("/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads.msh");
+// #ifdef MACOSX
+//     filename = "../"+filename;
+// #endif
+    // read.Read(gmesh,"/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads.msh");
+    read.Read(gmesh,"/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads_irregular.msh");
+    // VTKGeoMesh plotmesh;
+    // plotmesh.PrintGMeshVTK(&gmesh, "malha.vtk");
+    CompMesh cmesh(&gmesh);
+    MatrixDouble perm(3,3);
+    perm.setZero();
+    perm(0,0) = 1.;
+    perm(1,1) = 1.;
+    perm(2,2) = 1.;
+    Poisson *mat1 = new Poisson(1,perm);
+    mat1->SetDimension(1); //2
     
+    mat1->SetForceFunction(force);
+    MatrixDouble proj(1,1),val1(1,1),val2(1,1);
+    proj.setZero();
+    val1.setZero();
+    val2.setZero();
+    L2Projection *bc_linha = new L2Projection(0,2,proj,val1,val2);
+    L2Projection *bc_point = new L2Projection(0,3,proj,val1,val2);
+    std::vector<MathStatement *> mathvec = {0,mat1,bc_linha,bc_point};
+    cmesh.SetMathVec(mathvec);
+    cmesh.SetDefaultOrder(1); // ordem de aproximacao
+    cmesh.AutoBuild();
+    cmesh.Resequence();
+
+    Analysis AnalysisLoc(&cmesh);
+    AnalysisLoc.RunSimulation();
     
-    CompMesh mesh;
-    int order = 2;
-    //double h=1.; //para dar el tamanho del elemento
-    CreateTestMesh(mesh,order);
-
-    mesh.Print();
-
-	Analysis Analisis(&mesh);
-	Analisis.RunSimulation();
-
-    VecDouble vecerr;
     PostProcessTemplate<Poisson> postprocess;
+    
+      auto exact = [](const VecDouble &x, VecDouble &val, MatrixDouble &deriv)
+    {
+        val[0] = (1-x[0])*x[0]*(1-x[1])*x[1]; 
+        deriv(0,0) = (1-2.*x[0])*(1-x[1])*x[1]; 
+        deriv(1,0) = (1-x[0])*x[0]*(1-2.*x[1]); 
+    };
+
+    postprocess.AppendVariable("Flux");
+    postprocess.AppendVariable("Sol");
+    postprocess.AppendVariable("DSol");
+    postprocess.AppendVariable("SolExact");
+    postprocess.AppendVariable("Force");
+    postprocess.AppendVariable("DSolExact");    
+
     postprocess.SetExact(exact);
-    vecerr = Analisis.PostProcessError(std::cout, postprocess);
+    mat1->SetExactSolution(exact);
+
+    VTKGeoMesh plotmesh;
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_quads_irregular.vtk"); 
+    AnalysisLoc.PostProcessSolution("cmesh_quads_irregular.vtk", postprocess);
+
+    VecDouble errvec;
+    errvec = AnalysisLoc.PostProcessError(std::cout, postprocess); 
+   
+
+    // CompMesh mesh;
+    // int order = 2;
+    // //double h=1.; //para dar el tamanho del elemento
+    // CreateTestMesh(mesh,order);
+    // mesh.Print();
+
+	// Analysis Analisis(&mesh);
+	// Analisis.RunSimulation();
+
+    // VecDouble vecerr;
+    // PostProcessTemplate<Poisson> postprocess;
+    // postprocess.SetExact(exact);
+    // vecerr = Analisis.PostProcessError(std::cout, postprocess);
     
     return 0;
 }
@@ -104,7 +176,7 @@ void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
 }
 
 
-void CreateTestMesh(CompMesh &mesh, int order)
-{
-    DebugStop();
-}
+// void CreateTestMesh(CompMesh &mesh, int order)
+// {
+//     DebugStop();
+// }

@@ -261,7 +261,7 @@ void CompElement::EvaluateError(std::function<void(const VecDouble &loc, VecDoub
 
 
     IntRule *intrule = this->GetIntRule();
-    int maxIntOrder = intrule->MaxOrder();
+    int maxIntOrder = intrule->MaxOrder(); // pegando a maxima rentegracao que puder
     intrule->SetOrder(maxIntOrder);
 
     int dim = Dimension();

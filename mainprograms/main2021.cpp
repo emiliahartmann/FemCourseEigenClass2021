@@ -102,5 +102,8 @@ int main (){
     auto ne = assemble.NEquations();
     MatrixDouble globmat(ne, ne), rhs(ne, 1);
     assemble.Compute(globmat, rhs);
+
+    // Calculando o erro
+    
     return 0;
 }

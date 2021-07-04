@@ -79,7 +79,8 @@ void Analysis::RunSimulation() {
     for (int i = 0; i < solsize; i++) {
         sol[i] = Solution(i, 0);
     }
-    cmesh->LoadSolution(sol);
+    // Aqui, pq nao fazer sol igual solution diretamente... tentar em algum momento
+    cmesh->LoadSolution(sol); // inicializar o vetor solucao da malha (essencial para fazer o pos processamento)
 }
 
 void Analysis::PostProcessSolution(const std::string &filename, PostProcess &defPostProc) const {
@@ -101,7 +102,7 @@ VecDouble Analysis::PostProcessError(std::ostream &out, PostProcess &defPostProc
 
     for (int64_t i = 0; i < nel; i++) {
         CompElement *el = cmesh->GetElement(i);
-	GeoElement *gel = el->GetGeoElement();
+	    GeoElement *gel = el->GetGeoElement();
 	if(gel->Dimension() != dim) continue;
         if (el) {
             if (el->GetStatement()->GetMatID() == 1) {

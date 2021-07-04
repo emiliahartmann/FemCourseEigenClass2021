@@ -33,7 +33,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv);
+void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv); // declaracao de uma funcao da antiga linguagem C
 
 int main ()
 {
@@ -53,11 +53,22 @@ int main ()
     perm(2,2) = 1.;
     Poisson *mat1 = new Poisson(1,perm);
     mat1->SetDimension(1);
-    
-    auto force = [](const VecDouble &x, VecDouble &res)
-    {
-        res[0] = 1.;
-    };
+
+    auto force = [](const VecDouble &loc, VecDouble &f){
+        const auto &x = loc[0];
+        const auto &y = loc[1];
+
+        f[0] = x;
+        // f[0] = 1.;
+    };   
+            
+
+    // auto force = [](const VecDouble &x, VecDouble &res)
+    // {
+    //     // res[0] = 1.; //x[0]
+    //     res[0] = x[0]; 
+    // }; // declaracao de funcao tbm; dessa forma temos mais autonomia na funcao que escolhemos.
+        // os colchetes servem para setar quais variaveis do codigo vc vai usar para para construir a funcao force
     mat1->SetForceFunction(force);
     MatrixDouble proj(1,1),val1(1,1),val2(1,1);
     proj.setZero();
@@ -67,35 +78,47 @@ int main ()
     L2Projection *bc_point = new L2Projection(0,3,proj,val1,val2);
     std::vector<MathStatement *> mathvec = {0,mat1,bc_point,bc_linha};
     cmesh.SetMathVec(mathvec);
-    cmesh.SetDefaultOrder(2);
+    cmesh.SetDefaultOrder(2); // ordem de aproximacao
     cmesh.AutoBuild();
     cmesh.Resequence();
 
-    
-    
-    Analysis Analysis(&cmesh);
-    Analysis.RunSimulation();
+    Analysis AnalysisLoc(&cmesh);
+    AnalysisLoc.RunSimulation();
     
     PostProcessTemplate<Poisson> postprocess;
     postprocess.SetExact(exact);
     
     VecDouble errvec;
-    errvec = Analysis.PostProcessError(std::cout, postprocess);
+    errvec = AnalysisLoc.PostProcessError(std::cout, postprocess); 
+    // Tomar cuidado pq no PostProcessaento, ele calcula o erro para o mathId igual a 1 apenas....tentar modificar isso futuramente
     
     
     return 0;
 }
 void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
 
-    deriv(0,0) = 4-point[0];
-    val[0]=point[0]*(8.-point[0])/2.;
+    //// Para Laplaciano(u) = 1.;
+    // deriv(0,0) = 4-point[0];
+    // val[0]=point[0]*(8.-point[0])/2.;
+
+    // Para Laplaciano(u) = x;
+    deriv(0,0) = 32./3.-(point[0]*point[0]/2.);
+    val[0]=point[0]*(32.-point[0]*point[0]/2.)/3.;
+
+    // Para u" + u = x;
+    deriv(0,0) = 1. - (8./(2.*(exp(8.)-exp(-8.))))*(exp(point[0])-exp(-point[0]));
+    val[0]=- (8./(2.*(exp(8.)-exp(-8.))))*(exp(point[0])-exp(-point[0]))+point[0];
     return;
-    double E=exp(1.0);
-    VecDouble x(1);
-    x[0]=point[0];
+    // double E=exp(1.0);
+    // VecDouble x(1);
+    // x[0]=point[0];
     
-    val[0]=(30. + 100.*pow(E,100.) - 130.*pow(E,10.*x[0]) - 3*x[0] + 3*pow(E,100.)*x[0])/(10.*(-1. + pow(E,100.)));
-    deriv(0,0)=(-3. + 3*pow(E,100) - 1300*pow(E,10*x[0]))/(10.*(-1 + pow(E,100)));
+    // val[0]=(30. + 100.*pow(E,100.) - 130.*pow(E,10.*x[0]) - 3*x[0] + 3*pow(E,100.)*x[0])/(10.*(-1. + pow(E,100.)));
+    // deriv(0,0)=(-3. + 3*pow(E,100) - 1300*pow(E,10*x[0]))/(10.*(-1 + pow(E,100)));
+
+
+
+    return;
 }
 
 

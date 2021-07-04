@@ -8,11 +8,11 @@ Transfinite Surface{1};
 //+
 Recombine Surface{1};
 //+
-Physical Point("fix", 1) = {1};
+Physical Surface("plano", 1) = {1};
 //+
 Physical Curve("contorno", 2) = {4, 1, 2, 3};
 //+
-Physical Surface("plano", 3) = {1};
+Physical Point("fix", 3) = {1};
 //+
 SetFactory("Built-in");
 //+

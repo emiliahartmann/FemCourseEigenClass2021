@@ -74,13 +74,20 @@ void Geom1d::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Matr
     VecDouble phi(nCorners); // porque nCorners == 2 --  numero de funcoes de forma
     MatrixDouble dphi(Dimension, nCorners);
     Shape(xi, phi, dphi);
-    
-    for (int j = 0; j < nrow; j++) {
-        for (int i = 0; i < nCorners; i++) {
+
+    for (int i = 0; i < nCorners; i++) {
+        for (int j = 0; j < Dimension; j++) {
             x[j] += NodeCo(j,i) * phi[i];
             gradx(j,0) += NodeCo(j, i) * dphi(0, i);
         }
     }
+
+    // for (int j = 0; j < nrow; j++) {
+    //     for (int i = 0; i < nCorners; i++) {
+    //         x[j] += NodeCo(j,i) * phi[i];
+    //         gradx(j,0) += NodeCo(j, i) * dphi(0, i);
+    //     }
+    // }
 
 
 // //    X(xi, NodeCo, x);

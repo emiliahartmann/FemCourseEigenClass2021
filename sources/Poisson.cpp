@@ -98,7 +98,7 @@ void Poisson::ContributeError(IntPointData &data, VecDouble &u_exact, MatrixDoub
     MatrixDouble axes = data.axes;
 
     VecDouble u = data.solution;
-    MatrixDouble dudx = data.dsoldx;
+    MatrixDouble dudx = data.dsoldx; // futuramente, mudar o nome dsoldx para dsoldaxes
 
     this->Axes2XYZ(dudx, gradu, axes);
 
@@ -106,7 +106,7 @@ void Poisson::ContributeError(IntPointData &data, VecDouble &u_exact, MatrixDoub
     for (int i = 0; i < this->NState(); i++) {
         diff = (u[i] - u_exact[i]);
         errors[0] += diff*diff;
-    }
+    } // Erro L2
 
     errors[1] = 0.;
     int dim = this->Dimension();
@@ -115,10 +115,10 @@ void Poisson::ContributeError(IntPointData &data, VecDouble &u_exact, MatrixDoub
         for (int j = 0; j < nstate; j++) {
             diff = (gradu(i, j) - du_exact(i, j));
             errors[1] += diff*diff;
-        }
+        } // aqui o erro deveria ser diff*perm*diff..Num codigo com diferentes permeabilidades, teriamos um problema
 
-    }
-    errors[2] = errors[0] + errors[1];
+    } // Erro da derivada: h1 c menor
+    errors[2] = errors[0] + errors[1]; // norma do erro: produto interno da funcao e de sua derivada
 }
 
 void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, MatrixDouble &EF) const {
@@ -152,8 +152,13 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
     // std::cout << "dphi3/n" << dphi3 << std::endl;
     // std::cout << "res/n" << res << std::endl;    
 
+    // eq. diferencial = -u'' = fx
+    // EF += phi*(res*weight);
+    // EK += dphi3*perm*dphi2*weight;
+
+    // eq. diferencial = -u''+ u = fx
     EF += phi*(res*weight);
-    EK += dphi3*perm*dphi2*weight;
+    EK += (dphi3*perm*dphi2 + phi*phi.transpose())*weight;
 
     // versao a Emilia
     // this->Axes2XYZ(dphi, dphi2, axes);
