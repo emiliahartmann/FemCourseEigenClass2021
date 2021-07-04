@@ -1,11 +1,10 @@
 
-///\cond
+
 #include <iostream>
 #include <chrono>
 #include <math.h>
 #include <Eigen/Core>
 #include <Eigen/Dense>
-///\endcond
 
 using namespace Eigen;
 using namespace std;

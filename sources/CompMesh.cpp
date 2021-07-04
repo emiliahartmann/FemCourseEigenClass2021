@@ -8,6 +8,7 @@
 #include "GeoMesh.h"
 #include "MathStatement.h"
 #include "GeoElement.h"
+#include "CompElement.h"
 #include "CompElementTemplate.h"
 
 CompMesh::CompMesh() : geomesh(0), compelements(0), dofs(0), mathstatements(0), solution(0) {
@@ -125,8 +126,8 @@ void CompMesh::AutoBuild() {
         }
         CompElement *cel = CreateCompEl(gel, this, i);
         this->SetElement(i, cel);
-        this->Resequence();
     }
+    this->Resequence();
 }
 
 void CompMesh::Resequence() {

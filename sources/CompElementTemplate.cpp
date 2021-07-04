@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 #include "CompElementTemplate.h"
+#include "CompElement.h"
 #include "CompMesh.h"
+#include "DataTypes.h"
 #include "CompMesh.h"
 #include "Shape0d.h"
 #include "Shape1d.h"
 #include "ShapeQuad.h"
 #include "ShapeTetrahedron.h"
 #include "ShapeTriangle.h"
-#include "GeoElementSide.h"
+#include "GeoElement.h"
 #include "MathStatement.h"
+#include "GeoElementSide.h"
+#include "DOF.h"
 
 template<class Shape>
 CompElementTemplate<Shape>::CompElementTemplate() : dofindexes(0) {
@@ -49,6 +53,7 @@ CompElementTemplate<Shape>::CompElementTemplate(int64_t ind, CompMesh *cmesh, Ge
         } else {
             class DOF dof;
             int order = cmesh->GetDefaultOrder();
+            if(i < geo->NCornerNodes()) order = 1;
             int nshape = ComputeNShapeFunctions(i, order);
             int nstate = mat->NState();
             dof.SetNShapeStateOrder(nshape, nstate, order);

@@ -2,8 +2,9 @@
 
 cmake_minimum_required (VERSION 3.11.0)
 
-project (FemCourse)
+project (FemCourseRef)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #[[
 If the user specifies -DCMAKE_BUILD_TYPE on the command line, take their definition
 and dump it in the cache along with proper documentation, otherwise set CMAKE_BUILD_TYPE
@@ -72,11 +73,11 @@ endif()
 
 
 # LINKING FAD
-#option(USING_FAD "Whether the FAD package will be linked with the library" OFF)
+option(USING_FAD "Whether the FAD package will be linked with the library" OFF)
 
-#if(USING_FAD)
-#	add_subdirectory("Fad")
-#endif(USING_FAD)
+if(USING_FAD)
+	add_subdirectory("Fad")
+endif(USING_FAD)
 
 
 

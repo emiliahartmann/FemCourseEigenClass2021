@@ -16,6 +16,7 @@
 #include "CompMesh.h"
 #include "Poisson.h"
 #include "L2Projection.h"   // vai ser usado para função de contorno
+#include "CompElement.h"
 
 using std::cout;
 using std::endl;
@@ -86,10 +87,7 @@ int main()
 	ef.setZero();
 	matpoisson.Contribute(data, data.weight, ek, ef); // calculando a contribuicao da matriz de rigidez em um ponto somente da integracao
 	
-	std::cout << "ek/n" << ek << std::endl;
-	std::cout << "ef/n" << ef << std::endl;
+    std::cout << "ek\n" << ek << std::endl;
+    std::cout << "ef\n" << ef << std::endl;
 	return 0;
-		
-//	data.dphi[0] = 0.3;
-//	data.phi[1]  = 0.0; // ???
 }

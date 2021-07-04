@@ -92,7 +92,8 @@ int Poisson::NSolutionVariables(const PostProcVar var) {
 }
 
 void Poisson::ContributeError(IntPointData &data, VecDouble &u_exact, MatrixDouble &du_exact, VecDouble &errors) const {
-    errors.resize(NEvalErrors(), 0);
+    errors.resize(NEvalErrors());
+    errors.setZero();
     MatrixDouble gradu;
     MatrixDouble axes = data.axes;
 

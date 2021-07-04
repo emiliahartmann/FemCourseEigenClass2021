@@ -1,20 +1,20 @@
-add_executable(TestEigen mainEigenTest.cpp ${SOURCES} ${HEADERS})
-target_link_libraries (TestEigen Eigen3::Eigen)
 
-add_executable(Fem2021 main2021.cpp ${SOURCES})
-target_link_libraries (Fem2021 Eigen3::Eigen)
+add_library(course_library  ${SOURCES} ${HEADERS})
+target_link_libraries(course_library PRIVATE Eigen3::Eigen)
+# Mac OS X specific code
+if (APPLE)
+  target_compile_definitions(course_library PRIVATE MACOSX)
+endif()
 
-add_executable(TestIntegrate TestIntegrate.cpp ${SOURCES} ${HEADERS})
-target_link_libraries (TestIntegrate PRIVATE Eigen3::Eigen Catch2::Catch2)
 
-add_executable(TestGeom TestGeom.cpp ${SOURCES} ${HEADERS})
-target_link_libraries (TestGeom PRIVATE Eigen3::Eigen Catch2::Catch2)
+add_executable(TestEigen mainEigenTest.cpp)
+target_link_libraries (TestEigen course_library Eigen3::Eigen)
 
-add_executable(TestShape TestShape.cpp ${SOURCES} ${HEADERS})
-target_link_libraries (TestShape PRIVATE Eigen3::Eigen Catch2::Catch2)
+add_executable(Fem2021 main2021.cpp)
+target_link_libraries (Fem2021 Eigen3::Eigen course_library)
 
-add_executable(TestOneDProblem TestOneDProblem.cpp ${SOURCES} ${HEADERS})
-target_link_libraries (TestOneDProblem Eigen3::Eigen)
+add_executable(Contribute mainContribute.cpp)
+target_link_libraries (Contribute Eigen3::Eigen course_library)
 
 add_executable(TestTwoDProblem TestTwoDProblem.cpp ${SOURCES} ${HEADERS})
 target_link_libraries (TestTwoDProblem Eigen3::Eigen)
@@ -22,8 +22,46 @@ target_link_libraries (TestTwoDProblem Eigen3::Eigen)
 add_executable(Contribute mainContribute.cpp ${SOURCES})
 target_link_libraries (Contribute Eigen3::Eigen)
 
-add_executable(CalcStiff mainCalcStiff.cpp ${SOURCES})
-target_link_libraries (CalcStiff Eigen3::Eigen)
+# add_executable(CalcStiff mainCalcStiff.cpp ${SOURCES})
+# target_link_libraries (CalcStiff Eigen3::Eigen)
 
 add_executable(PostProcess mainPostProcess.cpp ${SOURCES})
 target_link_libraries (PostProcess Eigen3::Eigen)
+
+add_executable(Calcstiff mainCalcstiff.cpp)
+target_link_libraries (Calcstiff Eigen3::Eigen course_library)
+
+add_executable(Assemble mainAssemble.cpp)
+target_link_libraries (Assemble Eigen3::Eigen course_library)
+
+add_executable(TestIntegrate TestIntegrate.cpp)
+target_link_libraries (TestIntegrate  PRIVATE course_library Eigen3::Eigen Catch2::Catch2)
+
+add_executable(TestGeom TestGeom.cpp)
+target_link_libraries (TestGeom  PRIVATE course_library Eigen3::Eigen Catch2::Catch2)
+
+add_executable(TestShape TestShape.cpp)
+target_link_libraries (TestShape PRIVATE course_library Eigen3::Eigen Catch2::Catch2)
+
+add_executable(TestOneDProblem TestOneDProblem.cpp)
+target_link_libraries (TestOneDProblem  course_library Eigen3::Eigen)
+
+add_executable(TestTwoDProblem TestTwoDProblem.cpp)
+target_link_libraries (TestTwoDProblem course_library Eigen3::Eigen)
+
+# Mac OS X specific code
+if (APPLE)
+  target_compile_definitions(TestOneDProblem PRIVATE MACOSX)
+endif()
+
+
+
+file(GLOB MY_MESH_FILES
+  "*.msh" "*.geo"
+)
+
+file(COPY ${MY_MESH_FILES} DESTINATION .)
+
+# configure_file(*.msh *.msh COPYONLY)
+#
+# configure_file(*.geo *.geo COPYONLY)

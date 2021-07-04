@@ -17,34 +17,64 @@
 //
 #include <iostream>
 #include <math.h>
+#include "GeoMesh.h"
+#include "ReadGmsh.h"
 #include "CompMesh.h"
+#include "GeoElement.h"
 #include "GeoElementTemplate.h"
+#include "MathStatement.h"
+#include "L2Projection.h"
+#include "Analysis.h"
 #include "IntRule.h"
 #include "PostProcessTemplate.h"
+#include "Poisson.h"
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-void CreateTestMesh(CompMesh &mesh, int order, double h);
-
 void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv);
 
 int main ()
 {
+    GeoMesh gmesh;
+    ReadGmsh read;
+    std::string filename("oneD.msh");
+#ifdef MACOSX
+    filename = "../"+filename;
+#endif
+    read.Read(gmesh,filename);
+
+    CompMesh cmesh(&gmesh);
+    MatrixDouble perm(3,3);
+    perm.setZero();
+    perm(0,0) = 1.;
+    perm(1,1) = 1.;
+    perm(2,2) = 1.;
+    Poisson *mat1 = new Poisson(1,perm);
+    mat1->SetDimension(1);
+    
+    auto force = [](const VecDouble &x, VecDouble &res)
+    {
+        res[0] = 1.;
+    };
+    mat1->SetForceFunction(force);
+    MatrixDouble proj(1,1),val1(1,1),val2(1,1);
+    proj.setZero();
+    val1.setZero();
+    val2.setZero();
+    L2Projection *bc_linha = new L2Projection(0,2,proj,val1,val2);
+    L2Projection *bc_point = new L2Projection(0,3,proj,val1,val2);
+    std::vector<MathStatement *> mathvec = {0,mat1,bc_point,bc_linha};
+    cmesh.SetMathVec(mathvec);
+    cmesh.SetDefaultOrder(2);
+    cmesh.AutoBuild();
+    cmesh.Resequence();
+
     
     
-    CompMesh mesh;
-    int order = 3;
-    double h=1.0/8.0;
-    CreateTestMesh(mesh,order,h);
-    
-    Analysis Analysis(&mesh);
+    Analysis Analysis(&cmesh);
     Analysis.RunSimulation();
-    
-    //exact(x, val, deriv);
-    
-    double energy=0.0,l2=0.0;
     
     PostProcessTemplate<Poisson> postprocess;
     postprocess.SetExact(exact);
@@ -52,18 +82,14 @@ int main ()
     VecDouble errvec;
     errvec = Analysis.PostProcessError(std::cout, postprocess);
     
-    cout<<endl;
-    cout<<energy<<endl;
-    cout<<l2<<endl;
-    
-
-    //TestOneDProblem(&mesh);
     
     return 0;
 }
 void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
 
-
+    deriv(0,0) = 4-point[0];
+    val[0]=point[0]*(8.-point[0])/2.;
+    return;
     double E=exp(1.0);
     VecDouble x(1);
     x[0]=point[0];
@@ -73,7 +99,3 @@ void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
 }
 
 
-void CreateTestMesh(CompMesh &mesh, int order, double h)
-{
-    DebugStop();
-}
