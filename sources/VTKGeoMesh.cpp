@@ -344,7 +344,7 @@ void VTKGeoMesh::PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &file
 }
 
 void VTKGeoMesh::PrintSolVTK(CompMesh *cmesh, PostProcess &defPostProc, const std::string &filename){
-
+        //, bool Alldim
     std::ofstream file(filename);
     file.clear();
     

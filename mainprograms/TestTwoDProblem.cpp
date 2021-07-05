@@ -81,7 +81,7 @@ int main ()
     perm(1,1) = 1.;
     perm(2,2) = 1.;
     Poisson *mat1 = new Poisson(1,perm);
-    mat1->SetDimension(1); //2
+    mat1->SetDimension(2); //2
     
     mat1->SetForceFunction(force);
     MatrixDouble proj(1,1),val1(1,1),val2(1,1);
@@ -101,7 +101,7 @@ int main ()
     
     PostProcessTemplate<Poisson> postprocess;
     
-      auto exact = [](const VecDouble &x, VecDouble &val, MatrixDouble &deriv)
+    auto exact = [](const VecDouble &x, VecDouble &val, MatrixDouble &deriv)
     {
         val[0] = (1-x[0])*x[0]*(1-x[1])*x[1]; 
         deriv(0,0) = (1-2.*x[0])*(1-x[1])*x[1]; 

@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/emilia/Repositórios/FemCourseEigenClass2021/build/mainprograms/TestOneDProblem",
+            "program": "/home/emilia/Repositórios/FemCourseEigenClass2021/build/mainprograms/TestTwoDProblem",
             "args": [],
             "stopAtEntry": false,
             "cwd": "/home/emilia/Repositórios/FemCourseEigenClass2021/build/mainprograms",

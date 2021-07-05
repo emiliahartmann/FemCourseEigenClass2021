@@ -20,6 +20,7 @@
 #include "GeoMesh.h"
 #include "ReadGmsh.h"
 #include "CompMesh.h"
+#include "VTKGeoMesh.h"
 #include "GeoElement.h"
 #include "GeoElementTemplate.h"
 #include "MathStatement.h"
@@ -92,7 +93,9 @@ int main ()
     errvec = AnalysisLoc.PostProcessError(std::cout, postprocess); 
     // Tomar cuidado pq no PostProcessaento, ele calcula o erro para o mathId igual a 1 apenas....tentar modificar isso futuramente
     
-    
+    // Imprimir a malha VTK
+    VTKGeoMesh plotmesh;
+    plotmesh.PrintCMeshVTK(&cmesh, 2, "oneD.vtk"); 
     return 0;
 }
 void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
@@ -101,14 +104,13 @@ void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
     // deriv(0,0) = 4-point[0];
     // val[0]=point[0]*(8.-point[0])/2.;
 
-    // Para Laplaciano(u) = x;
-    deriv(0,0) = 32./3.-(point[0]*point[0]/2.);
-    val[0]=point[0]*(32.-point[0]*point[0]/2.)/3.;
+    // // Para Laplaciano(u) = x;
+    // deriv(0,0) = 32./3.-(point[0]*point[0]/2.);
+    // val[0]=point[0]*(32.-point[0]*point[0]/2.)/3.;
 
     // Para u" + u = x;
-    deriv(0,0) = 1. - (8./(2.*(exp(8.)-exp(-8.))))*(exp(point[0])-exp(-point[0]));
-    val[0]=- (8./(2.*(exp(8.)-exp(-8.))))*(exp(point[0])-exp(-point[0]))+point[0];
-    return;
+    deriv(0,0) = 1. - (8./((exp(8.)-exp(-8.))))*(exp(point[0])+exp(-point[0]));
+    val[0]= -(8./((exp(8.)-exp(-8.))))*(exp(point[0])-exp(-point[0]))+point[0];
     // double E=exp(1.0);
     // VecDouble x(1);
     // x[0]=point[0];
