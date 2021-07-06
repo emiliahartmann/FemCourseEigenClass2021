@@ -153,12 +153,12 @@ void Poisson::Contribute(IntPointData &data, double weight, MatrixDouble &EK, Ma
     // std::cout << "res/n" << res << std::endl;    
 
     // eq. diferencial = -u'' = fx
-    // EF += phi*(res*weight);
-    // EK += dphi3*perm*dphi2*weight;
+    EF += phi*(res*weight);
+    EK += dphi3*perm*dphi2*weight;
 
     // eq. diferencial = -u''+ u = fx
-    EF += phi*(res*weight);
-    EK += (dphi3*perm*dphi2 + phi*phi.transpose())*weight;
+    // EF += phi*(res*weight);
+    // EK += (dphi3*perm*dphi2 + phi*phi.transpose())*weight;
 
     // versao a Emilia
     // this->Axes2XYZ(dphi, dphi2, axes);

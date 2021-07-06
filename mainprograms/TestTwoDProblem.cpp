@@ -119,8 +119,8 @@ int main ()
     mat1->SetExactSolution(exact);
 
     VTKGeoMesh plotmesh;
-    // plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_quads_irregular.vtk"); 
-    AnalysisLoc.PostProcessSolution("cmesh_quads_irregular.vtk", postprocess);
+    plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_quads_irregular.vtk"); 
+    // AnalysisLoc.PostProcessSolution("cmesh_quads_irregular.vtk", postprocess);
 
     VecDouble errvec;
     errvec = AnalysisLoc.PostProcessError(std::cout, postprocess); 

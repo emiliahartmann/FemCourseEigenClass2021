@@ -40,7 +40,12 @@ int main ()
 {
     GeoMesh gmesh;
     ReadGmsh read;
-    std::string filename("oneD.msh");
+    // std::string filename("oned4elements.msh"); // 4 elements    
+    // std::string filename("oned8elements.msh"); // 8 elements
+    // std::string filename("oned16elements.msh"); // 16 elements
+    // std::string filename("oned32elements.msh"); // 32 elements
+    // std::string filename("oned80elements.msh"); // 80 elements   
+    std::string filename("oned160elements.msh"); // 160 elements  
 #ifdef MACOSX
     filename = "../"+filename;
 #endif
@@ -79,7 +84,7 @@ int main ()
     L2Projection *bc_point = new L2Projection(0,3,proj,val1,val2);
     std::vector<MathStatement *> mathvec = {0,mat1,bc_point,bc_linha};
     cmesh.SetMathVec(mathvec);
-    cmesh.SetDefaultOrder(2); // ordem de aproximacao
+    cmesh.SetDefaultOrder(1); // ordem de aproximacao
     cmesh.AutoBuild();
     cmesh.Resequence();
 
@@ -95,7 +100,21 @@ int main ()
     
     // Imprimir a malha VTK
     VTKGeoMesh plotmesh;
-    plotmesh.PrintCMeshVTK(&cmesh, 2, "oneD.vtk"); 
+    // Para ordem de aproximacao igual a 1
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned4elementsorder1.vtk");  
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned8elementsorder1.vtk");   
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned16elementsorder1.vtk");
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned32elementsorder1.vtk");   
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned80elementsorder1.vtk");
+    plotmesh.PrintCMeshVTK(&cmesh, 2, "oned160elementsorder1.vtk");
+    
+    // Para ordem de aproximacao igual a 2 
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned4elements.vtk");   
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned8elements.vtk");     
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned16elements.vtk");    
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned32elements.vtk");   
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned80elements.vtk");
+    // plotmesh.PrintCMeshVTK(&cmesh, 2, "oned160elements.vtk");
     return 0;
 }
 void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
