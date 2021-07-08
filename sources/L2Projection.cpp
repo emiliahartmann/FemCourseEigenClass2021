@@ -86,8 +86,7 @@ void L2Projection::Contribute(IntPointData &data, double weight, MatrixDouble &E
         case 0:
         {   // Para condicao de contorno Dirichlet
             EF += (MathStatement::gBigNumber*result[0]*weight)*data.phi;
-            EK += (MathStatement::gBigNumber*weight)*data.phi*data.phi.transpose();  
-
+            EK += (MathStatement::gBigNumber*weight)*data.phi*data.phi.transpose();            
             // // forma que estava comentada
             // for (int i = 0; i < nstate; i++) {      // i=iv
             //     for (int j = 0; j < nshape; j++) {  // j=in

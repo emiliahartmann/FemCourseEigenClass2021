@@ -70,6 +70,8 @@ void Analysis::RunSimulation() {
 
     std::cout << "Computing solution..." << std::endl;
     Solution = K.fullPivLu().solve(F);
+    // std::cout << "Solution" << Solution << std::endl;
+
 //    K.Solve_LU(F);
     std::cout << "Solution computed!" << std::endl;
     
@@ -107,7 +109,7 @@ VecDouble Analysis::PostProcessError(std::ostream &out, PostProcess &defPostProc
         if (el) {
             if (el->GetStatement()->GetMatID() == 1) {
                 errors.setZero();
-                fExact = defPostProc.GetExact();
+                fExact = defPostProc.GetExact(); // colocar isso fora do loop
                 el->EvaluateError(fExact, errors);
                 int nerrors = errors.size();
                 if(values.size() != nerrors)

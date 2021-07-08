@@ -53,27 +53,17 @@ using std::cin;
 
 // void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv);
 
-auto force = [](const VecDouble &loc, VecDouble &f)
-{
-    const auto &x = loc[0];
-    const auto &y = loc[1];
 
-    f[0] = 2.*(1.-x)*x + 2.*(1.-y)*y;
-    // res[0] = 2.*(1-x[0])*x[0] + 2.*(1-x[1])*x[1]; 
-};
 
 int main ()
 {
     GeoMesh gmesh;  // ler a malha que criamos
     ReadGmsh read;
-    // std::string filename("/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads.msh");
-// #ifdef MACOSX
-//     filename = "../"+filename;
-// #endif
-    // read.Read(gmesh,"/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads.msh");
-    read.Read(gmesh,"/home/emilia/Repositórios/FemCourseEigenClass2021/mainprograms/quads_irregular.msh");
-    // VTKGeoMesh plotmesh;
-    // plotmesh.PrintGMeshVTK(&gmesh, "malha.vtk");
+    std::string filename("quads36elements.msh");
+#ifdef MACOSX
+    filename = "../"+filename;
+#endif
+    read.Read(gmesh,filename);
     CompMesh cmesh(&gmesh);
     MatrixDouble perm(3,3);
     perm.setZero();
@@ -83,6 +73,17 @@ int main ()
     Poisson *mat1 = new Poisson(1,perm);
     mat1->SetDimension(2); //2
     
+    auto force = [](const VecDouble &loc, VecDouble &f)
+{
+    const auto &x = loc[0];
+    const auto &y = loc[1];
+
+    // f[0] = 2.*(1.-x)*x + 2.*(1.-y)*y; // para o problema -lap(u) = fx
+    f[0] = +2.*(1.-x)*x + 2.*(1.-y)*y + (1.-x)*x*(1.-y)*y; // para o problema -lap(u) +u = fx
+    
+    // res[0] = 2.*(1-x[0])*x[0] + 2.*(1-x[1])*x[1]; 
+};
+
     mat1->SetForceFunction(force);
     MatrixDouble proj(1,1),val1(1,1),val2(1,1);
     proj.setZero();
@@ -90,6 +91,8 @@ int main ()
     val2.setZero();
     L2Projection *bc_linha = new L2Projection(0,2,proj,val1,val2);
     L2Projection *bc_point = new L2Projection(0,3,proj,val1,val2);
+    // bc_linha->SetExactSolution(exact);
+    // bc_point->SetExactSolution(exact);
     std::vector<MathStatement *> mathvec = {0,mat1,bc_linha,bc_point};
     cmesh.SetMathVec(mathvec);
     cmesh.SetDefaultOrder(1); // ordem de aproximacao
@@ -103,42 +106,31 @@ int main ()
     
     auto exact = [](const VecDouble &x, VecDouble &val, MatrixDouble &deriv)
     {
+        // val[0] = (1-x[0])*x[0]+(1-x[1])*x[1]; 
+        // deriv(0,0) = (1-2.*x[0]); 
+        // deriv(1,0) = (1-2.*x[1]);         
         val[0] = (1-x[0])*x[0]*(1-x[1])*x[1]; 
         deriv(0,0) = (1-2.*x[0])*(1-x[1])*x[1]; 
         deriv(1,0) = (1-x[0])*x[0]*(1-2.*x[1]); 
     };
 
-    postprocess.AppendVariable("Flux");
-    postprocess.AppendVariable("Sol");
+    // postprocess.AppendVariable("Flux");
+    // postprocess.AppendVariable("Sol");
     postprocess.AppendVariable("DSol");
-    postprocess.AppendVariable("SolExact");
-    postprocess.AppendVariable("Force");
-    postprocess.AppendVariable("DSolExact");    
+    // postprocess.AppendVariable("SolExact");
+    // postprocess.AppendVariable("Force");
+    // postprocess.AppendVariable("DSolExact");    
 
     postprocess.SetExact(exact);
     mat1->SetExactSolution(exact);
 
     VTKGeoMesh plotmesh;
-    plotmesh.PrintCMeshVTK(&cmesh, 2, "cmesh_quads_irregular.vtk"); 
-    // AnalysisLoc.PostProcessSolution("cmesh_quads_irregular.vtk", postprocess);
+    plotmesh.PrintGMeshVTK(&gmesh, "g_quads36elements.vtk"); 
+    plotmesh.PrintCMeshVTK(&cmesh, 2, "c_quads36elements.vtk"); 
+    // AnalysisLoc.PostProcessSolution("quads36elements.vtk", postprocess);
 
     VecDouble errvec;
     errvec = AnalysisLoc.PostProcessError(std::cout, postprocess); 
-   
-
-    // CompMesh mesh;
-    // int order = 2;
-    // //double h=1.; //para dar el tamanho del elemento
-    // CreateTestMesh(mesh,order);
-    // mesh.Print();
-
-	// Analysis Analisis(&mesh);
-	// Analisis.RunSimulation();
-
-    // VecDouble vecerr;
-    // PostProcessTemplate<Poisson> postprocess;
-    // postprocess.SetExact(exact);
-    // vecerr = Analisis.PostProcessError(std::cout, postprocess);
     
     return 0;
 }
