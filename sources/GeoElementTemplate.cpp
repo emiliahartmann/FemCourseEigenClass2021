@@ -60,6 +60,7 @@ void GeoElementTemplate<TGeom>::X(const VecDouble &xi, VecDouble &x) const{
             coord(j, i) = node.Coord(j);
         }
     }
+    x.setZero();
     Geom.X(xi, coord, x);
 }
 
@@ -77,7 +78,10 @@ void GeoElementTemplate<TGeom>::GradX(const VecDouble &xi, VecDouble &x, MatrixD
             coord(j, i) = node.Coord(j);
         }
     }
+    x.setZero();
+    gradx.setZero();
     Geom.GradX(xi, coord, x, gradx);
+    // std::cout << "xi " << xi << "\nx " << x << std::endl;
 }
 
 

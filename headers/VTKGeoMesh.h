@@ -30,7 +30,7 @@ class VTKGeoMesh
     static void PrintCMeshVTK(CompMesh *cmesh, int dim, const std::string &filename);
     
     /// Generate an output file for the solution and its gradient
-    static void PrintSolVTK(CompMesh *cmesh, PostProcess &defPostProc, const std::string &filename);
+    static void PrintSolVTK(CompMesh *cmesh, PostProcess &defPostProc, const std::string &filename, bool AllDim = false);
     
 };
 

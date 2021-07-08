@@ -25,7 +25,7 @@ class ReadGmsh
 public:
 
     // Constructor of ReadGmsh
-    ReadGmsh() : fMaterialDataVec(3)
+    ReadGmsh() : fMaterialDataVec(4)
     {
         
     }

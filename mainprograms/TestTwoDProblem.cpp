@@ -17,19 +17,15 @@
 //
 #include <iostream>
 #include <math.h>
-
-#include "CompElementTemplate.h"
-#include "Shape1d.h"
-#include "ShapeQuad.h"
-#include "CompMesh.h"
 #include "GeoMesh.h"
 #include "ReadGmsh.h"
-#include "VTKGeoMesh.h"
+#include "CompMesh.h"
 #include "Poisson.h"
 #include "L2Projection.h"
 #include "Analysis.h"
 #include "PostProcessTemplate.h"
 
+// verificar se os headers abaixo sao necessarios
 #include "Topology1d.h"
 #include "TopologyTriangle.h"
 #include "TopologyQuad.h"
@@ -38,6 +34,7 @@
 #include "CompElement.h"
 #include "GeoElement.h"
 #include "Assemble.h"
+// ++++++++++++++++++++++++++++++++++++++++++++++
 
 #ifdef WIN32
 #define __PRETTY_FUNCTION__ __FUNCTION__
@@ -83,6 +80,20 @@ int main ()
     
     // res[0] = 2.*(1-x[0])*x[0] + 2.*(1-x[1])*x[1]; 
 };
+
+    // CompMesh cmesh(&gmesh);
+    // MatrixDouble perm(3,3);
+    // perm.setZero();
+    // perm(0,0) = 1.;
+    // perm(1,1) = 1.;
+    // perm(2,2) = 1.;
+    // Poisson *mat1 = new Poisson(1,perm);
+    // mat1->SetDimension(2);
+
+    // auto force = [](const VecDouble &x, VecDouble &res)
+    // {
+    //     res[0] = 2.*(1.-x[0])*x[0]+2.*(1-x[1])*x[1];
+    // };
 
     mat1->SetForceFunction(force);
     MatrixDouble proj(1,1),val1(1,1),val2(1,1);
@@ -135,40 +146,40 @@ int main ()
     return 0;
 }
 
+    // std::vector<MathStatement *> mathvec = {0,mat1,bc_point,bc_linha};
+    // cmesh.SetMathVec(mathvec);
+    // cmesh.SetDefaultOrder(1);
+    // cmesh.AutoBuild();
+    // cmesh.Resequence();
 
-void exact(const VecDouble &point,VecDouble &val, MatrixDouble &deriv){
+    //     Analysis locAnalysis(&cmesh);
+    // locAnalysis.RunSimulation();
+    // PostProcessTemplate<Poisson> postprocess;
+    // auto exact = [](const VecDouble &x, VecDouble &val, MatrixDouble &deriv)
+    // {
+    //     val[0] = (1.-x[0])*x[0]*(1-x[1])*x[1];
+    //     deriv(0,0) = (1.-2.*x[0])*(1-x[1])*x[1];
+    //     deriv(1,0) = (1-2.*x[1])*(1-x[0])*x[0];
+    // };
+
+//    if (!strcmp("Sol", name.c_str())) return ESol;
+//    if (!strcmp("DSol", name.c_str())) return EDSol;
+//    if (!strcmp("Flux", name.c_str())) return EFlux;
+//    if (!strcmp("Force", name.c_str())) return EForce;
+//    if (!strcmp("SolExact", name.c_str())) return ESolExact;
+//    if (!strcmp("DSolExact", name.c_str())) return EDSolExact;
+    postprocess.AppendVariable("Sol");
+    postprocess.AppendVariable("DSol");
+    postprocess.AppendVariable("Flux");
+    postprocess.AppendVariable("Force");
+    postprocess.AppendVariable("SolExact");
+    postprocess.AppendVariable("DSolExact");
+    postprocess.SetExact(exact);
+    mat1->SetExactSolution(exact);
+    locAnalysis.PostProcessSolution("quads.vtk", postprocess);
+
+    VecDouble errvec;
+    errvec = locAnalysis.PostProcessError(std::cout, postprocess);
     
-    
-    long double Pi=4*atan(1);
-    int mmax=200;
-    int nmax=200;
-    
-//    val=0.;
-//    deriv[0]=0.;
-//    deriv[1]=0.;
-//    
-//    val=-point[0]*point[0]+point[0];
-//    deriv[0]=-2.*point[0]+1.;
-//    deriv[1]=0.;
-    
-    for(int m=1;m<=mmax;m++){
-        for(int n=1;n<=nmax;n++){
-            val[0]+=(4*(-1 + pow(-1,m))*(-1 + pow(-1,n))*sin(m*Pi*point[0])*sin(n*Pi*point[1]))/(m*n*(pow(m,2) + pow(n,2))*pow(Pi,4));
-            
-            deriv(0,0)+=(4*(-1 + pow(-1,m))*(-1 + pow(-1,n))*cos(m*Pi*point[0])*sin(n*Pi*point[1]))/(n*(pow(m,2) + pow(n,2))*pow(Pi,3));
-            
-            deriv(1,0)+=(4*(-1 + pow(-1,m))*(-1 + pow(-1,n))*cos(n*Pi*point[1])*sin(m*Pi*point[0]))/(m*(pow(m,2) + pow(n,2))*pow(Pi,3));
-            
-        }
-    }
-    
-    
-    
-    
+    return 0;
 }
-
-
-// void CreateTestMesh(CompMesh &mesh, int order)
-// {
-//     DebugStop();
-// }

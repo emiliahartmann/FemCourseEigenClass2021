@@ -18,7 +18,7 @@
 class PostProcess;
 
 /**
- @brief Implements post processing for a particular math statement
+ @brief Interfaces post processing for a particular math statement
  @ingroup global
  */
 template<class math>
@@ -26,11 +26,14 @@ class PostProcessTemplate: public PostProcess
 {
 
     protected:
-    
+    /// indices of the post processing variables that will be annexed to the vtk file
     std::vector<typename math::PostProcVar> scalarvariables;
+    /// indexes of the vector valued post processing variables that will be annexed to the vtk file
     std::vector<typename math::PostProcVar> vectorvariables;
-    
+
+    /// names of the vector valued post processed quantities
     std::vector<std::string> vectornames;
+    /// name of the scalar valued post processed quantities
     std::vector<std::string> scalarnames;
 
     
@@ -50,10 +53,7 @@ class PostProcessTemplate: public PostProcess
     PostProcessTemplate &operator=(const PostProcessTemplate &cp){
         return *this;
     }
-    
-    PostProcessTemplate(Analysis *Ref) : PostProcess(Ref){
-    }
-    
+
     
     virtual std::vector<std::string> Vectornames() const{
         return vectornames;
@@ -63,9 +63,10 @@ class PostProcessTemplate: public PostProcess
         return scalarnames;
     }
     
+    /// translates the post processed vector variables strings into post processed indexes
     virtual VecInt VectorvariablesIds() const{
         math Statement;
-        VecInt VecVar(NumVectorVariables(),0);
+        VecInt VecVar(NumVectorVariables());
         
         for (int index = 0; index< NumVectorVariables(); index++) {
             VecVar[index]=Statement.VariableIndex(vectorvariables[index]);
@@ -74,9 +75,10 @@ class PostProcessTemplate: public PostProcess
         return VecVar;
     }
 
+    /// translate the post processed scalar variables into post processed indexes
     virtual VecInt ScalarvariablesIds() const{
         math Statement;
-        VecInt ScalVar(NumScalarVariables(),0);
+        VecInt ScalVar(NumScalarVariables());
         
         for (int index = 0; index< NumScalarVariables(); index++) {
             ScalVar[index]=Statement.VariableIndex(scalarvariables[index]);
@@ -85,6 +87,7 @@ class PostProcessTemplate: public PostProcess
         return ScalVar;
     }
     
+    /// add a post processed quantity defined by a string
     virtual void AppendVariable(const std::string &name){
         math Statement;
         typename math::PostProcVar var = Statement.VariableIndex(name);
@@ -104,7 +107,7 @@ class PostProcessTemplate: public PostProcess
         
     }
     
-    
+    /// append a post processed variable identified by its enumerated value
     void AppendVariable(typename math::PostProcVar var){
         math Statement;
         int nsol = Statement.NSolutionVariables(var);
@@ -117,6 +120,7 @@ class PostProcessTemplate: public PostProcess
         
     }
     
+    /// compute a post processed quantity for a post processing variable index at a point defined by the intpointdata
     VecDouble PostProcResult(MathStatement &mathStatement, unsigned int varIndex, const IntPointData &data) const {
         math *locptr = dynamic_cast<math *> (&mathStatement);
         

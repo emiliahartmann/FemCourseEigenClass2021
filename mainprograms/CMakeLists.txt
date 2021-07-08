@@ -16,17 +16,8 @@ target_link_libraries (Fem2021 Eigen3::Eigen course_library)
 add_executable(Contribute mainContribute.cpp)
 target_link_libraries (Contribute Eigen3::Eigen course_library)
 
-# add_executable(TestTwoDProblem TestTwoDProblem.cpp ${SOURCES} ${HEADERS})
-# target_link_libraries (TestTwoDProblem Eigen3::Eigen)
-
-# add_executable(Contribute mainContribute.cpp ${SOURCES})
-# target_link_libraries (Contribute Eigen3::Eigen)
-
-# add_executable(CalcStiff mainCalcStiff.cpp ${SOURCES})
-# target_link_libraries (CalcStiff Eigen3::Eigen)
-
-add_executable(PostProcess mainPostProcess.cpp ${SOURCES})
-target_link_libraries (PostProcess Eigen3::Eigen)
+add_executable(PostProcess mainPostProcess.cpp)
+target_link_libraries (PostProcess Eigen3::Eigen course_library)
 
 add_executable(Calcstiff mainCalcstiff.cpp)
 target_link_libraries (Calcstiff Eigen3::Eigen course_library)
@@ -49,9 +40,14 @@ target_link_libraries (TestOneDProblem  course_library Eigen3::Eigen)
 add_executable(TestTwoDProblem TestTwoDProblem.cpp)
 target_link_libraries (TestTwoDProblem course_library Eigen3::Eigen)
 
+add_executable(TestThreeDProblem TestThreeDProblem.cpp)
+target_link_libraries (TestThreeDProblem course_library Eigen3::Eigen)
+
 # Mac OS X specific code
 if (APPLE)
+  target_compile_definitions(TestTwoDProblem PRIVATE MACOSX)
   target_compile_definitions(TestOneDProblem PRIVATE MACOSX)
+  target_compile_definitions(TestThreeDProblem PRIVATE MACOSX)
 endif()
 
 
