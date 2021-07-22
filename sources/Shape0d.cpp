@@ -25,7 +25,7 @@ void Shape0d::Shape(const VecDouble& xi, VecInt& orders, VecDouble& phi, MatrixD
 int Shape0d::NShapeFunctions(int side, int order) {
 
     if (side == 0) {
-        if(order != 1) DebugStop();
+        // if(order != 1) DebugStop(); // descomentar isso depois
         return 1;
     }
     // Code should not reach this point. This return is only here to stop compiler warnings.

@@ -12,21 +12,41 @@ using namespace std;
 
 /// computes the shape functions in function of the coordinate in parameter space and orders of the shape functions (size of orders is number of sides of the element topology)
 void ShapeQuad::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, MatrixDouble &dphi){
-    
+    // if(xi.size() != Dimension) DebugStop();
+    // if(orders.size() != nSides) DebugStop();  
+
+    for (int i = 0; i < orders.size(); i++)
+    {
+        if (orders[i] < 0) {
+            std::cout << "ShapeQuad::Shape: Invalid dimension for arguments: order\n";
+            DebugStop();
+        }
+    }
+    // if (orders[0] > 1 || orders[1] > 1 || orders[2] > 1 || orders[3] > 1) {
+    //     std::cout << "ShapeQuad::Shape: Invalid dimension for arguments: order\n";
+    //     DebugStop();
+    // }
+
+    auto nf = NShapeFunctions(orders);
+
+    if (orders[nf-1] > 2) {
+        std::cout << "ShapeQuad::Shape, only implemented until order = 2" << std::endl;
+        DebugStop();
+    }
+
 // Implementação da Emilia
-    if(xi.size() != Dimension) DebugStop();
-    if(orders.size() != nSides) DebugStop();
+
 
     int nshape = NShapeFunctions(orders);
-    int nsides = nSides;
+    int nsides = nSides;    
 
-    orders.resize(nSides);
-    phi.resize(nshape);
-    dphi.resize(2, nshape);
+    // orders.resize(nSides);
+    // phi.resize(nshape); dphi.resize(2, nshape);
+    // phi.setZero(); dphi.setZero();
 
     VecDouble csi(1);
-    csi[0] = xi[0];
     VecDouble eta(1);
+    csi[0] = xi[0];
     eta[0] = xi[1];
 
     phi[0] = (1. - csi[0]) * (1. - eta[0])/4.;
@@ -45,7 +65,7 @@ void ShapeQuad::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matri
     dphi(1,3) = + 1. * (1. - csi[0])/4.;    
 
 
-//  Implementando as funcoes de forma para os lados (manualmente)
+// //  Implementando as funcoes de forma para os lados (manualmente)
 //    int ip;
 //    for (ip = 4; ip < 8; ip++){
 //        if(orders[ip] == 2)
@@ -66,7 +86,7 @@ void ShapeQuad::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matri
 //        dphi(1,6) = + 1. * (1. - csi[0] * csi[0])/2.;
 //        dphi(1,7) = - eta[0] * (1. - csi[0]);  
 //        }
-//  
+ 
 //        else if(orders[ip] != 1) DebugStop();
 //        }
 
@@ -79,59 +99,55 @@ void ShapeQuad::Shape(const VecDouble &xi, VecInt &orders, VecDouble &phi, Matri
 //        }
 //    else if(orders[8] != 1) DebugStop();
 
-// Implementando as funcoes de forma para os lados (automatica)
+// // Implementando as funcoes de forma para os lados (automatica)
 
-    int count = 4;
-    int ip;
-    for (ip = 4; ip < 8; ip++){
-        if(orders[ip] == 2)
-        {
-        int id= ip % 4;
-        int id2 = (ip + 1) % 4;
-        int id3 = (ip + 2) % 4;
-        phi[count] = 4. * phi[id] * (phi[id2] + phi[id3]);
-        dphi(0, count) = 4. * (dphi(0, id) * (phi[id2] + phi[id3]) + (dphi(0, id2) + dphi(0, id3)));
-        dphi(1, count) = 4. * (dphi(1, id) * (phi[id2] + phi[id3]) + (dphi(1, id2) + dphi(1, id3)));
-        count++;
-//        std :: cout << "contador" << count << endl;
-        }  
-        else if(orders[ip] != 1) DebugStop();
-    }
+//     int count = 4;
+//     int ip;
+//     for (ip = 4; ip < 8; ip++){
+//         if(orders[ip] == 2)
+//         {
+//         int id= ip % 4;
+//         int id2 = (ip + 1) % 4;
+//         int id3 = (ip + 2) % 4;
+//         phi[count] = 4. * phi[id] * (phi[id2] + phi[id3]);
+//         dphi(0, count) = 4. * (dphi(0, id) * (phi[id2] + phi[id3]) + phi[id]*(dphi(0, id2) + dphi(0, id3)));
+//         dphi(1, count) = 4. * (dphi(1, id) * (phi[id2] + phi[id3]) + phi[id]*(dphi(1, id2) + dphi(1, id3)));
+//         count++;
+// //        std :: cout << "contador" << count << endl;
+//         }  
+//         else if(orders[ip] != 1) DebugStop();
+//     }
 
-    // Caso separado o lado 8
-    if(orders[8] == 2)
-    {
-        phi[count] = 16. * phi[0] * phi[2];
-        dphi(0, count) = 16. * (dphi(0, 0) * phi[2] + phi[0] * dphi(0, 2));
-        dphi(1, count) = 16. * (dphi(1, 0) * phi[2] + phi[0] * dphi(1, 2));
-        count++;
-    }
-    else if(orders[8] != 1) DebugStop();
-    if(count != nshape) DebugStop();
+//     // Caso separado o lado 8
+//     if(orders[8] == 2)
+//     {
+//         phi[count] = 16. * phi[0] * phi[2];
+//         dphi(0, count) = 16. * (dphi(0, 0) * phi[2] + phi[0] * dphi(0, 2));
+//         dphi(1, count) = 16. * (dphi(1, 0) * phi[2] + phi[0] * dphi(1, 2));
+//         count++;
+//     }
+//     else if(orders[8] != 1) DebugStop();
+//     if(count != nshape) DebugStop();
 
 // -----------------------
-
-    for (int i = 0; i < orders.size(); i++)
-    {
-        if (orders[i] < 0) {
-            std::cout << "ShapeQuad::Shape: Invalid dimension for arguments: order\n";
-            DebugStop();
-        }
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    int count = 4;
+    int is;
+    for (is = 4; is < 9; is++) {
+        if(orders[is] == 2)
+        {
+            int is1 = SideNodeLocIndex(is, 0);
+            int is2 = SideNodeLocIndex(is, 1);
+            phi[is] = 4. *phi[is1] * phi[is2];
+            dphi(0, is) = 4. * (dphi(0, is1) * phi[is2] + phi[is1] * dphi(0, is2));
+            dphi(1, is) = 4. * (dphi(1, is1) * phi[is2] + phi[is1] * dphi(1, is2));
+            count++;
+        } else if (orders[is] != 1) DebugStop();
     }
-    if (orders[0] > 1 || orders[1] > 1 || orders[2] > 1 || orders[3] > 1) {
-        std::cout << "ShapeQuad::Shape: Invalid dimension for arguments: order\n";
-        DebugStop();
-    }
+    if(count != nshape) DebugStop();
+    for(int is = 10 ; is< nSides; is++) if(orders[is] != 1 && orders[is] != 2) DebugStop();
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    auto nf = NShapeFunctions(orders);
-
-    if (orders[nf-1] > 2) {
-        std::cout << "ShapeQuad::Shape, only implemented until order = 2" << std::endl;
-        DebugStop();
-    }
-
-//    std::cout << "Please implement me\n";
-//    DebugStop();
 }
 
 /// returns the number of shape functions associated with a side

@@ -22,11 +22,15 @@ Geom1d& Geom1d::operator=(const Geom1d& copy) {
 
 void Geom1d::Shape(const VecDouble &xi, VecDouble &phi, MatrixDouble &dphi) {
 //    std::cout << __PRETTY_FUNCTION__ << std::endl;
-    if(xi.size() <= 0 || xi.size() > Dimension) DebugStop();
+    if (xi.size() == 0) DebugStop();
+    // if(xi.size() <= 0 || xi.size() > Dimension) DebugStop();
 //    if(xi.size() !=Dimension ) DebugStop();
 //|| phi.size() !=nCorners || dphi.rows() !=Dimension || dphi.cols() !=nCorners
     phi.resize(nCorners);
     dphi.resize(Dimension, nCorners);
+
+    phi.setZero();
+    dphi.setZero();
 
     double csi = xi[0];
 
@@ -44,16 +48,24 @@ void Geom1d::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     if(NodeCo.cols() !=nCorners) DebugStop();
 
     int nrow=NodeCo.rows();
+    int ncol=NodeCo.cols();
 
-    VecDouble phi(2);
-    MatrixDouble dphi(Dimension,2);
+    VecDouble phi(nCorners);
+    MatrixDouble dphi(Dimension,nCorners);
 
+    x.setZero();
     Shape(xi, phi, dphi);
 
-    for (int i=0; i < nrow; i++) {
-        x[i] = NodeCo(i,0)*phi[0] + NodeCo(i,1)*phi[1];
-//        x[i] = NodeCo(i,0)*(1.-xi[0])*(1./2.) + NodeCo(i,1)*(1. + xi[0])*1./2.;
+    for (int i=0; i < nCorners; i++) {
+        for (int j=0; j < nrow; j++) {
+             x[j] = NodeCo(j,i)*phi[i];
+        }
     }
+
+//     for (int i=0; i < nrow; i++) {
+//         x[i] = NodeCo(i,0)*phi[0] + NodeCo(i,1)*phi[1];
+// //        x[i] = NodeCo(i,0)*(1.-xi[0])*(1./2.) + NodeCo(i,1)*(1. + xi[0])*1./2.;
+//     }
  
 }
 
@@ -61,15 +73,17 @@ void Geom1d::GradX(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x, Matr
     if(xi.size() != Dimension) DebugStop();
     if(x.size() < NodeCo.rows()) DebugStop();  // x.size() != NodeCo.rows()
     if(NodeCo.cols() !=nCorners) DebugStop();
+    // if(NodeCo.rows() !=Dimension) DebugStop(); // CHECAR
 
     int nrow=NodeCo.rows();
     int ncol=NodeCo.cols(); // x, y, z 
 
-    if (gradx.cols()<nrow) gradx.resize(nrow,1);
-//    gradx.resize(nrow, Dimension);
+//    x.resize(nrow);
     gradx.setZero();
-    // x.resize(nrow);
     x.setZero();
+
+    gradx.resize(nrow,1);
+    // if (gradx.cols()<nrow)  gradx.resize(nrow, Dimension);
 
     VecDouble phi(nCorners); // porque nCorners == 2 --  numero de funcoes de forma
     MatrixDouble dphi(Dimension, nCorners);
