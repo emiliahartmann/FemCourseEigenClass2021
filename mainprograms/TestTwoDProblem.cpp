@@ -90,7 +90,7 @@ int main ()
     // bc_point->SetExactSolution(exact);
     std::vector<MathStatement *> mathvec = {0,mat1,bc_linha,bc_point};
     cmesh.SetMathVec(mathvec);
-    cmesh.SetDefaultOrder(2); // ordem de aproximacao
+    cmesh.SetDefaultOrder(1); // ordem de aproximacao
     cmesh.AutoBuild();
     cmesh.Resequence();
 
@@ -151,41 +151,3 @@ int main ()
     
     return 0;
 }
-
-//     // std::vector<MathStatement *> mathvec = {0,mat1,bc_point,bc_linha};
-//     // cmesh.SetMathVec(mathvec);
-//     // cmesh.SetDefaultOrder(1);
-//     // cmesh.AutoBuild();
-//     // cmesh.Resequence();
-
-//     //     Analysis locAnalysis(&cmesh);
-//     // locAnalysis.RunSimulation();
-//     // PostProcessTemplate<Poisson> postprocess;
-//     // auto exact = [](const VecDouble &x, VecDouble &val, MatrixDouble &deriv)
-//     // {
-//     //     val[0] = (1.-x[0])*x[0]*(1-x[1])*x[1];
-//     //     deriv(0,0) = (1.-2.*x[0])*(1-x[1])*x[1];
-//     //     deriv(1,0) = (1-2.*x[1])*(1-x[0])*x[0];
-//     // };
-
-// //    if (!strcmp("Sol", name.c_str())) return ESol;
-// //    if (!strcmp("DSol", name.c_str())) return EDSol;
-// //    if (!strcmp("Flux", name.c_str())) return EFlux;
-// //    if (!strcmp("Force", name.c_str())) return EForce;
-// //    if (!strcmp("SolExact", name.c_str())) return ESolExact;
-// //    if (!strcmp("DSolExact", name.c_str())) return EDSolExact;
-//     postprocess.AppendVariable("Sol");
-//     postprocess.AppendVariable("DSol");
-//     postprocess.AppendVariable("Flux");
-//     postprocess.AppendVariable("Force");
-//     postprocess.AppendVariable("SolExact");
-//     postprocess.AppendVariable("DSolExact");
-//     postprocess.SetExact(exact);
-//     mat1->SetExactSolution(exact);
-//     locAnalysis.PostProcessSolution("quads.vtk", postprocess);
-
-//     VecDouble errvec;
-//     errvec = locAnalysis.PostProcessError(std::cout, postprocess);
-    
-//     return 0;
-// }

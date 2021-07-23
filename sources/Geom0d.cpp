@@ -31,7 +31,7 @@ void Geom0d::Shape(const VecDouble &xi, VecDouble &phi, MatrixDouble &dphi) {
 }
 
 void Geom0d::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
-    if(xi.size() != Dimension) DebugStop();
+    // if(xi.size() != Dimension) DebugStop();
     if(x.size() < NodeCo.rows()) DebugStop(); // x.size() != NodeCo.rows()
     if(NodeCo.cols() != nCorners) DebugStop();
 

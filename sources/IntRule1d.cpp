@@ -49,11 +49,17 @@ void IntRule1d::SetOrder(int order) {
     {
         fPoints.resize(3,Dimension());
         fWeights.resize(3);
-        VecDouble temp(3);
-        gauleg(-1.,1.,temp,fWeights);
-        fPoints(0,0) = temp[0];
-        fPoints(1,0) = temp[1];
-        fPoints(2,0) = temp[2];
+        // VecDouble temp(3);
+        // gauleg(-1.,1.,temp,fWeights);
+        // fPoints(0,0) = temp[0];
+        // fPoints(1,0) = temp[1];
+        // fPoints(2,0) = temp[2];
+            fPoints(0,0) = -sqrt(3./5.);
+            fPoints(1,0) =  0.;
+            fPoints(2,0) =  sqrt(3./5.);
+            fWeights(0) = 5./9.;
+            fWeights(1) = 8./9.;
+            fWeights(2) = 5./9.;        
     }
         break;
     default:

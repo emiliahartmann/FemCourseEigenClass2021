@@ -29,7 +29,7 @@ void IntRuleQuad::SetOrder(int order) {
         fWeights.resize(1);
         fPoints(0,0) = 0.;
         fPoints(0,1) = 0.;
-        fWeights(0) = 4.;
+        fWeights(0) = 4.; // aqui deveria ser peso 4 ou 2 mesmo?
         break;
 //        {
 //        fPoints.resize(1,Dimension());
@@ -43,15 +43,15 @@ void IntRuleQuad::SetOrder(int order) {
     case 3:
         fPoints.resize(4,Dimension());
         fWeights.resize(4);
-        fPoints(0,0) = -1./(sqrt (3));
-        fPoints(1,0) = -1./(sqrt (3));
-        fPoints(2,0) = 1./(sqrt (3));
-        fPoints(3,0) = 1./(sqrt (3));
+        fPoints(0,0) = -1./(sqrt (3.));
+        fPoints(1,0) = 1./(sqrt (3.)); //-
+        fPoints(2,0) = 1./(sqrt (3.));
+        fPoints(3,0) = -1./(sqrt (3.)); //+
 
-        fPoints(0,1) = -1./(sqrt (3));
-        fPoints(1,1) = 1./(sqrt (3));
-        fPoints(2,1) = -1./(sqrt (3));
-        fPoints(3,1) = 1./(sqrt (3));
+        fPoints(0,1) = -1./(sqrt (3.));
+        fPoints(1,1) = -1./(sqrt (3.)); //+
+        fPoints(2,1) = 1./(sqrt (3.)); //-
+        fPoints(3,1) = 1./(sqrt (3.));
 
         fWeights(0) = 1.;
         fWeights(1) = 1.;
@@ -62,25 +62,25 @@ void IntRuleQuad::SetOrder(int order) {
     case 5:
         fPoints.resize(9,Dimension());
         fWeights.resize(9);
-        fPoints(0,0) = - sqrt (3./5);
+        fPoints(0,0) = - sqrt (3./5.);
         fPoints(1,0) = 0.;
-        fPoints(2,0) = sqrt (3./5);
-        fPoints(3,0) = - sqrt (3./5);
+        fPoints(2,0) = sqrt (3./5.);
+        fPoints(3,0) = - sqrt (3./5.);
         fPoints(4,0) = 0.;
-        fPoints(5,0) = sqrt (3./5);
-        fPoints(6,0) = -sqrt (3./5);
+        fPoints(5,0) = sqrt (3./5.);
+        fPoints(6,0) = -sqrt (3./5.);
         fPoints(7,0) = 0.;
-        fPoints(8,0) = sqrt (3./5);
+        fPoints(8,0) = sqrt (3./5.);
 
-        fPoints(0,1) = - sqrt (3./5);
-        fPoints(1,1) = - sqrt (3./5);
-        fPoints(2,1) = - sqrt (3./5);
+        fPoints(0,1) = - sqrt (3./5.);
+        fPoints(1,1) = - sqrt (3./5.);
+        fPoints(2,1) = - sqrt (3./5.);
         fPoints(3,1) = 0.;
         fPoints(4,1) = 0.;
         fPoints(5,1) = 0.;
-        fPoints(6,1) = sqrt (3./5);
-        fPoints(7,1) = sqrt (3./5);
-        fPoints(8,1) = sqrt (3./5);
+        fPoints(6,1) = sqrt (3./5.);
+        fPoints(7,1) = sqrt (3./5.);
+        fPoints(8,1) = sqrt (3./5.);
 
         fWeights(0) = 25./81;
         fWeights(1) = 40./81;

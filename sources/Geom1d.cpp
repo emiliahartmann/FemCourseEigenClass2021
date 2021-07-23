@@ -53,12 +53,15 @@ void Geom1d::X(const VecDouble &xi, MatrixDouble &NodeCo, VecDouble &x) {
     VecDouble phi(nCorners);
     MatrixDouble dphi(Dimension,nCorners);
 
-    x.setZero();
+    // x.setZero();
     Shape(xi, phi, dphi);
 
+    // for (int i=0; i < nrow; i++) {
+    //     x[i] = NodeCo(i,0)*phi[0] + NodeCo(i,1)*phi[1];
+    // }
     for (int i=0; i < nCorners; i++) {
         for (int j=0; j < nrow; j++) {
-             x[j] = NodeCo(j,i)*phi[i];
+             x[j] += NodeCo(j,i)*phi[i];
         }
     }
 
